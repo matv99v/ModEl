@@ -19,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.all('/goods', (req,res,next) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     next();
 });
 
