@@ -18,7 +18,8 @@ module.exports = {
 
     module: {
         rules: [
-            { test: /\.css$/,
+            {
+                test: /\.css$/,
                 use: [
                     { loader: "style-loader" },
                     { loader: "css-loader" }
@@ -28,15 +29,33 @@ module.exports = {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: "babel-loader"
-            }, {
+            },
+            {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: "babel-loader"
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    "style-loader", // creates style nodes from JS strings
+                    "css-loader", // translates CSS into CommonJS
+                    "sass-loader" // compiles Sass to CSS
+                ]
             }
         ]
     },
 
-    plugins: [HtmlWebpackPluginConfig]
+    plugins: [HtmlWebpackPluginConfig],
 
+    resolve: {
+        alias: {
+            aliasSrc: path.resolve(__dirname, 'src'),
+        }
+    },
+
+    devServer: {
+        historyApiFallback: true
+    },
 
 }

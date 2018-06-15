@@ -15,15 +15,17 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// // send all requests to index.html so browserHistory in React Router works
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public/index.html'));
+// })
 
-app.all('/goods', (req,res,next) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    next();
-});
 
 app.get('/goods', (req,res,next) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+
     readCsv.then(function(data) {
         res.end(JSON.stringify(data));
     })

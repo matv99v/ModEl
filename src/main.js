@@ -1,12 +1,12 @@
-// TODO: main source jsx file
-
-console.log('eee');
-
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Layout from './Layout.jsx';
+
+
+import Layout from './components/Layout.jsx';
+
+import './styles.scss';
+
 
 ReactDOM.render(
     <Layout />,

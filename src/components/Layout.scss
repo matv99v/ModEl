@@ -1,0 +1,7 @@
+@import "~aliasSrc/variables";
+
+
+.Layout__container {
+    padding: $dev-padding;
+    background: rgba(255, 255, 0, $dev-opacity);
+}

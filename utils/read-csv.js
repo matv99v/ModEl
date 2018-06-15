@@ -22,7 +22,7 @@ var prms = new Promise(function(resolve, reject) {
             newItem.QUANTITY = +newItem.QUANTITY;
             newItem.PRICE = +newItem.PRICE;
             newItem.CATEGORIES = newItem.CATEGORIES.split(/,\s*/);
-            newItem.PHOTOS = newItem.PHOTOS.split(/,\s*/);;
+            newItem.PHOTOS = newItem.PHOTOS.split(/,\s*/);
             return newItem;
         })
         .validate(function(item){
