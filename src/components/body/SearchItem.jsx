@@ -1,6 +1,5 @@
 import React from 'react';
 import './SearchItem.scss';
-import ItemsList from './ItemBrowser/ItemsList.jsx';
 
 
 export default class SearchItem extends React.Component {
@@ -13,7 +12,6 @@ export default class SearchItem extends React.Component {
         return (
             <div className='SearchItem__cnt'>
                 <input type='text' placeholder='Search by text' />
-                <ItemsList />
             </div>
         );
     }

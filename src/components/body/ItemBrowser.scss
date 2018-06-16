@@ -4,13 +4,13 @@
 .ItemBrowser__container {
     padding: $dev-padding;
     background: rgba(0, 255, 0, $dev-opacity);
-    display: flex;
 
-    & > div:nth-child(1) {
-        flex: 0 1 auto;
-    }
+    .ItemBrowser__items-cont {
+        display: flex;
 
-    & > div:nth-child(2) {
-        flex: 1 1 auto;
+        & > div:nth-child(2) {
+            flex: 1 1 auto;
+        }
+
     }
 }
