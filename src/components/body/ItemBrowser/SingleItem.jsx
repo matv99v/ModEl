@@ -9,13 +9,13 @@ export default class SingleItem extends React.Component {
 
     render() {
         return (
-            <div className='SingleItem__container'>
+            <div className={this.props.isExtendedView ? 'SingleItem__container__extended' : 'SingleItem__container__compact'}>
 
                 <div>
                     Name: {this.props.name}
                 </div>
 
-                <div>
+                <div className='SingleItem__description'>
                     Description: {this.props.description}
                 </div>
 

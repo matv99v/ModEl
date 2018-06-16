@@ -10,7 +10,7 @@ export default class About extends React.Component {
     render() {
         return (
             <div className='About__cnt'>
-                <p className='dev-label'>About</p>
+                <p>Some words about a company, contacts, etc</p>
             </div>
         );
     }

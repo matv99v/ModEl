@@ -29,11 +29,8 @@ export default class ItemsList extends React.Component {
                 {
                     this.state.goods
                         .filter(good => {
-                            // return this.props.filterId
-                            //     ? good.ID == this.props.filterId
-                            //     : true;
-
-                                return !this.props.filterId || good.ID == this.props.filterId;
+                            // if no filterId then no filtering
+                            return !this.props.filterId || good.ID == this.props.filterId;
                         })
                         .map((good, i) => {
                             const url = `/catalog/${good.ID}`;
@@ -44,6 +41,7 @@ export default class ItemsList extends React.Component {
                                         description={good.DESCRIPTION}
                                         price={good.PRICE}
                                         photos={good.PHOTOS}
+                                        isExtendedView={!!this.props.filterId}
                                     />
                                 </Link>
 
