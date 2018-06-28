@@ -1,8 +1,10 @@
 import React from 'react';
-import './ItemBrowser.scss';
 import ItemCategories from './ItemBrowser/ItemCategories.jsx';
 import ItemsList from './ItemBrowser/ItemsList.jsx';
 import SearchItem from './SearchItem.jsx';
+
+import { Grid, Row, Col } from 'react-bootstrap';
+
 
 
 export default class ItemBrowser extends React.Component {
@@ -11,15 +13,22 @@ export default class ItemBrowser extends React.Component {
         console.log(this.props.match.params.id);
 
         return (
-            <div className='ItemBrowser__container'>
-                <SearchItem />
+            <Grid fluid>
 
-                <div className='ItemBrowser__items-cont'>
-                    <ItemCategories />
-                    <ItemsList filterId={this.props.match.params.id} />
-                </div>
+                <Row style={{display: 'none'}}>
+                    <SearchItem />
+                </Row>
 
-            </div>
+                <Row>
+                    <Col xs={4} md={2}>
+                        <ItemCategories />
+                    </Col>
+                    <Col xs={8} md={10}>
+                        <ItemsList filterId={this.props.match.params.id} />
+                    </Col>
+                </Row>
+
+            </Grid>
         );
     }
 }

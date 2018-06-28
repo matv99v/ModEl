@@ -1,50 +1,34 @@
 import React from 'react';
-import { Route, Link, BrowserRouter } from 'react-router-dom';
-import { Image, Grid, Row, Col, Button } from 'react-bootstrap';
-
-import './ItemsList.scss';
-
+import './Cart.scss';
+import { Image, Grid, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 
 
-
-export default class ItemsList extends React.Component {
+export default class Cart extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            goods: [],
+            goods: JSON.parse(localStorage.getItem("ModElCart")) || []
         };
     }
 
-    componentDidMount() {
-        fetch('http://localhost:3000/goods')
-           .then(response => response.json())
-           .then(data => this.setState({goods: data}))
-           .catch(err => console.error(err));
-   }
+    handleUpClick(e) {
+        e.preventDefault();
+        console.log('handleUpClick');
+    }
 
-   handleButtonClick(e, good) {
-       e.preventDefault();
-       alert(`Товар ${good.NAME} добавлен в корзину`);
-       const cart = JSON.parse(localStorage.getItem("ModElCart")) || [];
-       cart.push(good);
-       localStorage.setItem("ModElCart", JSON.stringify(cart));
-   }
+    handleDownClick(e) {
+        e.preventDefault();
+        console.log('handleDownClick');
+    }
 
-   componentWillRecieveProps
 
     render() {
-        console.log(this.state.goods);
-
         return (
-
-            <div className="list-group ItemsList__container">
+            <div className="list-group Cart__cnt">
                 {
                     this.state.goods
-                        .filter(good => {
-                            // if no filterId then no filtering
-                            return !this.props.filterId || good.ID == this.props.filterId;
-                        })
                         .map((good, i) => {
                             const url = `/catalog/${good.ID}`;
                             return (
@@ -54,14 +38,18 @@ export default class ItemsList extends React.Component {
                                             <Col xs={3} sm={3} md={3}>
                                                 <Image src={good.PHOTOS[0]} responsive thumbnail />
                                             </Col>
-                                            <Col xs={6} sm={6} md={7}>
+                                            <Col xs={6} sm={6} md={6}>
                                                 <h5 className="list-group-item-heading">{good.NAME}</h5>
                                                 <p className="list-group-item-text">{good.DESCRIPTION}</p>
                                             </Col>
-                                            <Col xs={3} sm={3} md={2}>
+                                            <Col xs={3} sm={3} md={3}>
                                                 <div className="Item__price">
                                                     <h5 className="list-group-item-heading">{good.PRICE} грн</h5>
-                                                    <Button onClick={(e) => this.handleButtonClick(e, good)}>В корзину</Button>
+                                                    <ButtonGroup bsSize="large">
+                                                        <Button onClick={(e) => this.handleDownClick(e)}>—</Button>
+                                                        <Button onClick={(e) => e.preventDefault()}>1</Button>
+                                                        <Button onClick={(e) => this.handleUpClick(e)}>+</Button>
+                                                    </ButtonGroup>
                                                 </div>
                                             </Col>
                                         </Row>
@@ -70,8 +58,12 @@ export default class ItemsList extends React.Component {
                             );
                         })
                 }
-            </div>
 
+                <div className="Order__cnt">
+                    <Button bsSize="large" bsStyle="success">Оформить заказ</Button>
+                </div>
+
+            </div>
 
         );
     }

@@ -1,8 +1,12 @@
-// @import "~bootstrap/scss/bootstrap";
+// @import "~bootstrap/scss/bootstrap"; v4
+// @import "~bootstrap/dist/css/bootstrap.css";
+@import "bootstrap-theme/bootstrap-theme.css";
 // @import "~bootstrap/scss/bootstrap-grid";
-@import "~bootstrap/scss/bootstrap-reboot";
+// @import "~bootstrap/scss/bootstrap-reboot";
 
 .dev-label {
     font-size: 10px;
     color: darkred;
 }
+
+// override bootstrap styles here

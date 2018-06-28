@@ -1,9 +1,11 @@
 import React from 'react';
-import Header from './header/Header.jsx';
 import ItemBrowser from './body/ItemBrowser.jsx';
-import SingleItem from './body/ItemBrowser/SingleItem.jsx';
-import About from './body/About.jsx';
-import './Layout.scss';
+import HomePage from './HomePage.jsx';
+import ContactPage from './ContactPage.jsx';
+import Navigation from './Navigation.jsx';
+import Cart from './Cart.jsx';
+
+import { Grid, Row } from 'react-bootstrap';
 import { Route, BrowserRouter } from 'react-router-dom';
 
 
@@ -12,13 +14,21 @@ export default class Layout extends React.Component {
     render() {
         return (
             <BrowserRouter>
-                <div className="Layout__container">
-                    <Header />
-                    <Route exact path='/' component={ItemBrowser} />
-                    <Route exact path='/catalog' component={ItemBrowser} />
-                    <Route exact path='/catalog/:id' component={ItemBrowser} />
-                    <Route exact path='/about' component={About} />
-                </div>
+                <Grid>
+
+                    <Row>
+                        <Navigation />
+                    </Row>
+
+                    <Row>
+                        <Route exact path='/' component={HomePage} />
+                        <Route exact path='/catalog' component={ItemBrowser} />
+                        <Route exact path='/catalog/:id' component={ItemBrowser} />
+                        <Route exact path='/contacts' component={ContactPage} />
+                        <Route exact path='/cart' component={Cart} />
+                    </Row>
+
+                </Grid>
             </BrowserRouter>
         );
     }

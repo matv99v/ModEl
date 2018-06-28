@@ -1,18 +1,39 @@
 import React from 'react';
-import './SearchItem.scss';
+import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+
 
 
 export default class SearchItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
-    }
+        this.state = {isValid: true};
+    };
+
+    handleInputChange() {};
+
+    handleSubmitClick() {};
+
 
     render() {
         return (
-            <div className='SearchItem__cnt'>
-                <input type='text' placeholder='Search by text' />
-            </div>
+
+            <form>
+              <FormGroup
+                controlId="formBasicText"
+              >
+                <ControlLabel>Working example with validation</ControlLabel>
+                <FormControl
+                  type="text"
+                  value={this.state.value}
+                  placeholder="Enter text"
+                  onChange={this.handleChange}
+                />
+                <FormControl.Feedback />
+                <HelpBlock>Validation is based on string length.</HelpBlock>
+              </FormGroup>
+            </form>
+
+
         );
     }
 }
