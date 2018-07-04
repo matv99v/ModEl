@@ -9,7 +9,14 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 module.exports = {
     mode: 'development',
 
-    entry: './src/main.js',
+    entry: ['babel-polyfill', './src/main.js'],
+
+    // entry: [
+    //     'webpack-dev-server/client?http://localhost:8001',
+    //     'webpack/hot/only-dev-server',
+    //     'babel-polyfill',
+    //     './src/main.js'
+    // ],
 
     output: {
         path: path.resolve('public'),
@@ -71,16 +78,21 @@ module.exports = {
         ]
     },
 
-    plugins: [HtmlWebpackPluginConfig],
+    plugins: [
+        HtmlWebpackPluginConfig
+    ],
 
     resolve: {
         alias: {
-            aliasSrc: path.resolve(__dirname, 'src'),
+            AliasSrc: path.resolve(__dirname, 'src'),
+            AliasReduxActions: path.resolve(__dirname, 'src/redux/actions/'),
         }
     },
 
     devServer: {
         historyApiFallback: true
     },
+
+    devtool: 'source-map'
 
 }

@@ -1,0 +1,17 @@
+@import "~AliasSrc/variables";
+
+
+.Spinner__cnt {
+    border-style: solid;
+    border-color: $spinner-border-color;
+    border-top-color: $spinner-color;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+    z-index: 9999;
+    margin: auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

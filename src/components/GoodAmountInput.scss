@@ -1,0 +1,25 @@
+@import "~AliasSrc/variables";
+
+
+
+.GoodAmountInput__cnt {
+    display: flex;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    border-radius: 3px;
+
+    & > button {
+        box-shadow: none;
+    }
+
+    .input-wrapper {
+        input {
+            box-shadow: none;
+            width: 40px;
+            border-left: 1px solid #dddddd;
+            border-right: 1px solid #dddddd;
+            height: 100%;
+            text-align: center;
+        }
+
+    }
+}

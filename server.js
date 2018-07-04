@@ -27,7 +27,9 @@ app.get('/goods', (req,res,next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
 
     readCsv.then(function(data) {
-        res.end(JSON.stringify(data));
+        setTimeout(function () {
+            res.end(JSON.stringify(data));
+        }, 2000); // mimic fake long response
     })
     .catch(function(err) {
         console.log(err);

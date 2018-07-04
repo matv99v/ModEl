@@ -1,70 +1,133 @@
 import React from 'react';
 import './Cart.scss';
-import { Image, Grid, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
+import { Image, Button } from 'react-bootstrap';
+
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { removeFromCartAction, updateGoodQuantityAction } from 'AliasReduxActions/cart-actions';
+import PlaceOrderModalForm from './PlaceOrderModalForm.jsx';
+import GoodAmountInput from './GoodAmountInput.jsx';
 
 
 
-export default class Cart extends React.Component {
+
+class Cart extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            goods: JSON.parse(localStorage.getItem("ModElCart")) || []
-        };
+        this.state = {isModalVisible: false};
     }
 
-    handleUpClick(e) {
+    handleAmountChange = (goodId, amount, isReplace=false) => {
+        const payload = { goodId, amount, isReplace };
+        this.props.dispatch(updateGoodQuantityAction(payload));
+    }
+
+    handleRemoveItem(e, id) {
         e.preventDefault();
-        console.log('handleUpClick');
+        this.props.dispatch(removeFromCartAction(id));
     }
 
-    handleDownClick(e) {
-        e.preventDefault();
-        console.log('handleDownClick');
+    handlePlaceOrderClick() {
+        console.log('handlePlaceOrderClick');
+        this.setState({isModalVisible: true});
     }
 
+    handleClose() {
+        console.log('handleClose');
+        this.setState({isModalVisible: false});
+    }
 
     render() {
+        const {cart, goods} = this.props;
+        const cartKeys = Object.keys(cart);
+
+        const total = cartKeys.reduce((acc, key) => {
+            const good = goods.find(good => good.ID === key);
+            return cart[key] * good.PRICE + acc;
+        }, 0);
+
         return (
             <div className="list-group Cart__cnt">
                 {
-                    this.state.goods
+                    Object.keys(this.props.cart)
+                        .map(goodId => {
+                            const goodObj = this.props.goods.find(good => {
+                                return good.ID == goodId;
+                            });
+                            return goodObj;
+                        })
                         .map((good, i) => {
                             const url = `/catalog/${good.ID}`;
                             return (
                                 <Link to={url} className="list-group-item" key={i}>
-                                    <Grid fluid>
-                                        <Row>
-                                            <Col xs={3} sm={3} md={3}>
-                                                <Image src={good.PHOTOS[0]} responsive thumbnail />
-                                            </Col>
-                                            <Col xs={6} sm={6} md={6}>
-                                                <h5 className="list-group-item-heading">{good.NAME}</h5>
-                                                <p className="list-group-item-text">{good.DESCRIPTION}</p>
-                                            </Col>
-                                            <Col xs={3} sm={3} md={3}>
-                                                <div className="Item__price">
-                                                    <h5 className="list-group-item-heading">{good.PRICE} грн</h5>
-                                                    <ButtonGroup bsSize="large">
-                                                        <Button onClick={(e) => this.handleDownClick(e)}>—</Button>
-                                                        <Button onClick={(e) => e.preventDefault()}>1</Button>
-                                                        <Button onClick={(e) => this.handleUpClick(e)}>+</Button>
-                                                    </ButtonGroup>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                    </Grid>
+
+                                    <div className='Cart__good'>
+
+                                        <div className='Cart__good_remove_cross'>
+                                            <span className="glyphicon glyphicon-remove" onClick={(e) => this.handleRemoveItem(e, good.ID)}></span>
+                                        </div>
+
+                                        <div className='Cart__good_img_cnt'>
+                                            <Image src={good.PHOTOS[0]} />
+                                        </div>
+
+                                        <div className='Cart__good_desc'>
+                                            <h5 className="list-group-item-heading">{good.NAME}</h5>
+                                            <h5 className="list-group-item-heading">{good.PRICE} грн</h5>
+                                        </div>
+
+                                        <div className="Cart_good_amount">
+                                            <GoodAmountInput
+                                                amountChangeCb={this.handleAmountChange}
+                                                good={good}
+                                                defValue={this.props.cart[good.ID]}
+                                            />
+                                        </div>
+
+                                        <div className="Cart_good_sum">
+                                            <h5 className='list-group-item-heading'>
+                                                {good.PRICE * this.props.cart[good.ID]}
+                                            </h5>
+
+                                            <h5 className='list-group-item-heading'>
+                                                грн
+                                            </h5>
+
+                                        </div>
+
+                                    </div>
+
                                 </Link>
                             );
                         })
                 }
 
-                <div className="Order__cnt">
-                    <Button bsSize="large" bsStyle="success">Оформить заказ</Button>
+
+                <hr/>
+
+                <div className="Order__total">
+                    <h6>Итого: {total} грн</h6>
                 </div>
+
+                <div className="Order__cnt">
+                    <Button bsSize="large" bsStyle="success" onClick={(e) => this.handlePlaceOrderClick()} >Оформить заказ</Button>
+                </div>
+
+                <PlaceOrderModalForm
+                    isVisible={this.state.isModalVisible}
+                    hideCb={this.handleClose.bind(this)}
+                />
 
             </div>
 
         );
     }
-}
+};
+
+
+const mapStateToProps = (state) => ({
+    cart: state.cart,
+    goods: state.goods
+});
+
+export default connect(mapStateToProps)(Cart);
