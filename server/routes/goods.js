@@ -4,14 +4,22 @@ const goodsRouter = express.Router();
 goodsRouter.use(bodyParser.json());
 
 
+
+
 goodsRouter.route('/')
     .all((req, res, next) => {
         res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/plain');
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Access-Control-Allow-Origin', '*');
         next();
     })
     .get((req, res, next) => {
-        res.end('Will send all the goods to you!');
+
+        // remove this test data later!
+        const fs = require('fs');
+        const testData = fs.readFileSync('./test-data.json', 'utf8');
+
+        res.end(testData);
     })
     .post((req, res, next) => {
         res.end(`Will add the good: ${req.body.name}, with details: ${req.body.description}`);
