@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "wds": "node_modules/.bin/webpack-dev-server --inline --hot --history-api-fallback --host localhost --port 8001 --progress --colors --debug --output-pathinfo",
-    "build": "node_modules/.bin/webpack",
+    "start": "node_modules/.bin/webpack-dev-server --inline --hot --history-api-fallback --host localhost --port 8001 --progress --colors --debug --output-pathinfo --open --config webpack.dev.js",
+    "build": "node_modules/.bin/webpack --progress --config webpack.prod.js",
     "server": "node server.js",
     "create-element": "ft"
   },
@@ -36,6 +36,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",
     "express-generator": "^4.16.0",
     "file-loader": "^1.1.11",

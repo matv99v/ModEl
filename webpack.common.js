@@ -1,22 +1,20 @@
 const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-    template: './public/index.html',
+    template: './src/index.html',
     filename: 'index.html',
     inject: 'body'
-})
+});
+
 
 module.exports = {
-    mode: 'development',
-
     entry: ['babel-polyfill', './src/main.js'],
 
-    // entry: [
-    //     'webpack-dev-server/client?http://localhost:8001',
-    //     'webpack/hot/only-dev-server',
-    //     'babel-polyfill',
-    //     './src/main.js'
-    // ],
+    plugins: [
+        HtmlWebpackPluginConfig,
+        new CleanWebpackPlugin('./public')
+    ],
 
     output: {
         path: path.resolve('public'),
@@ -78,9 +76,7 @@ module.exports = {
         ]
     },
 
-    plugins: [
-        HtmlWebpackPluginConfig
-    ],
+
 
     resolve: {
         alias: {
@@ -88,11 +84,5 @@ module.exports = {
             AliasReduxActions: path.resolve(__dirname, 'src/redux/actions/'),
         }
     },
-
-    devServer: {
-        historyApiFallback: true
-    },
-
-    devtool: 'source-map'
 
 }
