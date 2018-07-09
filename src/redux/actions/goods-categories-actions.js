@@ -1,16 +1,18 @@
+// import 'regenerator-runtime/runtime';
 import { showSpinnerAction, hideSpinnerAction } from 'AliasReduxActions/spinner-actions';
 
-export function fetchGoodsActionAsync() {
+
+export function fetchGoodsCategoriesAsync() {
     return (dispatch) => {
         dispatch(showSpinnerAction());
 
-        fetch('http://localhost:3000/goods')
+        fetch('http://localhost:3000/goods-categories')
             .then(response => {
                 return response.json();
             })
             .then(data => {
                 console.log(data);
-                dispatch(fetchGoodsAction(data));
+                dispatch(fetchGoodsCategories(data));
             })
             .catch(err => console.error(err))
             .finally(() => {
@@ -19,10 +21,10 @@ export function fetchGoodsActionAsync() {
     };
 };
 
-export function fetchGoodsAction(goods) {
-    console.log('fetchGoodsAction', goods);
+export function fetchGoodsCategories(categories) {
+    console.log('fetchGoodsCategories', categories);
     return {
-        type: 'FETCH_GOODS',
-        payload: goods
+        type: 'FETCH_CATEGORIES',
+        payload: categories
     };
 };

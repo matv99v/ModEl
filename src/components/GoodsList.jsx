@@ -20,9 +20,7 @@ class GoodsList extends React.Component {
     }
 
     componentWillMount() {
-        if (!this.props.goods.length) {
-            this.props.dispatch(fetchGoodsActionAsync());
-        }
+        this.props.dispatch(fetchGoodsActionAsync());
 
    }
 
@@ -57,15 +55,15 @@ class GoodsList extends React.Component {
                                     <Grid fluid>
                                         <Row>
                                             <Col xs={3} sm={3} md={3}>
-                                                <Image src={good.PHOTOS[0]} thumbnail />
+                                                <Image src={'https://scm.ncsu.edu/as/scm/i/channels/articles/scm/production-types-of-goods.gif'} thumbnail />
                                             </Col>
                                             <Col xs={6} sm={6} md={7}>
-                                                <h5 className="list-group-item-heading">{good.NAME}</h5>
+                                                <h5 className="list-group-item-heading">{good.product_name}</h5>
                                                 <p className="list-group-item-text">{good.DESCRIPTION}</p>
                                             </Col>
                                             <Col xs={3} sm={3} md={2}>
                                                 <div className="Good__price">
-                                                    <h5 className="list-group-item-heading">{good.PRICE} грн</h5>
+                                                    <h5 className="list-group-item-heading">{good.Declare_price} грн</h5>
                                                     <Button onClick={(e) => this.handleButtonClick(e, good.ID)}>В корзину</Button>
                                                 </div>
                                             </Col>

@@ -1,17 +1,30 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const goodsCategoriesRouter = express.Router();
+const db = require('../database/db.js');
+
 goodsCategoriesRouter.use(bodyParser.json());
 
 
 goodsCategoriesRouter.route('/')
     .all((req, res, next) => {
         res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/plain');
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Access-Control-Allow-Origin', '*');
         next();
     })
     .get((req, res, next) => {
-        res.end('Will send all the goodsCategories to you!');
+
+        db.getAllGoodsCategories()
+            .then(rows => {
+                console.log(JSON.stringify(rows));
+                res.end(JSON.stringify(rows));
+            })
+            .catch(err => {
+                console.log('eeeeee');
+                next(err);
+            });
+
     })
     .post((req, res, next) => {
         res.end(`Will add the good: ${req.body.name}, with details: ${req.body.description}`);

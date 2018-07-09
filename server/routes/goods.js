@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const goodsRouter = express.Router();
+const db = require('../database/db.js');
+
 goodsRouter.use(bodyParser.json());
 
 
@@ -15,11 +17,13 @@ goodsRouter.route('/')
     })
     .get((req, res, next) => {
 
-        // remove this test data later!
-        const fs = require('fs');
-        const testData = fs.readFileSync('./test-data.json', 'utf8');
+        db.getAllGoods()
+            .then(rows => {
+                console.log(JSON.stringify(rows));
+                res.end(JSON.stringify(rows));
+            });
 
-        res.end(testData);
+
     })
     .post((req, res, next) => {
         res.end(`Will add the good: ${req.body.name}, with details: ${req.body.description}`);
