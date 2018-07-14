@@ -19,7 +19,6 @@ goodsRouter.route('/')
 
         db.getAllGoods()
             .then(rows => {
-                console.log(JSON.stringify(rows));
                 res.end(JSON.stringify(rows));
             });
 

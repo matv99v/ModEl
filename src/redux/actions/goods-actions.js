@@ -9,7 +9,6 @@ export function fetchGoodsActionAsync() {
                 return response.json();
             })
             .then(data => {
-                console.log(data);
                 dispatch(fetchGoodsAction(data));
             })
             .catch(err => console.error(err))
@@ -20,7 +19,6 @@ export function fetchGoodsActionAsync() {
 };
 
 export function fetchGoodsAction(goods) {
-    console.log('fetchGoodsAction', goods);
     return {
         type: 'FETCH_GOODS',
         payload: goods

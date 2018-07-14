@@ -1,5 +1,5 @@
 import React from 'react';
-import GoodsCategories from './GoodsCategories.jsx';
+import Categories from './Categories.jsx';
 import GoodsList from './GoodsList.jsx';
 
 import { Grid, Row, Col } from 'react-bootstrap';
@@ -13,7 +13,7 @@ export default class GoodsSection extends React.Component {
 
                 <Row>
                     <Col xs={3} sm={3} md={3}>
-                        <GoodsCategories />
+                        <Categories />
                     </Col>
                     <Col xs={9} sm={9} md={9}>
                         <GoodsList filterId={this.props.match.params.id} />

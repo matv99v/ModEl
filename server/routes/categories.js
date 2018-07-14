@@ -1,12 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const goodsCategoriesRouter = express.Router();
+const categoriesRouter = express.Router();
 const db = require('../database/db.js');
 
-goodsCategoriesRouter.use(bodyParser.json());
+categoriesRouter.use(bodyParser.json());
 
 
-goodsCategoriesRouter.route('/')
+categoriesRouter.route('/')
     .all((req, res, next) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
@@ -15,9 +15,8 @@ goodsCategoriesRouter.route('/')
     })
     .get((req, res, next) => {
 
-        db.getAllGoodsCategories()
+        db.getAllCategories()
             .then(rows => {
-                console.log(JSON.stringify(rows));
                 res.end(JSON.stringify(rows));
             })
             .catch(err => {
@@ -31,19 +30,38 @@ goodsCategoriesRouter.route('/')
     })
     .put((req, res, next) => {
         res.statusCode = 403;
-        res.end('PUT operation is not supported on /goodsCategories');
+        res.end('PUT operation is not supported on /Categories');
     })
     .delete((req, res, next) => {
-        res.end('Deleting all the goodsCategories');
+        res.end('Deleting all the Categories');
     });
 
-goodsCategoriesRouter.route('/:id')
+
+categoriesRouter.route('/:id')
+    .all((req, res, next) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        next();
+    })
     .get((req, res, next) => {
-        res.end(`Will send detailes of the good: ${req.params.id}`);
+
+        if (req.params.id === 'existing') { // special :id
+            db.getExistingCategories()
+                .then(rows => {
+                    res.end(JSON.stringify(rows));
+                })
+                .catch(err => {
+                    next(err);
+                });
+        } else {
+            res.end(`Will send detailes of the good: ${req.params.id}`);
+        }
+
     })
     .post((req, res, next) => {
         res.statusCode = 403;
-        res.end(`POST operation is not supported on /goodsCategories/${req.params.id}`);
+        res.end(`POST operation is not supported on /Categories/${req.params.id}`);
     })
     .put((req, res, next) => {
         res.end(`Updating the good: ${req.params.id}, will update the good: ${req.body.name} with details: ${req.body.description}`);
@@ -53,4 +71,4 @@ goodsCategoriesRouter.route('/:id')
     });
 
 
-module.exports = goodsCategoriesRouter;
+module.exports = categoriesRouter;

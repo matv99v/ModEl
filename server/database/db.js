@@ -11,11 +11,15 @@ const connection = mysql.createConnection({
 const db = Bluebird.promisifyAll(connection);
 
 module.exports = {
-    getAllGoodsCategories() {
-        return db.queryAsync('SELECT * FROM goods.category')
+    getAllCategories() {
+        return db.queryAsync('SELECT * FROM goods.category');
+    },
+
+    getExistingCategories() {
+        return db.queryAsync('SELECT * FROM category where idcategory in (select distinct idcategory from products)');
     },
 
     getAllGoods() {
-        return db.queryAsync('SELECT * FROM goods.products')
+        return db.queryAsync('SELECT * FROM goods.products');
     }
 };

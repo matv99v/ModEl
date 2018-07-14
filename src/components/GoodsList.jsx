@@ -47,6 +47,9 @@ class GoodsList extends React.Component {
                             // if no filterId then no filtering
                             return !this.props.filterId || good.ID == this.props.filterId;
                         })
+                        .filter(good => {
+                            return good.idcategory === this.props.activeCategoryId
+                        })
                         .map((good, i) => {
                             const url = `/catalog/${good.ID}`;
                             return (
@@ -84,7 +87,8 @@ class GoodsList extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-    goods: state.goods
+    goods: state.goods,
+    activeCategoryId: state.activeCategoryId
 });
 
 export default connect(mapStateToProps)(GoodsList);

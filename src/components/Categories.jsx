@@ -1,19 +1,26 @@
 import React from 'react';
 import { Nav, NavItem } from 'react-bootstrap';
-import { fetchGoodsCategoriesAsync } from 'AliasReduxActions/goods-categories-actions';
+import { fetchExistingCategoriesAsync } from 'AliasReduxActions/categories-actions';
 import { connect } from 'react-redux';
+import { setActiveCategoryId } from 'AliasReduxActions/active-category-id-actions';
 
 
 
 
-class GoodsCategories extends React.Component {
+
+class Categories extends React.Component {
     constructor(props) {
         super(props);
         this.state = {activeTab: 1};
     }
 
     componentWillMount() {
-        this.props.dispatch(fetchGoodsCategoriesAsync());
+        this.props.dispatch(fetchExistingCategoriesAsync());
+    }
+
+    componentDidUpdate() {
+        const activeCat = this.props.categories[this.state.activeTab - 1];
+        this.props.dispatch(setActiveCategoryId(activeCat.idCategory));
     }
 
     render() {
@@ -40,7 +47,8 @@ class GoodsCategories extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-    categories: state.categories
+    categories: state.categories,
+    activeCategoryId: state.activeCategoryId
 });
 
-export default connect(mapStateToProps)(GoodsCategories);
+export default connect(mapStateToProps)(Categories);
