@@ -6,7 +6,11 @@
 
 .dev-label {
     font-size: 10px;
-    color: darkred;
+    color: #e200ae;
+    background-color: #aefdd5;
+    display: inline-block;
+    padding: 0 5px;
+    border-radius: 5px;
 }
 
 // override bootstrap styles here

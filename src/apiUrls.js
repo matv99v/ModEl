@@ -1,6 +1,4 @@
-import config from './config';
-
-console.log(config.baseUrl);
+import config from 'AliasSrc/config';
 
 export default {
     existingCategories: `http://${config.baseUrl}/categories/existing`,

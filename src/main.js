@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import store from './redux/store';
 import { Provider } from 'react-redux';
+import { isProduction } from 'AliasSrc/utils';
 
-if (process.env.NODE_ENV !== 'production') {
+
+if (!isProduction) {
     console.warn('Looks like we are in development mode!');
 }
 

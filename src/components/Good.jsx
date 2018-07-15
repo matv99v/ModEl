@@ -6,6 +6,8 @@ import { fetchGoodsActionAsync } from 'AliasReduxActions/goods-actions';
 import { addToCartAction } from 'AliasReduxActions/cart-actions';
 
 import { Image, Grid, Row, Col, Button } from 'react-bootstrap';
+import { isProduction } from 'AliasSrc/utils';
+
 import './GoodsList.scss';
 
 
@@ -13,25 +15,6 @@ import './GoodsList.scss';
 
 
 class GoodsList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            good: props.good
-        };
-    }
-
-    componentWillMount() {
-        // this.props.dispatch(fetchGoodsActionAsync());
-        // console.log(this.props);
-
-        // console.log(good);
-
-        if (!this.state.good) {
-            const good = this.props.goods.find(good => good.idproduct === +this.props.match.params.id)
-            this.setState({ good });
-        }
-    }
-
    handleButtonClick(e, goodId) {
        e.preventDefault();
        const payload = {
@@ -43,6 +26,14 @@ class GoodsList extends React.Component {
 
     render() {
 
+        // use passed categoryId or use it from URL
+        const catId = this.props.id || +this.props.match.params.id;
+
+        const good = this.props.goods.find(good => {
+            return good.idproduct == catId;
+        });
+
+
         return (
             <Grid fluid>
                 <Row>
@@ -50,13 +41,14 @@ class GoodsList extends React.Component {
                         <Image src={'https://scm.ncsu.edu/as/scm/i/channels/articles/scm/production-types-of-goods.gif'} thumbnail />
                     </Col>
                     <Col xs={6} sm={6} md={7}>
-                        <h5 className="list-group-item-heading">{this.state.good.product_name}</h5>
-                        <p className="list-group-item-text">{this.state.good.DESCRIPTION}</p>
+                        <h5 className="list-group-item-heading">{good.product_name}</h5>
+                        <p className="list-group-item-text">{good.DESCRIPTION}</p>
+                        <p className={isProduction ? 'hidden' : 'dev-label'}>catId:{good.idcategory}, goodId:{good.idproduct}</p>
                     </Col>
                     <Col xs={3} sm={3} md={2}>
                         <div className="Good__price">
-                            <h5 className="list-group-item-heading">{this.state.good.Declare_price} грн</h5>
-                            <Button onClick={(e) => this.handleButtonClick(e, this.state.good.idproduct)}>В корзину</Button>
+                            <h5 className="list-group-item-heading">{good.Declare_price} грн</h5>
+                            <Button onClick={(e) => this.handleButtonClick(e, good.idproduct)}>В корзину</Button>
                         </div>
                     </Col>
                 </Row>

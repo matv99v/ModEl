@@ -21,7 +21,9 @@ class GoodsList extends React.Component {
     }
 
     componentWillMount() {
-        this.props.dispatch(fetchGoodsActionAsync());
+        if (!this.props.goods.length) {
+            this.props.dispatch(fetchGoodsActionAsync());
+        }
     }
 
     render() {
@@ -46,7 +48,7 @@ class GoodsList extends React.Component {
                                     className="list-group-item"
                                     key={i}
                                 >
-                                    <Good good={good}/>
+                                    <Good id={good.idproduct}/>
                                 </Link>
                             );
                         })

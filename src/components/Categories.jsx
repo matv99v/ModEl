@@ -3,6 +3,7 @@ import { Nav, NavItem } from 'react-bootstrap';
 import { fetchExistingCategoriesAsync } from 'AliasReduxActions/categories-actions';
 import { connect } from 'react-redux';
 import { setActiveCategoryId } from 'AliasReduxActions/active-category-id-actions';
+import { isProduction } from 'AliasSrc/utils';
 
 
 
@@ -35,7 +36,13 @@ class Categories extends React.Component {
                 {
                     this.props.categories.map((cat, i) => (
                         <NavItem eventKey={i + 1} key={i}>
-                            {cat.Category_Name}
+                            <span className={isProduction ? 'hidden' : 'dev-label'}>
+                                catId:{cat.idCategory}
+                            </span>
+
+                            <span>
+                                {cat.Category_Name}
+                            </span>
                         </NavItem>
                     ))
                 }
