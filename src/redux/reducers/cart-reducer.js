@@ -12,6 +12,7 @@ const cartReducer = (state={}, action) => {
             delete newState[action.payload];
             break
         case 'UPDATE_GOOD_QUANTITY':
+            debugger;
             if (action.payload.isReplace) {
                 newState[action.payload.goodId] = action.payload.amount;
             } else {
