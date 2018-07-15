@@ -1,14 +1,14 @@
 // import 'regenerator-runtime/runtime';
 import { showSpinnerAction, hideSpinnerAction } from 'AliasReduxActions/spinner-actions';
 import { setActiveCategoryId } from 'AliasReduxActions/active-category-id-actions';
-
+import apiUrls from 'AliasSrc/apiUrls';
 
 
 export function fetchExistingCategoriesAsync() {
     return (dispatch) => {
         dispatch(showSpinnerAction());
 
-        fetch('http://localhost:3000/categories/existing')
+        fetch(apiUrls.existingCategories)
             .then(response => {
                 return response.json();
             })

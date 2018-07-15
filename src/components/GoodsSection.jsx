@@ -12,10 +12,10 @@ export default class GoodsSection extends React.Component {
             <Grid fluid>
 
                 <Row>
-                    <Col xs={3} sm={3} md={3}>
+                    <Col xs={12} sm={3} md={3}>
                         <Categories />
                     </Col>
-                    <Col xs={9} sm={9} md={9}>
+                    <Col xs={12} sm={9} md={9}>
                         <GoodsList filterId={this.props.match.params.id} />
                     </Col>
                 </Row>

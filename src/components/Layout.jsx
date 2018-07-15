@@ -4,6 +4,7 @@ import HomePage from './HomePage.jsx';
 import ContactPage from './ContactPage.jsx';
 import Navigation from './Navigation.jsx';
 import Cart from './Cart.jsx';
+import Good from './Good.jsx';
 import { hot } from 'react-hot-loader'
 
 
@@ -25,7 +26,7 @@ class Layout extends React.Component {
                     <Row>
                         <Route exact path='/' component={HomePage} />
                         <Route exact path='/catalog' component={GoodsSection} />
-                        <Route exact path='/catalog/:id' component={GoodsSection} />
+                        <Route exact path='/catalog/:id' component={Good} />
                         <Route exact path='/contacts' component={ContactPage} />
                         <Route exact path='/cart' component={Cart} />
                     </Row>

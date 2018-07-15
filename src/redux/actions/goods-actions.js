@@ -1,10 +1,12 @@
 import { showSpinnerAction, hideSpinnerAction } from 'AliasReduxActions/spinner-actions';
+import apiUrls from 'AliasSrc/apiUrls';
+
 
 export function fetchGoodsActionAsync() {
     return (dispatch) => {
         dispatch(showSpinnerAction());
 
-        fetch('http://localhost:3000/goods')
+        fetch(apiUrls.allGoods)
             .then(response => {
                 return response.json();
             })
