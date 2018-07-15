@@ -6,7 +6,7 @@ import { fetchGoodsActionAsync } from 'AliasReduxActions/goods-actions';
 import { addToCartAction } from 'AliasReduxActions/cart-actions';
 
 import { Image, Grid, Row, Col, Button } from 'react-bootstrap';
-import { isProduction } from 'AliasSrc/utils';
+import utils from 'AliasSrc/utils';
 
 import './GoodsList.scss';
 
@@ -43,7 +43,7 @@ class GoodsList extends React.Component {
                     <Col xs={6} sm={6} md={7}>
                         <h5 className="list-group-item-heading">{good.product_name}</h5>
                         <p className="list-group-item-text">{good.DESCRIPTION}</p>
-                        <p className={isProduction ? 'hidden' : 'dev-label'}>catId:{good.idcategory}, goodId:{good.idproduct}</p>
+                        <p className={utils.isProduction ? 'hidden' : 'dev-label'}>catId:{good.idcategory}, goodId:{good.idproduct}</p>
                     </Col>
                     <Col xs={3} sm={3} md={2}>
                         <div className="Good__price">

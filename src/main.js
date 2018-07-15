@@ -2,10 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import store from './redux/store';
 import { Provider } from 'react-redux';
-import { isProduction } from 'AliasSrc/utils';
+import utils from 'AliasSrc/utils';
 
-
-if (!isProduction) {
+if (!utils.isProduction) {
     console.warn('Looks like we are in development mode!');
 }
 
