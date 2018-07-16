@@ -7,7 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node_modules/.bin/webpack-dev-server --inline --hot --history-api-fallback --host localhost --port 8001 --progress --colors --debug --output-pathinfo --open --config webpack.dev.js",
     "build": "node_modules/.bin/webpack --progress --config webpack.prod.js",
-    "server": "node server.js",
     "create-element": "ft"
   },
   "dependencies": {
