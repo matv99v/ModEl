@@ -18,7 +18,13 @@ goodsRouter.route('/')
     .get((req, res, next) => {
 
         db.getAllGoods()
-            .then(rows => {
+            .then(rows => { // TODO: get send photos to response
+                const productIds = rows.reduce((row, acc) => {
+                    console.log(row.idproduct);
+                }, []);
+
+                // console.log(rows[0].idproduct);
+
                 res.end(JSON.stringify(rows));
             });
 
