@@ -19,9 +19,9 @@ goodsRouter.route('/')
 
         db.getAllGoods()
             .then(rows => { // TODO: get send photos to response
-                const productIds = rows.reduce((row, acc) => {
-                    console.log(row.idproduct);
-                }, []);
+                // const productIds = rows.reduce((row, acc) => {
+                //     console.log(row.idproduct);
+                // }, []);
 
                 // console.log(rows[0].idproduct);
 
