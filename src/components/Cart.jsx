@@ -42,8 +42,8 @@ class Cart extends React.Component {
         const cartKeys = Object.keys(cart);
 
         const total = cartKeys.reduce((acc, key) => {
-            const good = goods.find(good => good.idproduct === +key);
-            return cart[key] * good.Declare_price + acc;
+            const good = goods.find(good => good.idProduct === +key);
+            return cart[key] * good.declarePrice + acc;
         }, 0);
 
         return (
@@ -52,19 +52,19 @@ class Cart extends React.Component {
                     Object.keys(this.props.cart)
                         .map(goodId => {
                             const goodObj = this.props.goods.find(good => {
-                                return good.idproduct == goodId;
+                                return good.idProduct == goodId;
                             });
                             return goodObj;
                         })
                         .map((good, i) => {
-                            const url = `/catalog/${good.idproduct}`;
+                            const url = `/catalog/${good.idProduct}`;
                             return (
                                 <Link to={url} className="list-group-item" key={i}>
 
                                     <div className='Cart__good'>
 
                                         <div className='Cart__good_remove_cross'>
-                                            <span className="glyphicon glyphicon-remove" onClick={(e) => this.handleRemoveItem(e, good.idproduct)}></span>
+                                            <span className="glyphicon glyphicon-remove" onClick={(e) => this.handleRemoveItem(e, good.idProduct)}></span>
                                         </div>
 
                                         <div className='Cart__good_img_cnt'>
@@ -72,21 +72,21 @@ class Cart extends React.Component {
                                         </div>
 
                                         <div className='Cart__good_desc'>
-                                            <h5 className="list-group-item-heading">{good.product_name}</h5>
-                                            <h5 className="list-group-item-heading">{good.Declare_price} грн</h5>
+                                            <h5 className="list-group-item-heading">{good.productName}</h5>
+                                            <h5 className="list-group-item-heading">{good.declarePrice} грн</h5>
                                         </div>
 
                                         <div className="Cart_good_amount">
                                             <GoodAmountInput
                                                 amountChangeCb={this.handleAmountChange}
                                                 good={good}
-                                                defValue={this.props.cart[good.idproduct]}
+                                                defValue={this.props.cart[good.idProduct]}
                                             />
                                         </div>
 
                                         <div className="Cart_good_sum">
                                             <h5 className='list-group-item-heading'>
-                                                {good.Declare_price * this.props.cart[good.idproduct]}
+                                                {good.declarePrice * this.props.cart[good.idProduct]}
                                             </h5>
 
                                             <h5 className='list-group-item-heading'>

@@ -14,13 +14,13 @@ export default class GoodAmountInput extends React.Component {
         const isNumbersOnly = /^\d+$/.test(this.inputEl.current.value);
         const isLengthOk = this.inputEl.current.value.length < 4;
         if (isNumbersOnly && isLengthOk) {
-            this.props.amountChangeCb(this.props.good.idproduct, +this.inputEl.current.value, true);
+            this.props.amountChangeCb(this.props.good.idProduct, +this.inputEl.current.value, true);
         }
     };
 
     changeHandler = (e, amount) => {
         e.preventDefault();
-        this.props.amountChangeCb(this.props.good.idproduct, amount);
+        this.props.amountChangeCb(this.props.good.idProduct, amount);
     };
 
     render() {

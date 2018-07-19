@@ -41,7 +41,7 @@ class Categories extends React.Component {
                             </span>
 
                             <span>
-                                {cat.Category_Name}
+                                {cat.CategoryName}
                             </span>
                         </NavItem>
                     ))

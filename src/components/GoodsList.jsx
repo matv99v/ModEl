@@ -34,25 +34,13 @@ class GoodsList extends React.Component {
 
                 <Spinner size='50' />
 
-                {
-                    this.props.goods
-                        .filter(good => {
-                            return good.idcategory === this.props.activeCategoryId
-                        })
-                        .map((good, i) => {
-                            const url = `/catalog/${good.idproduct}`;
-
-                            return (
-                                <Link
-                                    to={url}
-                                    className="list-group-item"
-                                    key={i}
-                                >
-                                    <Good id={good.idproduct}/>
-                                </Link>
-                            );
-                        })
-                }
+                <section>
+                    {
+                        this.props.goods
+                            .filter(good => good.idCategory === this.props.activeCategoryId)
+                            .map((good, i) => (<Good good={good} key={i}/>))
+                    }
+                </section>
 
             </div>
 

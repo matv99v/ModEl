@@ -1,0 +1,13 @@
+@import "~AliasSrc/variables";
+
+
+.Good__cnt {
+    &:hover {
+      outline: 1px solid red;
+      cursor: pointer;
+    }
+
+    &.expandedView {
+      background-color: yellow;
+    }
+}
