@@ -45,7 +45,6 @@ class GoodExpandedView extends React.Component {
             <div
               className='GoodExpandedView__cnt'
               onClick={(e) => this.handleGoodClick(e, this.props.good.idProduct)}
-              style={{display: this.props.isLoading ? 'none' : 'flex'}}
             >
 
               <span className="GoodExpandedView__fold glyphicon glyphicon-resize-vertical"></span>
@@ -96,7 +95,6 @@ class GoodExpandedView extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-  isLoading: state.isLoading
 });
 
 export default connect(mapStateToProps)(GoodExpandedView);
