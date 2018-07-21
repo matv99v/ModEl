@@ -11,6 +11,7 @@ import apiUrls from 'AliasSrc/apiUrls';
 import DevInfo from './DevInfo.jsx';
 
 import { unsetActiveGoodIdAction } from 'AliasReduxActions/active-good-id-actions';
+import { fetchGoodDetailsActionAsync } from 'AliasReduxActions/goods-actions';
 
 import { connect } from 'react-redux';
 
@@ -31,12 +32,21 @@ class GoodExpandedView extends React.Component {
       this.props.dispatch(unsetActiveGoodIdAction());
     }
 
+    componentWillMount() {
+      console.log('fetch');
+      this.props.dispatch(fetchGoodDetailsActionAsync(this.props.good.idProduct));
+    }
+
     render() {
 
       const isCartMode = this.props.mode === 'cart';
 
         return (
-            <div className='GoodExpandedView__cnt' onClick={(e) => this.handleGoodClick(e, this.props.good.idProduct)}>
+            <div
+              className='GoodExpandedView__cnt'
+              onClick={(e) => this.handleGoodClick(e, this.props.good.idProduct)}
+              style={{display: this.props.isLoading ? 'none' : 'flex'}}
+            >
 
               <span className="GoodExpandedView__fold glyphicon glyphicon-resize-vertical"></span>
 
@@ -62,9 +72,7 @@ class GoodExpandedView extends React.Component {
               <div className="GoodExpandedView__descriptionCnt">
                 <GoodName value={this.props.good.productName} />
 
-                <section>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </section>
+                <section  dangerouslySetInnerHTML={{__html: this.props.good.textDescrip}}></section>
 
                 <DevInfo>
                   catId:{this.props.good.idCategory}, goodId:{this.props.good.idProduct}
@@ -88,6 +96,7 @@ class GoodExpandedView extends React.Component {
 
 
 const mapStateToProps = (state) => ({
+  isLoading: state.isLoading
 });
 
 export default connect(mapStateToProps)(GoodExpandedView);

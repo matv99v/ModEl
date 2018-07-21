@@ -6,5 +6,8 @@ export default {
     goodPhoto(goodId, imageIndex) {
       return `http://${config.baseUrl}/images/goods/pht_${goodId}_${imageIndex}.jpg`;
     },
-    defaultGoodPhoto: `http://${config.baseUrl}/images/goods/good_default_image.png`
+    defaultGoodPhoto: `http://${config.baseUrl}/images/goods/good_default_image.png`,
+    goodDetails(id) {
+      return `http://${config.baseUrl}/goods/details/${id}`;
+    }
 }

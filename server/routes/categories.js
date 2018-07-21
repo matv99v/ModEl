@@ -10,7 +10,6 @@ categoriesRouter.route('/')
     .all((req, res, next) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.setHeader('Access-Control-Allow-Origin', '*');
         next();
     })
     .get((req, res, next) => {
@@ -41,7 +40,6 @@ categoriesRouter.route('/:id')
     .all((req, res, next) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
-        res.setHeader('Access-Control-Allow-Origin', '*');
         next();
     })
     .get((req, res, next) => {

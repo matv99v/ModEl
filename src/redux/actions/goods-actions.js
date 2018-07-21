@@ -2,7 +2,7 @@ import { showSpinnerAction, hideSpinnerAction } from 'AliasReduxActions/spinner-
 import apiUrls from 'AliasSrc/apiUrls';
 
 
-export function fetchGoodsActionAsync() {
+export function saveGoodsActionAsync() {
     return (dispatch) => {
         dispatch(showSpinnerAction());
 
@@ -11,7 +11,7 @@ export function fetchGoodsActionAsync() {
                 return response.json();
             })
             .then(data => {
-                dispatch(fetchGoodsAction(data));
+                dispatch(saveGoodsAction(data));
             })
             .catch(err => console.error(err))
             .finally(() => {
@@ -20,9 +20,41 @@ export function fetchGoodsActionAsync() {
     };
 };
 
-export function fetchGoodsAction(goods) {
+export function saveGoodsAction(goods) {
     return {
-        type: 'FETCH_GOODS',
+        type: 'SAVE_GOODS',
         payload: goods
+    };
+};
+
+export function fetchGoodDetailsActionAsync(id) {
+  return (dispatch) => {
+    dispatch(showSpinnerAction());
+
+    fetch(apiUrls.goodDetails(id))
+      .then(response => {
+          return response.json();
+      })
+      .then(data => {
+          dispatch(saveGoodDetailsAction(id, data));
+      })
+      .catch(err => console.error(err))
+      .finally(() => {
+          dispatch(hideSpinnerAction());
+      });
+
+
+  };
+}
+
+
+export function saveGoodDetailsAction(id, details) {
+    const data = {
+      ...details[0],
+      idProduct: id
+    };
+    return {
+        type: 'SAVE_GOOD_DETAILS',
+        payload: data
     };
 };

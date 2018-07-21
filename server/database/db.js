@@ -23,7 +23,11 @@ module.exports = {
         return db.queryAsync('SELECT * FROM goods.products');
     },
 
+    // TODO: make request by id
     getGoodById(id) {
-        return db.queryAsync('SELECT * FROM goods.products');
+    },
+
+    getGoodDetailsById(id) {
+        return db.queryAsync(`select textDescrip from goods.descrip where idProduct=${id}`);
     }
 };

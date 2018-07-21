@@ -4,7 +4,7 @@ import GoodsList from './GoodsList.jsx';
 
 import { Grid, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { fetchGoodsActionAsync } from 'AliasReduxActions/goods-actions';
+import { saveGoodsActionAsync } from 'AliasReduxActions/goods-actions';
 
 
 
@@ -14,7 +14,7 @@ class GoodsSection extends React.Component {
 
   componentWillMount() {
       if (!this.props.goods.length) {
-          this.props.dispatch(fetchGoodsActionAsync());
+          this.props.dispatch(saveGoodsActionAsync());
       }
   }
 

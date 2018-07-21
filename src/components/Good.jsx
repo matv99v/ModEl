@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Link, BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { fetchGoodsActionAsync } from 'AliasReduxActions/goods-actions';
+import { saveGoodsActionAsync } from 'AliasReduxActions/goods-actions';
 import { addToCartAction } from 'AliasReduxActions/cart-actions';
 import { setActiveGoodIdAction } from 'AliasReduxActions/active-good-id-actions';
 
