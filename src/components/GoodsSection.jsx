@@ -3,11 +3,27 @@ import Categories from './Categories.jsx';
 import GoodsList from './GoodsList.jsx';
 
 import { Grid, Row, Col } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { fetchGoodsActionAsync } from 'AliasReduxActions/goods-actions';
 
 
 
-export default class GoodsSection extends React.Component {
+
+
+class GoodsSection extends React.Component {
+
+  componentWillMount() {
+      if (!this.props.goods.length) {
+          this.props.dispatch(fetchGoodsActionAsync());
+      }
+  }
+
     render() {
+
+      const activeCategoryGoods = this.props.goods
+        .filter(good => good.idCategory === this.props.activeCategoryId);
+
+
         return (
             <Grid fluid>
 
@@ -16,7 +32,7 @@ export default class GoodsSection extends React.Component {
                         <Categories />
                     </Col>
                     <Col xs={12} sm={9} md={9}>
-                        <GoodsList filterId={this.props.match.params.id} />
+                        <GoodsList goods={activeCategoryGoods} mode="catalog"/>
                     </Col>
                 </Row>
 
@@ -24,3 +40,11 @@ export default class GoodsSection extends React.Component {
         );
     }
 }
+
+
+const mapStateToProps = (state) => ({
+    goods: state.goods,
+    activeCategoryId: state.activeCategoryId
+});
+
+export default connect(mapStateToProps)(GoodsSection);

@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const goodsRouter = express.Router();
-const db = require('../database/db.js');
+const db = require('../database/db');
+const utils = require('../utils/utils');
 
 goodsRouter.use(bodyParser.json());
 
@@ -18,16 +19,22 @@ goodsRouter.route('/')
     .get((req, res, next) => {
 
         db.getAllGoods()
-            .then(rows => { // TODO: get send photos to response
-                // const productIds = rows.reduce((row, acc) => {
-                //     console.log(row.idproduct);
-                // }, []);
+            .then(rows => { // TODO: chain promises
 
-                // console.log(rows[0].idproduct);
+                const existingGoodsIds = rows.reduce((acc, row) => [...acc, row.idProduct], []);
 
-                res.end(JSON.stringify(rows));
+                utils.getAmountOfPhotos(existingGoodsIds)
+                    .then(photosAmount => {
+                        const results = rows.map(row => {
+                            return {
+                                ...row,
+                                photosAmount: photosAmount[row.idProduct]
+                            };
+                        });
+                        res.end(JSON.stringify(results));
+                    });
+
             });
-
 
     })
     .post((req, res, next) => {

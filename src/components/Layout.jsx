@@ -6,6 +6,8 @@ import Navigation from './Navigation.jsx';
 import Cart from './Cart.jsx';
 import Good from './Good.jsx';
 import { hot } from 'react-hot-loader'
+import Spinner from './Spinner.jsx';
+
 
 
 import { Grid, Row } from 'react-bootstrap';
@@ -17,10 +19,14 @@ class Layout extends React.Component {
     render() {
         return (
             <BrowserRouter>
-                <Grid>
+                <Grid fluid>
 
                     <Row>
                         <Navigation />
+                    </Row>
+
+                    <Row>
+                        <Spinner size='50' />
                     </Row>
 
                     <Row>

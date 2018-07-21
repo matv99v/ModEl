@@ -7,12 +7,10 @@ import { addToCartAction } from 'AliasReduxActions/cart-actions';
 import { setActiveGoodIdAction } from 'AliasReduxActions/active-good-id-actions';
 
 import { Image, Grid, Row, Col, Button } from 'react-bootstrap';
-import utils from 'AliasSrc/utils';
 
-import './Good.scss';
-
-
-
+import DevInfo from './DevInfo.jsx';
+import GoodFoldedView from './GoodFoldedView.jsx';
+import GoodExpandedView from './GoodExpandedView.jsx';
 
 
 class Good extends React.Component {
@@ -32,23 +30,16 @@ class Good extends React.Component {
     }
 
     render() {
+      const isActive = this.props.activeGoodId === this.props.good.idProduct;
+
         return (
-            <Grid fluid className={this.props.activeGoodId === this.props.good.idProduct ? "Good__cnt expandedView" : "Good__cnt"} onClick={() => this.handleGoodClick(this.props.good.idProduct)}>
+            <Grid fluid>
                 <Row>
-                    <Col xs={3} sm={3} md={3}>
-                        <Image src={'https://scm.ncsu.edu/as/scm/i/channels/articles/scm/production-types-of-goods.gif'} thumbnail />
-                    </Col>
-                    <Col xs={6} sm={6} md={7}>
-                        <h5 className="list-group-item-heading">{this.props.good.productName}</h5>
-                        <p className="list-group-item-text">{this.props.good.productParams}</p>
-                        <p className={utils.isProduction ? 'hidden' : 'dev-label'}>catId:{this.props.good.iDcategory}, goodId:{this.props.good.idProduct}</p>
-                    </Col>
-                    <Col xs={3} sm={3} md={2}>
-                        <div className="Good__price">
-                            <h5 className="list-group-item-heading">{this.props.good.declarePrice} грн</h5>
-                            <Button onClick={(e) => this.handleButtonClick(e, this.props.good.idProduct)}>В корзину</Button>
-                        </div>
-                    </Col>
+                  {
+                    isActive
+                      ? <GoodExpandedView good={this.props.good} mode={this.props.mode} />
+                      : <GoodFoldedView good={this.props.good} mode={this.props.mode} />
+                  }
                 </Row>
             </Grid>
         );

@@ -7,3 +7,9 @@ export function setActiveGoodIdAction(id) {
         payload: id
     };
 };
+
+export function unsetActiveGoodIdAction() {
+    return {
+        type: 'UNSET_ACTIVE_GOOD'
+    };
+};

@@ -5,6 +5,12 @@ const activeGoodIdReducer = (state=null, action) => {
             break;
     }
 
+    switch (action.type) {
+        case 'UNSET_ACTIVE_GOOD':
+            state = null;
+            break;
+    }
+
     return state;
 };
 

@@ -6,9 +6,9 @@
     border-color: $spinner-border-color;
     border-top-color: $spinner-color;
     border-radius: 50%;
-    animation: spin 2s linear infinite;
     z-index: 9999;
     margin: auto;
+    animation: spin 2s linear infinite;
 }
 
 @keyframes spin {

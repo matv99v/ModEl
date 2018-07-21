@@ -21,5 +21,9 @@ module.exports = {
 
     getAllGoods() {
         return db.queryAsync('SELECT * FROM goods.products');
+    },
+
+    getGoodById(id) {
+        return db.queryAsync('SELECT * FROM goods.products');
     }
 };

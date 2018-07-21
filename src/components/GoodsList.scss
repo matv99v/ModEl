@@ -2,13 +2,8 @@
 
 
 .GoodsList__container {
-    .Good__price {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    img {
-        width: 140px;
-    }
+  .list-group-item:hover {
+    cursor: pointer;
+    background-color: #eee;
+  }
 }

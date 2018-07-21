@@ -1,0 +1,45 @@
+@import "~AliasSrc/variables";
+
+
+.GoodFoldedView__cnt {
+
+  display: flex;
+
+  .GoodFoldedView__removeCross {
+    font-size: 20px;
+    padding-right: 5px;
+  }
+
+  .GoodFoldedView__imageCnt {
+    flex: 0 0 120px;
+  }
+
+  .GoodFoldedView__priceCnt__big {
+    margin-left: auto;
+  }
+
+  .GoodFoldedView__priceCnt__small {
+    display: none;
+  }
+
+  @media only screen and (max-width: 450px) {
+    .GoodFoldedView__priceCnt__big {
+      display: none;
+    }
+    .GoodFoldedView__priceCnt__small {
+      display: flex;
+    }
+  }
+
+  .GoodFoldedView__goodName {
+    padding: 0 10px;
+  }
+
+  .GoodFoldedView__sumCnt__big {
+    font-size: 2.5vh;
+    line-height: 3.5vh;
+    padding-left: 10px;
+  }
+
+
+}
