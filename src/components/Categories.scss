@@ -1,0 +1,34 @@
+@import "~AliasSrc/variables";
+
+
+.Categories__cnt, ul {
+  list-style-type: none;
+
+
+
+  .Categories__singleItem:hover, .Categories__singleSubitem:hover {
+    background-color: #eee;
+    cursor: pointer;
+  }
+
+  .Categories__singleItem.active, .Categories__singleSubitem.active {
+    background-color: #2196f3;
+    color: white;
+  }
+
+  .Categories__singleItem, .Categories__singleSubitem {
+    color: #2196f3;
+    border-radius: 3px;
+  }
+
+  .Categories__singleSubitem {
+    padding: 5px 5px;
+    font-size: smaller;
+  }
+
+  .Categories__singleItem {
+    padding: 7px 12px;
+  }
+
+
+}

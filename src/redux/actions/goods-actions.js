@@ -2,7 +2,7 @@ import { showSpinnerAction, hideSpinnerAction } from 'AliasReduxActions/spinner-
 import apiUrls from 'AliasSrc/apiUrls';
 
 
-export function saveGoodsActionAsync() {
+export function fetchGoodsActionAsync() {
     return (dispatch) => {
         dispatch(showSpinnerAction());
 
