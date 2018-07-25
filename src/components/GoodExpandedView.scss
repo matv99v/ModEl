@@ -2,30 +2,25 @@
 
 
 .GoodExpandedView__cnt {
-  display: flex;
 
-  .GoodExpandedView__fold {
-    position: absolute;
-    right: 5px;
-    top: 10px;
-    font-size: 25px;
+  .GoodExpandedView__head {
+    display: flex;
+
+    .GoodExpandedView__carouselBox {
+      flex: 1 0 50%;
+    }
+
+    .GoodExpandedView__maininfo {
+      flex: 1 0 50%;
+    }
   }
 
-  .GoodExpandedView__carouselCnt {
-    flex: 1 1 50%;
-  }
-
-  .GoodExpandedView__descriptionCnt {
-    flex: 1 1 50%;
-    padding-left: 15px;
-
-  }
 
 
 }
 
 @media only screen and (max-width: 600px) {
   .GoodExpandedView__cnt {
-    display: block;
+
   }
 }

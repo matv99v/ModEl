@@ -46,7 +46,7 @@ class GoodPrice extends React.Component {
     return (
         <div className={stylesClass}>
             <div>{this.props.value} грн</div>
-            {false && <Button bsSize="sm" onClick={(e) => {this.handleButtonClick(e)}}>В корзину</Button>}
+            <Button bsSize="sm" onClick={(e) => {this.handleButtonClick(e)}}>В корзину</Button>
         </div>
     );
   }
