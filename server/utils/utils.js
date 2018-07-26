@@ -9,7 +9,7 @@ const fs = Bluebird.promisifyAll(require("fs"));
 module.exports = {
 
     getFilesByGoodId(goodId) {
-        const pattern = new RegExp(`pht_${goodId}`);
+        const pattern = new RegExp(`pht_${goodId}_`);
         return fs.readdirAsync('./public/images/goods')
             .then(files => {
                 const mathcedFiles = files.filter(file => file.match(pattern));
