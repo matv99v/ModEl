@@ -58,11 +58,16 @@ class GoodFoldedView extends React.Component {
                   />
               </div>
 
+
           </div>
 
           <div className="GoodFoldedView__goodName">
 
               <GoodName value={this.props.good.productName}/>
+              <p dangerouslySetInnerHTML={{__html: this.props.good.detailName}}></p>
+
+
+
               <DevInfo>
                 catId:{this.props.good.idCategory}, goodId:{this.props.good.idProduct}
               </DevInfo>

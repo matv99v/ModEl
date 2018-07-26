@@ -2,30 +2,22 @@
 
 
 .GoodExpandedView__cnt {
-  display: flex;
 
-  .GoodExpandedView__fold {
-    position: absolute;
-    right: 5px;
-    top: 10px;
-    font-size: 25px;
+  .GoodExpandedView__head {
+    display: flex;
+    justify-content: space-between;
+    // align-items: center;
+    padding: 15px 10px 15px 10px;
+
+    & > :last-child {
+      padding-left: 20px;
+    }
   }
-
-  .GoodExpandedView__carouselCnt {
-    flex: 1 1 50%;
-  }
-
-  .GoodExpandedView__descriptionCnt {
-    flex: 1 1 50%;
-    padding-left: 15px;
-
-  }
-
 
 }
 
 @media only screen and (max-width: 600px) {
   .GoodExpandedView__cnt {
-    display: block;
+
   }
 }

@@ -6,6 +6,8 @@ import { Image, Grid, Row, Col, Button } from 'react-bootstrap';
 
 import GoodName from './common/GoodName.jsx';
 import GoodPrice from './common/GoodPrice.jsx';
+import FoldableText from './common/FoldableText.jsx';
+import ControlledCarousel from './common/ControlledCarousel.jsx';
 
 import apiUrls from 'AliasSrc/apiUrls';
 import DevInfo from './DevInfo.jsx';
@@ -28,12 +30,11 @@ class GoodExpandedView extends React.Component {
         this.state = {};
     }
 
-    handleGoodClick() {
+    handleGoodClick() { // temporary not working due to return false in onClick
       this.props.dispatch(unsetActiveGoodIdAction());
     }
 
     componentWillMount() {
-      console.log('fetch');
       this.props.dispatch(fetchGoodDetailsActionAsync(this.props.good.idProduct));
     }
 
@@ -42,52 +43,48 @@ class GoodExpandedView extends React.Component {
       const isCartMode = this.props.mode === 'cart';
 
         return (
-            <div
-              className='GoodExpandedView__cnt'
-              onClick={(e) => this.handleGoodClick(e, this.props.good.idProduct)}
+            <div className='GoodExpandedView__cnt'
+              onClick={(e) => false && this.handleGoodClick(e, this.props.good.idProduct)}
             >
 
-              <span className="GoodExpandedView__fold glyphicon glyphicon-resize-vertical"></span>
 
-              <div className="GoodExpandedView__carouselCnt">
-                <Carousel onClick={e => e.stopPropagation()}>
-                  {
-                    Array
-                      .apply(null, {length: this.props.good.photosAmount || 1}) // if no photo, apply the standart one
-                      .map((el, i) => {
+              <div className="GoodExpandedView__head">
 
-                        const imgSrc = this.props.good.photosAmount ? apiUrls.goodPhoto(this.props.good.idProduct, i+1) : apiUrls.defaultGoodPhoto;
+                <div>
+                  <GoodName value={this.props.good.productName} />
+                  <p dangerouslySetInnerHTML={{__html: this.props.good.detailName}}></p>
+                </div>
 
-                        return (
-                          <Carousel.Item key={i}>
-                            <img alt={this.props.good.productName} src={imgSrc} />
-                          </Carousel.Item>
-                        )
-                      })
-                  }
-                </Carousel>
-              </div>
-
-              <div className="GoodExpandedView__descriptionCnt">
-                <GoodName value={this.props.good.productName} />
-
-                <section  dangerouslySetInnerHTML={{__html: this.props.good.textDescrip}}></section>
-
-                <DevInfo>
-                  catId:{this.props.good.idCategory}, goodId:{this.props.good.idProduct}
-                </DevInfo>
 
 
                 <GoodPrice
                   value={this.props.good.declarePrice}
-                  type="stretched"
+                  type="vertical"
                   goodId={this.props.good.idProduct}
                 />
 
               </div>
 
 
+              <ControlledCarousel good={this.props.good}/>
 
+              <div className="GoodExpandedView__descriptionCnt">
+
+                <FoldableText>
+                  <h5>Технические характеристики</h5>
+                  <div dangerouslySetInnerHTML={{__html: this.props.good.productParams}}></div>
+                </FoldableText>
+
+                <FoldableText>
+                  <h5>Описание</h5>
+                  <div dangerouslySetInnerHTML={{__html: this.props.good.textDescrip}}></div>
+                </FoldableText>
+
+                <DevInfo>
+                  catId:{this.props.good.idCategory}, goodId:{this.props.good.idProduct}
+                </DevInfo>
+
+              </div>
             </div>
         );
     }

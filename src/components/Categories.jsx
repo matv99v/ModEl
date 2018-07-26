@@ -33,8 +33,8 @@ export default class Categories extends React.Component {
         return (
           <Grid fluid>
           <Row>
-          <Col>
-          <ul className="Categories__cnt">
+          <Col className="Categories__cnt">
+          <ul>
               {
                   this.props.categories.map((cat, k) => (
                     <li

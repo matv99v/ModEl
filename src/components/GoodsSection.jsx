@@ -52,6 +52,7 @@ class GoodsSection extends React.Component {
                         <GoodsList
                             goods={goodsList}
                             mode="catalog"
+                            isFoldedView={!this.props.activeGoodId}
                         />
 
                     </Col>

@@ -25,9 +25,11 @@ class Layout extends React.Component {
                         <Navigation />
                     </Row>
 
+                    { false &&
                     <Row>
                         <Spinner size='50' />
                     </Row>
+                    }
 
                     <Row>
                         <Route exact path='/' component={HomePage} />

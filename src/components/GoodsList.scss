@@ -2,7 +2,7 @@
 
 
 .GoodsList__container {
-  .list-group-item:hover {
+  .list-group-item.hoverable:hover {
     cursor: pointer;
     background-color: #eee;
   }

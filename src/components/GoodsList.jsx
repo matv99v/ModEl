@@ -14,7 +14,7 @@ export default class GoodsList extends React.Component {
               {
                   this.props.goods
                       .map((good, i) => (
-                        <ListGroupItem key={i}>
+                        <ListGroupItem key={i} className={this.props.isFoldedView && "hoverable"}>
                           <Good good={good} mode={this.props.mode}/>
                         </ListGroupItem>
                       ))
