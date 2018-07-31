@@ -47,15 +47,12 @@ class GoodExpandedView extends React.Component {
               onClick={(e) => false && this.handleGoodClick(e, this.props.good.idProduct)}
             >
 
-
               <div className="GoodExpandedView__head">
 
                 <div>
                   <GoodName value={this.props.good.productName} />
                   <p dangerouslySetInnerHTML={{__html: this.props.good.detailName}}></p>
                 </div>
-
-
 
                 <GoodPrice
                   value={this.props.good.declarePrice}
@@ -70,15 +67,19 @@ class GoodExpandedView extends React.Component {
 
               <div className="GoodExpandedView__descriptionCnt">
 
-                <FoldableText>
-                  <h5>Технические характеристики</h5>
-                  <div dangerouslySetInnerHTML={{__html: this.props.good.productParams}}></div>
-                </FoldableText>
+                { this.props.good.productParams &&
+                  <FoldableText>
+                    <h5>Технические характеристики</h5>
+                    <div dangerouslySetInnerHTML={{__html: this.props.good.productParams}}></div>
+                  </FoldableText>
+                }
 
-                <FoldableText>
-                  <h5>Описание</h5>
-                  <div dangerouslySetInnerHTML={{__html: this.props.good.textDescrip}}></div>
-                </FoldableText>
+                { this.props.good.textDescrip &&
+                  <FoldableText>
+                    <h5>Описание</h5>
+                    <div dangerouslySetInnerHTML={{__html: this.props.good.textDescrip}}></div>
+                  </FoldableText>
+                }
 
                 <DevInfo>
                   catId:{this.props.good.idCategory}, goodId:{this.props.good.idProduct}
