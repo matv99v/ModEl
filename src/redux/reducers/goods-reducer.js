@@ -1,7 +1,7 @@
 const goodsReducer = (state=[], action) => {
     switch (action.type) {
         case 'SAVE_GOODS':
-            state = [...action.payload];
+            state = [...action.payload].filter(good => good.exist);
             break;
     }
     switch (action.type) {
