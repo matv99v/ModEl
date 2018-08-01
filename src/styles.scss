@@ -1,9 +1,7 @@
-// @import "~bootstrap/scss/bootstrap"; v4
-// @import "~bootstrap/dist/css/bootstrap.css";
-@import "bootstrap-theme/bootstrap-theme.css";
-// @import "~bootstrap/scss/bootstrap-grid";
-// @import "~bootstrap/scss/bootstrap-reboot";
+// override bootstrap styles
+@import "variables_override";
 
 
-
-// override bootstrap styles here
+// import bootstrap
+$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+@import '~bootstrap-sass/assets/stylesheets/bootstrap';

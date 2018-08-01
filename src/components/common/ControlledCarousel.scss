@@ -1,4 +1,4 @@
-@import "~AliasSrc/variables";
+@import "~AliasSrc/variables_override";
 
 
 .ControlledCarousel__cnt {
@@ -7,7 +7,7 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    background-color: white;
+    background-color: $body-bg;
     padding: 5px 10px;
     border-radius: 5px;
     font-weight: bold;

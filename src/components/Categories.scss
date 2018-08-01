@@ -1,4 +1,4 @@
-@import "~AliasSrc/variables";
+@import "~AliasSrc/variables_override";
 
 
 .Categories__cnt {
@@ -9,17 +9,17 @@
 
 
   .Categories__singleItem:hover, .Categories__singleSubitem:hover {
-    background-color: #eee;
+    background-color: $list-group-hover-bg;
     cursor: pointer;
   }
 
   .Categories__singleItem.active, .Categories__singleSubitem.active {
-    background-color: #2196f3;
-    color: white;
+    background-color: $brand-primary;
+    color: $catalog-active-color;
   }
 
   .Categories__singleItem, .Categories__singleSubitem {
-    color: #2196f3;
+    color: $brand-primary;
     border-radius: 3px;
   }
 

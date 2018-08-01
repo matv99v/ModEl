@@ -1,9 +1,9 @@
-@import "~AliasSrc/variables";
+@import "~AliasSrc/variables_override";
 
 
 .GoodsList__container {
   .list-group-item.hoverable:hover {
     cursor: pointer;
-    background-color: #eee;
+    background-color: $list-group-hover-bg;
   }
 }

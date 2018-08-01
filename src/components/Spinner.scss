@@ -1,10 +1,7 @@
-@import "~AliasSrc/variables";
-
-
 .Spinner__cnt {
     border-style: solid;
-    border-color: $spinner-border-color;
-    border-top-color: $spinner-color;
+    border-color: brown;
+    border-top-color: green;
     border-radius: 50%;
     z-index: 9999;
     margin: auto;

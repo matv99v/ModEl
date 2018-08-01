@@ -14,7 +14,7 @@ import Layout from './components/Layout.jsx';
 import './styles.scss';
 
 
-const appEl = document.getElementById('app')
+const appEl = document.getElementById('app');
 
 ReactDOM.render(
     <Provider store={store}>

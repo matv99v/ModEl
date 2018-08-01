@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var goods = require('./routes/goods');
 var categories = require('./routes/categories');
-const cors = require('cors')
+const cors = require('cors');
 
 
 var app = express();
