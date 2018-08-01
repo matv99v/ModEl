@@ -16,7 +16,7 @@ module.exports = {
     },
 
     getExistingCategories() {
-        return db.queryAsync('SELECT * FROM category where idcategory in (select distinct idcategory from products)');
+        return db.queryAsync('SELECT * FROM category where idcategory in (select distinct idcategory from products where exist=1)');
     },
 
     getAllGoods() {
