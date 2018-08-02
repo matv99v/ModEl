@@ -23,7 +23,9 @@ class Navigation extends React.Component {
 
                 <Navbar.Header>
                     <Navbar.Brand>
-                        <Link to='/' >Modern Electronics</Link>
+                        <Link to='/' >
+                            <img style={{height: '30px'}} src="http://localhost:3000/images/brand/brand_logo2.svg"/>
+                        </Link>
                     </Navbar.Brand>
                 </Navbar.Header>
 
