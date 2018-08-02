@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import apiUrls from 'AliasSrc/apiUrls';
 
 
 
@@ -24,7 +25,7 @@ class Navigation extends React.Component {
                 <Navbar.Header>
                     <Navbar.Brand>
                         <Link to='/' >
-                            <img style={{height: '30px'}} src="http://localhost:3000/images/brand/brand_logo2.svg"/>
+                            <img style={{height: '30px'}} src={apiUrls.brandLogo}/>
                         </Link>
                     </Navbar.Brand>
                 </Navbar.Header>

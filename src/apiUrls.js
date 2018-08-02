@@ -9,5 +9,6 @@ export default {
     defaultGoodPhoto: `http://${config.baseUrl}/images/goods/good_default_image.png`,
     goodDetails(id) {
       return `http://${config.baseUrl}/goods/details/${id}`;
-    }
+    },
+    brandLogo: `http://${config.baseUrl}/images/brand/brand_logo2.svg`
 }
