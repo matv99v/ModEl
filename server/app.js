@@ -30,6 +30,12 @@ app.use('/', index);
 app.use('/goods', goods);
 app.use('/categories', categories);
 
+// handle every other route with index.html, which will contain
+// a script tag to your application's JavaScript file(s).
+app.get('*', (request, response) => {
+    response.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

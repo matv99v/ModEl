@@ -1,5 +1,5 @@
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+// const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
     template: './src/index.html',
@@ -13,11 +13,11 @@ module.exports = {
 
     plugins: [
         HtmlWebpackPluginConfig,
-        new CleanWebpackPlugin('./public')
+        // new CleanWebpackPlugin('../public')
     ],
 
     output: {
-        path: path.resolve('public'),
+        path: path.resolve('../server/public'),
         filename: 'bundle.js'
     },
 

@@ -1,4 +1,2 @@
 node_modules
-server/public/images/goods
-server/public/stylesheets
-./public
+public
