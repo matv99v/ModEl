@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import apiUrls from 'AliasSrc/apiUrls';
+import BrandLogo from './common/BrandLogo.jsx';
 
 
 
@@ -25,7 +26,10 @@ class Navigation extends React.Component {
                 <Navbar.Header>
                     <Navbar.Brand>
                         <Link to='/' >
-                            <img style={{height: '30px'}} src={apiUrls.brandLogo}/>
+                          <div style={{display: 'flex'}}>
+                            {true && <img style={{height: '30px'}} src={apiUrls.brandLogo}/>}
+                            <BrandLogo/>
+                          </div>
                         </Link>
                     </Navbar.Brand>
                 </Navbar.Header>
