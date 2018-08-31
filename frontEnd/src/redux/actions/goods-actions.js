@@ -1,5 +1,6 @@
 import { showSpinnerAction, hideSpinnerAction } from 'AliasReduxActions/spinner-actions';
 import apiUrls from 'AliasSrc/apiUrls';
+import { spawnNewError } from 'AliasReduxActions/error-actions';
 
 
 export function fetchGoodsActionAsync() {
@@ -8,12 +9,20 @@ export function fetchGoodsActionAsync() {
 
         fetch(apiUrls.allGoods)
             .then(response => {
-                return response.json();
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw response;
+                }
             })
             .then(data => {
                 dispatch(saveGoodsAction(data));
             })
-            .catch(err => console.error(err))
+            .catch(err => {
+              err.text().then(errorMessage => {
+                  dispatch(spawnNewError(errorMessage));
+              })
+            })
             .finally(() => {
                 dispatch(hideSpinnerAction());
             });
@@ -33,12 +42,20 @@ export function fetchGoodDetailsActionAsync(id) {
 
     fetch(apiUrls.goodDetails(id))
       .then(response => {
-          return response.json();
+          if (response.ok) {
+              return response.json();
+          } else {
+              throw response;
+          }
       })
       .then(data => {
           dispatch(saveGoodDetailsAction(id, data));
       })
-      .catch(err => console.error(err))
+      .catch(err => {
+        err.text().then(errorMessage => {
+            dispatch(spawnNewError(errorMessage));
+        })
+      })
       .finally(() => {
           dispatch(hideSpinnerAction());
       });

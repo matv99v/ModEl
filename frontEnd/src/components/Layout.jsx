@@ -7,6 +7,7 @@ import Cart from './Cart.jsx';
 import Good from './Good.jsx';
 import { hot } from 'react-hot-loader'
 import Spinner from './Spinner.jsx';
+import ErrorWindow from './ErrorWindow.jsx';
 
 
 
@@ -36,6 +37,10 @@ class Layout extends React.Component {
                         <Route exact path='/catalog' component={GoodsSection} />
                         <Route exact path='/contacts' component={ContactPage} />
                         <Route exact path='/cart' component={Cart} />
+                    </Row>
+
+                    <Row>
+                        <ErrorWindow />
                     </Row>
 
                 </Grid>

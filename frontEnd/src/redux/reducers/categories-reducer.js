@@ -1,6 +1,6 @@
 const categoriesReducer = (state=[], action) => {
     switch (action.type) {
-        case 'FETCH_CATEGORIES':
+        case 'SAVE_CATEGORIES':
             state = [...action.payload];
             break;
     }

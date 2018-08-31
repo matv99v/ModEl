@@ -7,6 +7,7 @@ import goodsReducer from './goods-reducer';
 import categoriesReducer from './categories-reducer';
 import activeCategoryIdReducer from './active-category-id-reducer.js';
 import activeGoodIdReducer from './active-good-id-reducer.js';
+import errorReducer from './error-reducer';
 
 const reducers = combineReducers({
     cart: cartReducer,
@@ -14,7 +15,8 @@ const reducers = combineReducers({
     goods: goodsReducer,
     categories: categoriesReducer,
     activeCategoryId: activeCategoryIdReducer,
-    activeGoodId: activeGoodIdReducer
+    activeGoodId: activeGoodIdReducer,
+    error: errorReducer
 });
 
 
