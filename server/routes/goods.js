@@ -18,25 +18,27 @@ goodsRouter.route('/')
     })
     .get((req, res, next) => {
 
+        let sharedRows;
+
         db.getQueryPromise(mysqlQueries.getAllGoods())
-            .then(rows => { // TODO: chain promises
-
+            .then(rows => {
+                sharedRows = rows;
                 const existingGoodsIds = rows.reduce((acc, row) => [...acc, row.idProduct], []);
-
-                utils.getAmountOfPhotos(existingGoodsIds)
-                    .then(photosAmount => {
-                        const results = rows.map(row => {
-                            return {
-                                ...row,
-                                photosAmount: photosAmount[row.idProduct]
-                            };
-                        });
-                        res.end(JSON.stringify(results));
-                    });
-
+                return utils.getAmountOfPhotos(existingGoodsIds)
+            })
+            .then(photosAmount => {
+                const results = sharedRows.map(row => {
+                    return {
+                        ...row,
+                        photosAmount: photosAmount[row.idProduct]
+                    };
+                });
+                res.end(JSON.stringify(results));
+            })
+            .catch(err => {
+                next(err);
             });
-
-    })
+    });
 
 goodsRouter.route('/:id')
     .all((req, res, next) => {
@@ -53,8 +55,10 @@ goodsRouter.route('/details/:id')
         db.getQueryPromise(mysqlQueries.getGoodDetailsById(req.params.id))
             .then(rows => {
                 res.end(JSON.stringify(rows));
+            })
+            .catch(err => {
+                next(err);
             });
-
     });
 
 

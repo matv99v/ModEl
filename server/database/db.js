@@ -14,7 +14,6 @@ function getConnection() {
     const connection = mysql.createConnection(connectionOptions);
     connection.connect((err) => {
         if (err) {
-            console.error('error connecting: ' + err.stack);
             return;
         }
         console.log('connected as id ' + connection.threadId);
@@ -28,7 +27,6 @@ function getQueryPromise(queryStr) {
     return new Bluebird((resolve, reject) => {
         connection.query(queryStr, (error, results, fields) => {
             if (error) {
-                console.log(error);
                 reject(error);
             }
 
