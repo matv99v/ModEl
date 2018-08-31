@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const goodsRouter = express.Router();
 const db = require('../database/db');
+const mysqlQueries = require('../database/mysqlQueries.js');
 const utils = require('../utils/utils');
 
 goodsRouter.use(bodyParser.json());
@@ -17,7 +18,7 @@ goodsRouter.route('/')
     })
     .get((req, res, next) => {
 
-        db.getAllGoods()
+        db.getQueryPromise(mysqlQueries.getAllGoods())
             .then(rows => { // TODO: chain promises
 
                 const existingGoodsIds = rows.reduce((acc, row) => [...acc, row.idProduct], []);
@@ -49,11 +50,10 @@ goodsRouter.route('/:id')
 
 goodsRouter.route('/details/:id')
     .get((req, res, next) => {
-
-        db.getGoodDetailsById(req.params.id)
-          .then(rows => {
-            res.end(JSON.stringify(rows));
-          });
+        db.getQueryPromise(mysqlQueries.getGoodDetailsById(req.params.id))
+            .then(rows => {
+                res.end(JSON.stringify(rows));
+            });
 
     });
 

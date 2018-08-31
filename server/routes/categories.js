@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const categoriesRouter = express.Router();
 const db = require('../database/db.js');
+const mysqlQueries = require('../database/mysqlQueries.js');
 
 categoriesRouter.use(bodyParser.json());
 
@@ -13,16 +14,13 @@ categoriesRouter.route('/')
         next();
     })
     .get((req, res, next) => {
-
-        db.getAllCategories()
+        db.getQueryPromise(mysqlQueries.getAllCategories())
             .then(rows => {
                 res.end(JSON.stringify(rows));
             })
             .catch(err => {
-                console.log('eeeeee');
                 next(err);
             });
-
     })
     .post((req, res, next) => {
         res.end(`Will add the good: ${req.body.name}, with details: ${req.body.description}`);
@@ -43,9 +41,8 @@ categoriesRouter.route('/:id')
         next();
     })
     .get((req, res, next) => {
-
         if (req.params.id === 'existing') { // special :id
-            db.getExistingCategories()
+            db.getQueryPromise(mysqlQueries.getExistingCategories())
                 .then(rows => {
                     res.end(JSON.stringify(rows));
                 })
@@ -55,7 +52,6 @@ categoriesRouter.route('/:id')
         } else {
             res.end(`Will send detailes of the good: ${req.params.id}`);
         }
-
     })
     .post((req, res, next) => {
         res.statusCode = 403;

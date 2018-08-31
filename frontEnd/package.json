@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node_modules/.bin/webpack-dev-server --inline --hot --history-api-fallback --host localhost --port 8001 --progress --colors --debug --output-pathinfo --open --config webpack.dev.js",
-    "dev": "NODE_ENV=development node_modules/.bin/webpack --progress --watch --config webpack.dev.js",
-    "build": "NODE_ENV=production node_modules/.bin/webpack --progress --config webpack.prod.js",
+    "dev": "SET NODE_ENV=development & node_modules\\.bin\\webpack --progress --watch --config webpack.dev.js",
+    "build": "SET NODE_ENV=production & node_modules\\.bin\\webpack --progress --config webpack.prod.js",
     "server": "node server.js",
     "create-element": "ft"
   },
