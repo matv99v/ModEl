@@ -44,7 +44,15 @@ export default class ControlledCarousel extends React.Component {
 
               return (
                 <Carousel.Item key={i}>
-                  <img alt={this.props.good.productName} src={imgSrc} />
+                  {false && <img alt={this.props.good.productName} src={imgSrc} />}
+
+                  <div
+                      className='ControlledCarousel__imgCnt'
+                      style={{background: `url(${imgSrc}) no-repeat center center / contain`}}
+                  >
+
+                  </div>
+
                   <div className="ControlledCarousel__goodId">ID: {this.props.good.idProduct}</div>
                 </Carousel.Item>
               )

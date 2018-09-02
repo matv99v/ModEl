@@ -1,15 +1,39 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Badge, NavDropdown, MenuItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import apiUrls from 'AliasSrc/apiUrls';
+
+import { unsetActiveCategoryId, setActiveCategoryId } from 'AliasReduxActions/active-category-id-actions';
+import { unsetActiveGoodIdAction } from 'AliasReduxActions/active-good-id-actions';
+import { fetchGoodsActionAsync } from 'AliasReduxActions/goods-actions';
+import { fetchExistingCategoriesAsync } from 'AliasReduxActions/categories-actions';
+
+
 
 
 
 class Navigation extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
+
+    componentWillMount() {
+        if (!this.props.goods.length) {
+            this.props.dispatch(fetchGoodsActionAsync());
+        }
+
+        if (!this.props.categories.length) {
+            this.props.dispatch(fetchExistingCategoriesAsync());
+        }
+    }
+
+
+    refreshIds = () => {
+        this.props.dispatch(unsetActiveGoodIdAction());
+        this.props.dispatch(unsetActiveCategoryId());
+    }
+
+    handleCategorySelection = (cat) => {
+        this.props.dispatch(setActiveCategoryId(cat));
+        this.props.dispatch(unsetActiveGoodIdAction());
     }
 
     render() {
@@ -28,23 +52,45 @@ class Navigation extends React.Component {
                             <img style={{height: '30px'}} src={apiUrls.brandLogo}/>
                         </Link>
                     </Navbar.Brand>
+                    <Navbar.Toggle />
                 </Navbar.Header>
 
-                <Nav pullRight>
+                <Navbar.Collapse>
 
-                    <NavItem componentClass={Link} href="/catalog" to='/catalog'>
-                        Каталог
-                    </NavItem>
+                    <Nav pullRight>
 
-                    <NavItem componentClass={Link} href="/contacts" to='/contacts'>
-                        Контакты
-                    </NavItem>
+                      <NavDropdown eventKey={3} title="Каталог" id="basic-nav-dropdown" className="visible-xs">
+                          {
+                              this.props.categories.map((cat, i) => (
+                                  <MenuItem
+                                      eventKey={i}
+                                      key={i}
+                                      componentClass={Link}
+                                      href={`/catalog/${cat.idCategory}`}
+                                      to={`/catalog/${cat.idCategory}`}
+                                      onClick={() => this.handleCategorySelection(cat.idCategory)}
+                                  >
+                                      {cat.CategoryName}
+                                  </MenuItem>
+                              ))
+                          }
+                      </NavDropdown>
 
-                    <NavItem componentClass={Link} href="/cart" to='/cart' style={{display: displayCart}}>
-                        Корзина <Badge>{amount}</Badge>
-                    </NavItem>
+                      <NavItem componentClass={Link} href="/catalog" to='/catalog' onClick={this.refreshIds} className="hidden-xs">
+                          Каталог
+                      </NavItem>
 
-                </Nav>
+                      <NavItem componentClass={Link} href="/contacts" to='/contacts'>
+                          Контакты
+                      </NavItem>
+
+                      <NavItem componentClass={Link} href="/cart" to='/cart' style={{display: displayCart}}>
+                          Корзина <Badge>{amount}</Badge>
+                      </NavItem>
+
+                    </Nav>
+                  </Navbar.Collapse>
+
 
             </Navbar>
         );
@@ -52,7 +98,9 @@ class Navigation extends React.Component {
 };
 
 const mapStateToProps = (state) => ({
-    cart: state.cart
+    cart: state.cart,
+    categories: state.categories,
+    goods: state.goods,
 });
 
 export default connect(mapStateToProps)(Navigation);

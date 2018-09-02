@@ -7,3 +7,9 @@ export function setActiveCategoryId(id) {
         payload: id
     };
 };
+
+export function unsetActiveCategoryId() {
+    return {
+        type: 'UNSET_ACTIVE_CATEGORY'
+    };
+};

@@ -4,10 +4,10 @@ import HomePage from './HomePage.jsx';
 import ContactPage from './ContactPage.jsx';
 import Navigation from './Navigation.jsx';
 import Cart from './Cart.jsx';
-import Good from './Good.jsx';
 import { hot } from 'react-hot-loader'
-import Spinner from './Spinner.jsx';
 import ErrorWindow from './ErrorWindow.jsx';
+import Spinner from './common/Spinner.jsx';
+import './Layout.scss';
 
 
 
@@ -20,21 +20,19 @@ class Layout extends React.Component {
     render() {
         return (
             <BrowserRouter>
-                <Grid fluid>
+                <Grid fluid className="Layout__cnt">
+
+                    <div className="Layout__spinnerCnt">
+                        <Spinner size="15" />
+                    </div>
 
                     <Row>
                         <Navigation />
                     </Row>
 
-                    { false &&
-                    <Row>
-                        <Spinner size='50' />
-                    </Row>
-                    }
-
                     <Row>
                         <Route exact path='/' component={HomePage} />
-                        <Route exact path='/catalog' component={GoodsSection} />
+                        <Route path='/catalog' component={GoodsSection} />
                         <Route exact path='/contacts' component={ContactPage} />
                         <Route exact path='/cart' component={Cart} />
                     </Row>

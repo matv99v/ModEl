@@ -13,7 +13,7 @@ class Spinner extends React.Component {
         const obj = {
             width: `${this.props.size}px`,
             height: `${this.props.size}px`,
-            borderWidth: `${this.props.size / 10}px`,
+            borderWidth: `${this.props.size / 5}px`,
             display: this.props.isLoading ? 'block' : 'none'
         };
 

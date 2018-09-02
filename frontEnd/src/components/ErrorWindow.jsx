@@ -16,7 +16,7 @@ class ErrorWindow extends React.Component {
             <div className='ErrorWindow__cnt'>
               <Modal show={!!this.props.error} bsSize="large">
                  <Modal.Header>
-                     <Modal.Title>Something went wrong</Modal.Title>
+                     <Modal.Title>Server error</Modal.Title>
                  </Modal.Header>
                  <Modal.Body>
 

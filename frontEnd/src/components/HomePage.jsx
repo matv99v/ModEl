@@ -1,12 +1,14 @@
 import React from 'react';
 import { Panel } from 'react-bootstrap';
 import wordings from 'AliasSrc/misc/wordings.json';
+import './HomePage.scss';
+
 
 
 export default class Homepage extends React.Component {
     render() {
         return (
-            <div>
+            <div className="HomePage__cnt">
 
                 <Panel>
                     <Panel.Heading>

@@ -5,6 +5,12 @@ const categoriesReducer = (state=null, action) => {
             break;
     }
 
+    switch (action.type) {
+        case 'UNSET_ACTIVE_CATEGORY':
+            state = null;
+            break;
+    }
+
     return state;
 };
 

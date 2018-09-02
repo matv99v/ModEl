@@ -4,56 +4,68 @@ import GoodsList from './GoodsList.jsx';
 
 import { Grid, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { fetchGoodsActionAsync } from 'AliasReduxActions/goods-actions';
-import { fetchExistingCategoriesAsync } from 'AliasReduxActions/categories-actions';
+import Breadcrumbs from './Breadcrumbs.jsx';
+import { Route, BrowserRouter } from 'react-router-dom';
+import GoodExpandedView from './GoodExpandedView.jsx';
+import './GoodsSection.scss';
 
-
+import { setActiveCategoryId } from 'AliasReduxActions/active-category-id-actions';
+import { setActiveGoodIdAction } from 'AliasReduxActions/active-good-id-actions';
 
 
 
 class GoodsSection extends React.Component {
 
-  componentWillMount() {
-      if (!this.props.goods.length) {
-          this.props.dispatch(fetchGoodsActionAsync());
-      }
+    componentWillMount() {
+        const pathname = window.location.pathname;
+        const re = /^\/catalog\/\d+\/?\d*$/;
 
-      if (!this.props.categories.length) {
-          this.props.dispatch(fetchExistingCategoriesAsync());
-      }
-  }
+        if (pathname.match(re)) {
+            const arr = pathname.split('/')
+            const catId = +arr[2];
+            const goodId = +arr[3];
+            console.log(catId, goodId);
+
+
+            if (catId) {
+                this.props.dispatch(setActiveCategoryId(catId));
+            }
+
+            if (goodId) {
+                this.props.dispatch(setActiveGoodIdAction(goodId));
+            }
+
+        }
+
+    }
+
 
     render() {
-
-      const activeCategoryGoods = this.props.goods
-        .filter(good => good.idCategory === this.props.activeCategoryId);
-
-      const goodsList = this.props.activeGoodId
-          ? this.props.goods.filter(good => good.idProduct === this.props.activeGoodId)
-          : activeCategoryGoods;
-
         return (
-            <Grid fluid>
+            <Grid fluid className='GoodsSection__Cnt'>
+
+                <Row>
+                    <Col>
+                        <Breadcrumbs />
+                    </Col>
+                </Row>
 
                 <Row>
                     <Col xs={12} sm={4} md={4}>
 
                         <Categories
                             categories={this.props.categories}
-                            activeCategoryGoods={activeCategoryGoods}
                             dispatch={this.props.dispatch}
                             activeCategoryId={this.props.activeCategoryId}
-                            activeGoodId={this.props.activeGoodId}
                         />
 
                     </Col>
                     <Col xs={12} sm={8} md={8}>
 
-                        <GoodsList
-                            goods={goodsList}
-                            mode="catalog"
-                            isFoldedView={!this.props.activeGoodId}
-                        />
+                        <Route exact path='/catalog' render={() => <div className='GoodsSection__chooseCatDialog hidden-xs'>Выберите категорию</div>} />
+                        <Route exact path='/catalog/:catId' component={GoodsList} />
+                        { this.props.goods.length && <Route exact path='/catalog/:catId/:goodId' component={GoodExpandedView} />}
+
 
                     </Col>
                 </Row>
@@ -68,7 +80,6 @@ const mapStateToProps = (state) => ({
     goods: state.goods,
     activeCategoryId: state.activeCategoryId,
     categories: state.categories,
-    activeGoodId: state.activeGoodId
 });
 
 export default connect(mapStateToProps)(GoodsSection);

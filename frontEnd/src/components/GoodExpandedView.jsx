@@ -25,11 +25,6 @@ import { connect } from 'react-redux';
 
 
 class GoodExpandedView extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
     handleGoodClick() { // temporary not working due to return false in onClick
       this.props.dispatch(unsetActiveGoodIdAction());
     }
@@ -40,11 +35,9 @@ class GoodExpandedView extends React.Component {
 
     render() {
 
-      const isCartMode = this.props.mode === 'cart';
-
         return (
             <div className='GoodExpandedView__cnt'
-              onClick={(e) => false && this.handleGoodClick(e, this.props.good.idProduct)}
+                onClick={(e) => false && this.handleGoodClick(e, this.props.good.idProduct)}
             >
 
               <div className="GoodExpandedView__head">
@@ -63,27 +56,29 @@ class GoodExpandedView extends React.Component {
               </div>
 
 
-              <ControlledCarousel good={this.props.good}/>
+              <div className='GoodExpandedView__carouselCnt'>
+                  <ControlledCarousel good={this.props.good}/>
+              </div>
 
               <div className="GoodExpandedView__descriptionCnt">
 
-                { this.props.good.productParams &&
-                  <FoldableText>
-                    <h5>Технические характеристики</h5>
-                    <div dangerouslySetInnerHTML={{__html: this.props.good.productParams}}></div>
-                  </FoldableText>
-                }
+                  { this.props.good.productParams &&
+                    <FoldableText>
+                      <h5>Технические характеристики</h5>
+                      <div dangerouslySetInnerHTML={{__html: this.props.good.productParams}}></div>
+                    </FoldableText>
+                  }
 
-                { this.props.good.textDescrip &&
-                  <FoldableText>
-                    <h5>Описание</h5>
-                    <div dangerouslySetInnerHTML={{__html: this.props.good.textDescrip}}></div>
-                  </FoldableText>
-                }
+                  { this.props.good.textDescrip &&
+                    <FoldableText>
+                      <h5>Описание</h5>
+                      <div dangerouslySetInnerHTML={{__html: this.props.good.textDescrip}}></div>
+                    </FoldableText>
+                  }
 
-                <DevInfo>
-                  catId:{this.props.good.idCategory}, goodId:{this.props.good.idProduct}
-                </DevInfo>
+                  <DevInfo>
+                    catId:{this.props.good.idCategory}, goodId:{this.props.good.idProduct}
+                  </DevInfo>
 
               </div>
             </div>
@@ -92,7 +87,9 @@ class GoodExpandedView extends React.Component {
 }
 
 
-const mapStateToProps = (state) => ({
-});
+const mapStateToProps = (state) => {
+  return ({
+    good: state.goods.find(good => good.idProduct === state.activeGoodId)
+})};
 
 export default connect(mapStateToProps)(GoodExpandedView);

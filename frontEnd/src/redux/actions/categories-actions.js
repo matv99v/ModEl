@@ -20,9 +20,9 @@ export function fetchExistingCategoriesAsync() {
             })
             .then(data => {
                 dispatch(saveGoodsCategories(data));
-                if (data.length) {
-                    dispatch(setActiveCategoryId(data[0].idCategory));
-                }
+                // if (data.length) {
+                //     dispatch(setActiveCategoryId(data[0].idCategory)); // set first category active
+                // }
             })
             .catch(err => {
               err.text().then(errorMessage => {
