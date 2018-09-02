@@ -26,7 +26,7 @@ class GoodFoldedView extends React.Component {
           <div className="GoodFoldedView__imageCnt">
               <Image src={imgSrc} thumbnail />
 
-              <div className="GoodFoldedView__priceCnt__small">
+              <div className="GoodFoldedView__priceCnt__small visible-xs">
                   <GoodPrice
                       value={this.props.good.declarePrice}
                       type="vertical"
@@ -47,7 +47,7 @@ class GoodFoldedView extends React.Component {
               </DevInfo>
           </div>
 
-          <div className="GoodFoldedView__priceCnt__big">
+          <div className="GoodFoldedView__priceCnt__big hidden-xs">
             <GoodPrice
                 value={this.props.good.declarePrice}
                 type="vertical"

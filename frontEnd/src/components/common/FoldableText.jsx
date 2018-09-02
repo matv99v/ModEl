@@ -25,6 +25,7 @@ export default class FoldableText extends React.Component {
                 </div>
 
                 {
+                  false &&
                   this.state.isFolded &&
                   <div className="FoldableText__fadeout"></div>
                 }

@@ -7,6 +7,8 @@ import { Image, Grid, Row, Col, Button } from 'react-bootstrap';
 import GoodName from './common/GoodName.jsx';
 import GoodPrice from './common/GoodPrice.jsx';
 import FoldableText from './common/FoldableText.jsx';
+import FoldableText2 from './common/FoldableText2.jsx';
+import FoldableText3 from './common/FoldableText3.jsx';
 import ControlledCarousel from './common/ControlledCarousel.jsx';
 
 import apiUrls from 'AliasSrc/apiUrls';
@@ -35,6 +37,17 @@ class GoodExpandedView extends React.Component {
 
     render() {
 
+        const goodFoldableDetails = [
+            {
+                head: "Технические характеристики",
+                body: this.props.good.productParams
+            },
+            {
+                head: "Описание",
+                body: this.props.good.textDescrip
+            }
+        ].filter(el => !!el.body);
+
         return (
             <div className='GoodExpandedView__cnt'
                 onClick={(e) => false && this.handleGoodClick(e, this.props.good.idProduct)}
@@ -62,22 +75,17 @@ class GoodExpandedView extends React.Component {
 
               <div className="GoodExpandedView__descriptionCnt">
 
-                  { this.props.good.productParams &&
-                    <FoldableText>
-                      <h5>Технические характеристики</h5>
-                      <div dangerouslySetInnerHTML={{__html: this.props.good.productParams}}></div>
-                    </FoldableText>
-                  }
+                  {false && <FoldableText2 data={goodFoldableDetails} />}
+                  <FoldableText3 />
 
-                  { this.props.good.textDescrip &&
-                    <FoldableText>
-                      <h5>Описание</h5>
-                      <div dangerouslySetInnerHTML={{__html: this.props.good.textDescrip}}></div>
-                    </FoldableText>
+                  {
+                      goodFoldableDetails.map((el, i) => (
+                          <FoldableText3 head={el.head} body={el.body} key={i}/>
+                      ))
                   }
 
                   <DevInfo>
-                    catId:{this.props.good.idCategory}, goodId:{this.props.good.idProduct}
+                      catId:{this.props.good.idCategory}, goodId:{this.props.good.idProduct}
                   </DevInfo>
 
               </div>

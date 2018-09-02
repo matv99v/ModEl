@@ -1,10 +1,23 @@
 .Breadcrumbs__Cnt {
+
+    display: block;
+
+    li {
+      display: inline;
+      color: #6f6f6f;
+      &::after {
+        content: " > ";
+        white-space: pre;
+      }
+      &:last-child:after {
+        content: '';
+      }
+    }
+
     list-style: none;
-    display: flex;
-    padding: 10px 15px 10px 15px;
+    padding: 10px 15px;
     background-color: #f5f5f5;
     border-radius: 4px;
-    align-items: center;
 
     .active {
       color: #6f6f6f;
@@ -12,26 +25,23 @@
 
     p {
       padding: 0;
-      margin: 0
+      margin: 0;
+      display: inline;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+  .Breadcrumbs__Cnt {
+    display: flex;
+    flex-direction: column;
+
+    li:after {
+      content: '';
     }
 
-    .Breadcrumb__devider {
-      align-self: center;
-      color: #ccc;
-
+    li:before {
+      content: ' > ';
     }
+  }
 
-    li {
-      display: flex;
-    }
-
-    // li::after {
-    //   content: " / ";
-    //   color: #ccc;
-    //   white-space: pre;
-    // }
-    //
-    // li:last-child:after {
-    //   content: '';
-    // }
 }

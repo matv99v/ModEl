@@ -24,8 +24,6 @@ class GoodsSection extends React.Component {
             const arr = pathname.split('/')
             const catId = +arr[2];
             const goodId = +arr[3];
-            console.log(catId, goodId);
-
 
             if (catId) {
                 this.props.dispatch(setActiveCategoryId(catId));

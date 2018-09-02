@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "nodemon-dev": "nodemon ./bin/www",
-    "prodStart": "prod is handled by pm2"
+    "prod-start": "prod is handled by pm2"
   },
   "dependencies": {
     "bluebird": "^3.5.1",
@@ -15,11 +15,11 @@
     "debug": "~2.6.9",
     "express": "~4.15.5",
     "morgan": "~1.9.0",
-    "mysql": "^2.15.0",
+    "mysql": "^2.16.0",
     "pug": "2.0.0-beta11",
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {
-    "nodemon": "^1.17.5"
+    "nodemon": "^1.18.4"
   }
 }

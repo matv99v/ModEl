@@ -49,6 +49,9 @@ class Breadcrumbs extends React.Component {
                       const isTheLastElem = arr.length === k + 1;
                       return (
                         <li className={isTheLastElem ? 'active' : ''} key={k} >
+
+                            {/* <span style={{fontSize: '20px', lineHeight: '15px'}}>&#x21d2;</span> */}
+
                             {
                               isTheLastElem
                                 ?
@@ -61,6 +64,7 @@ class Breadcrumbs extends React.Component {
 
                             {
                               // do not render trailing /
+                              false &&
                               !isTheLastElem &&
                               <div className='Breadcrumb__devider'>&nbsp;/&nbsp;</div>
                             }

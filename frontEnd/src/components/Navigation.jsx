@@ -14,6 +14,11 @@ import { fetchExistingCategoriesAsync } from 'AliasReduxActions/categories-actio
 
 
 class Navigation extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {isOpen: false};
+    }
+
 
     componentWillMount() {
         if (!this.props.goods.length) {
@@ -36,6 +41,16 @@ class Navigation extends React.Component {
         this.props.dispatch(unsetActiveGoodIdAction());
     }
 
+    handleNavToggle = () => {
+        this.setState(prevState => ({isOpen: !prevState.isOpen}));
+    }
+
+    handleNavSelect = (eventKey) => {
+        if (eventKey) {
+            this.setState(prevState => ({isOpen: false}));
+        }
+    }
+
     render() {
         const cartObjectIds = Object.keys(this.props.cart);
         const amount = cartObjectIds.reduce((acc, key) => {
@@ -44,7 +59,7 @@ class Navigation extends React.Component {
         const displayCart = amount > 0 ? 'block' : 'none';
 
         return (
-            <Navbar inverse>
+            <Navbar inverse onToggle={this.handleNavToggle} expanded={this.state.isOpen} onSelect={this.handleNavSelect}>
 
                 <Navbar.Header>
                     <Navbar.Brand>
@@ -59,7 +74,7 @@ class Navigation extends React.Component {
 
                     <Nav pullRight>
 
-                      <NavDropdown eventKey={3} title="Каталог" id="basic-nav-dropdown" className="visible-xs">
+                      <NavDropdown title="Каталог" id="basic-nav-dropdown" className="visible-xs">
                           {
                               this.props.categories.map((cat, i) => (
                                   <MenuItem
