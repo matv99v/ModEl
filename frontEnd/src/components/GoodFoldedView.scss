@@ -1,0 +1,23 @@
+.GoodFoldedView__cnt {
+
+  display: flex;
+
+  .GoodFoldedView__imageCnt {
+    flex: 0 0 120px;
+  }
+
+  .GoodFoldedView__priceCnt__big {
+    margin-left: auto;
+  }
+
+  .GoodFoldedView__priceCnt__small {
+    display: none;
+  }
+
+
+  .GoodFoldedView__goodName {
+    padding: 0 10px;
+  }
+
+
+}

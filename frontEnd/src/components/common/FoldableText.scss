@@ -1,0 +1,33 @@
+.FoldableText__cnt {
+    position: relative;
+
+    .FoldableText__box {
+
+
+      &.unfolded {
+          height: 150px;
+          overflow-y: hidden;
+      }
+    }
+
+    .FoldableText__fadeout {
+      position: absolute;
+      bottom: 75px;
+      height: 75px;
+      background-image: linear-gradient(rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+      bottom: 35px;
+      right: 0;
+      left: 0;
+
+    }
+
+
+
+
+    .FoldableText__btnCnt {
+      text-align: center;
+    }
+
+
+
+}
