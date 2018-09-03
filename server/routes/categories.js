@@ -21,16 +21,6 @@ categoriesRouter.route('/')
             .catch(err => {
                 next(err);
             });
-    })
-    .post((req, res, next) => {
-        res.end(`Will add the good: ${req.body.name}, with details: ${req.body.description}`);
-    })
-    .put((req, res, next) => {
-        res.statusCode = 403;
-        res.end('PUT operation is not supported on /Categories');
-    })
-    .delete((req, res, next) => {
-        res.end('Deleting all the Categories');
     });
 
 
@@ -52,16 +42,6 @@ categoriesRouter.route('/:id')
         } else {
             res.end(`Will send detailes of the good: ${req.params.id}`);
         }
-    })
-    .post((req, res, next) => {
-        res.statusCode = 403;
-        res.end(`POST operation is not supported on /Categories/${req.params.id}`);
-    })
-    .put((req, res, next) => {
-        res.end(`Updating the good: ${req.params.id}, will update the good: ${req.body.name} with details: ${req.body.description}`);
-    })
-    .delete((req, res, next) => {
-        res.end(`Deleting the good: ${req.params.id}`);
     });
 
 

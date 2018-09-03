@@ -40,16 +40,6 @@ goodsRouter.route('/')
             });
     });
 
-goodsRouter.route('/:id')
-    .all((req, res, next) => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        next();
-    })
-    .get((req, res, next) => {
-        res.end(`Will send detailes of the good: ${req.params.id}`);
-    });
-
 goodsRouter.route('/details/:id')
     .get((req, res, next) => {
         db.getQueryPromise(mysqlQueries.getGoodDetailsById(req.params.id))

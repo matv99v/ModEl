@@ -18,7 +18,7 @@ import { removeFromCartAction } from 'AliasReduxActions/cart-actions';
 class GoodFoldedView extends React.Component {
 
     render() {
-      const imgSrc = this.props.good.photosAmount ? apiUrls.goodPhoto(this.props.good.idProduct, 1) : apiUrls.defaultGoodPhoto;
+      const imgSrc = this.props.good.photosAmount ? apiUrls.goodPhotoThumbnail(this.props.good.idProduct, 1) : apiUrls.defaultGoodPhoto;
 
       return (
         <div className="GoodFoldedView__cnt" >
