@@ -5,9 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var index = require('./routes/index');
 var goods = require('./routes/goods');
 var categories = require('./routes/categories');
+var images = require('./routes/images');
 const cors = require('cors');
 
 
@@ -26,9 +26,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
 app.use('/goods', goods);
 app.use('/categories', categories);
+app.use('/images', images);
 
 // handle every other route with index.html, which will contain
 // a script tag to your application's JavaScript file(s).

@@ -2,15 +2,11 @@ const Bluebird = require('bluebird');
 const fs = Bluebird.promisifyAll(require("fs"));
 
 
-
-
-
-
 module.exports = {
 
     getFilesByGoodId(goodId) {
         const pattern = new RegExp(`pht_${goodId}_`);
-        return fs.readdirAsync('./public/images/goods')
+        return fs.readdirAsync('./assets/goods-photos')
             .then(files => {
                 const mathcedFiles = files.filter(file => file.match(pattern));
                 return {[goodId]: mathcedFiles.length};
