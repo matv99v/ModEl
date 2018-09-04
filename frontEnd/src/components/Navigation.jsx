@@ -9,6 +9,8 @@ import { unsetActiveGoodIdAction } from 'AliasReduxActions/active-good-id-action
 import { fetchGoodsActionAsync } from 'AliasReduxActions/goods-actions';
 import { fetchExistingCategoriesAsync } from 'AliasReduxActions/categories-actions';
 
+import './Navigation.scss';
+
 
 
 
@@ -59,7 +61,7 @@ class Navigation extends React.Component {
         const displayCart = amount > 0 ? 'block' : 'none';
 
         return (
-            <Navbar inverse onToggle={this.handleNavToggle} expanded={this.state.isOpen} onSelect={this.handleNavSelect}>
+            <Navbar inverse onToggle={this.handleNavToggle} expanded={this.state.isOpen} onSelect={this.handleNavSelect} className="Navigation__Cnt">
 
                 <Navbar.Header>
                     <Navbar.Brand>
@@ -73,6 +75,10 @@ class Navigation extends React.Component {
                 <Navbar.Collapse>
 
                     <Nav pullRight>
+
+                      <NavItem componentClass={Link} href="/" to='/'>
+                          О сайте
+                      </NavItem>
 
                       <NavDropdown title="Каталог" id="basic-nav-dropdown" className="visible-xs">
                           {
