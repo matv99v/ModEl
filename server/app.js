@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var goods = require('./routes/goods');
 var categories = require('./routes/categories');
 var images = require('./routes/images');
+var html = require('./routes/html');
 const cors = require('cors');
 
 
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/goods', goods);
 app.use('/categories', categories);
 app.use('/images', images);
+app.use('/html', html); // this is temporary route, remove it after DB is updated
 
 // handle every other route with index.html, which will contain
 // a script tag to your application's JavaScript file(s).

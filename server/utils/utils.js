@@ -1,5 +1,7 @@
 const Bluebird = require('bluebird');
 const fs = Bluebird.promisifyAll(require("fs"));
+const http = require('http');
+
 
 
 module.exports = {
@@ -24,6 +26,31 @@ module.exports = {
                 }), {});
                 return result;
             });
+    },
+
+    request(url) {
+      return new Bluebird((resolve, reject) => {
+
+        http
+          .get(url, (resp) => {
+              let data = '';
+
+              // A chunk of data has been recieved.
+              resp.on('data', (chunk) => {
+                data += chunk;
+              });
+
+              // The whole response has been received. Print out the result.
+              resp.on('end', () => {
+                // resolve(JSON.parse(data).explanation);
+                resolve(data);
+              });
+          })
+          .on("error", (err) => {
+              reject(err);
+          });
+
+      });
     }
 
 
