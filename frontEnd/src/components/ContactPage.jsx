@@ -1,6 +1,5 @@
 import React from 'react';
 import { Panel } from 'react-bootstrap';
-import wordings from 'AliasSrc/misc/wordings.json';
 
 
 
@@ -12,15 +11,16 @@ export default class ContactPage extends React.Component {
 
                 <Panel>
                     <Panel.Heading>
-                        <Panel.Title componentClass="h3">{wordings.contacts.heading}</Panel.Title>
+                        <Panel.Title componentClass="h3">Контакты</Panel.Title>
                     </Panel.Heading>
 
                     <Panel.Body>
-                        <div>{wordings.contacts.text1}</div>
-                        <div>{wordings.contacts.text2}</div>
-                        <div>{wordings.contacts.text3}</div>
-                        <div>{wordings.contacts.text4}</div>
-                        <div>{wordings.contacts.text5}</div>
+                        <p>Контактное лицо - Валерий.</p>
+                        <p>Связаться можно одним из способов:</p>
+                        <ul>
+                          <li>Телефон - 050-487-7079; 096-575-5429</li>
+                          <li>E-Mail - ZAIKA.VALERII@gmail.com</li>
+                        </ul>
                     </Panel.Body>
                 </Panel>
 
