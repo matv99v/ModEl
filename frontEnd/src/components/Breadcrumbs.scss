@@ -1,10 +1,11 @@
+@import "~AliasSrc/variables_override";
+
 .Breadcrumbs__Cnt {
 
     display: block;
 
     li {
       display: inline;
-      color: #6f6f6f;
       &::after {
         content: " > ";
         white-space: pre;
@@ -16,11 +17,11 @@
 
     list-style: none;
     padding: 10px 15px;
-    background-color: #f5f5f5;
+    background-color: $gray-lighter;
     border-radius: 4px;
 
     .active {
-      color: #6f6f6f;
+      color: $gray-light;
     }
 
     p {
