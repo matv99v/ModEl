@@ -77,7 +77,7 @@ class Navigation extends React.Component {
                     <Nav pullRight>
 
                       <NavItem componentClass={Link} href="/" to='/'>
-                          О сайте
+                          Инфо
                       </NavItem>
 
                       <NavDropdown title="Каталог" id="basic-nav-dropdown" className="visible-xs">
