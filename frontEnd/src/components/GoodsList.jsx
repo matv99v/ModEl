@@ -16,24 +16,27 @@ class GoodsList extends React.Component {
         this.props.dispatch(setActiveGoodIdAction(goodId));
     }
 
-
     render() {
         return (
-          <ListGroup className="GoodsList__container">
-              {
-                  this.props.goods
-                      .filter(good => good.idCategory === this.props.activeCategoryId)
-                      .map((good, i) => (
-                          <ListGroupItem key={i} onClick={() => this.handleGoodClick(good.idProduct)}>
-                              <Link
-                                  href={`/catalog/${good.idCategory}/${good.idProduct}`}
-                                  to={`/catalog/${good.idCategory}/${good.idProduct}`}
-                              >
-                                  <GoodFoldedView good={good}/>
-                              </Link>
-                          </ListGroupItem>
-                      ))
-              }
+            <ListGroup className="GoodsList__container" >
+                {
+                    this.props.goods
+                        .filter(good => good.idCategory === this.props.activeCategoryId)
+                        .map((good, i) => (
+                            <li className="list-group-item"
+                                key={i}
+                                onClick={() => this.handleGoodClick(good.idProduct)}
+                            >
+
+                                <Link
+                                    href={`/catalog/${good.idCategory}/${good.idProduct}`}
+                                    to={`/catalog/${good.idCategory}/${good.idProduct}`}
+                                >
+                                    <GoodFoldedView good={good}/>
+                                </Link>
+                            </li>
+                    ))
+                }
           </ListGroup>
         );
     }
