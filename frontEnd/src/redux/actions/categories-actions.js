@@ -1,37 +1,31 @@
-// import 'regenerator-runtime/runtime';
 import { showSpinnerAction, hideSpinnerAction } from 'AliasReduxActions/spinner-actions';
 import { setActiveCategoryId } from 'AliasReduxActions/active-category-id-actions';
 import { spawnNewError } from 'AliasReduxActions/error-actions';
 
-import apiUrls from 'AliasSrc/apiUrls';
+import apiUrls from 'AliasSrc/api/apiUrls';
+import api from 'AliasSrc/api/api';
 
 
 export function fetchExistingCategoriesAsync() {
+
     return (dispatch) => {
         dispatch(showSpinnerAction());
 
-        fetch(apiUrls.existingCategories)
-            .then(response => {
-              if (response.ok) {
-                  return response.json();
-              } else {
-                  throw response;
-              }
-            })
+        api.get(apiUrls.existingCategories)
             .then(data => {
                 dispatch(saveGoodsCategories(data));
                 // if (data.length) {
                 //     dispatch(setActiveCategoryId(data[0].idCategory)); // set first category active
                 // }
+                return null;
             })
             .catch(err => {
-              err.text().then(errorMessage => {
-                  dispatch(spawnNewError(errorMessage));
-              })
+                dispatch(spawnNewError(err));
             })
             .finally(() => {
                 dispatch(hideSpinnerAction());
             });
+
     };
 };
 

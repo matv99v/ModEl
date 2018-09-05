@@ -11,7 +11,7 @@ import FoldableText2 from './common/FoldableText2.jsx';
 import FoldableText3 from './common/FoldableText3.jsx';
 import ControlledCarousel from './common/ControlledCarousel.jsx';
 
-import apiUrls from 'AliasSrc/apiUrls';
+import apiUrls from 'AliasSrc/api/apiUrls';
 import DevInfo from './DevInfo.jsx';
 
 import { unsetActiveGoodIdAction } from 'AliasReduxActions/active-good-id-actions';

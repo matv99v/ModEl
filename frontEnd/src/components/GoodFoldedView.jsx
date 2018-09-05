@@ -7,7 +7,7 @@ import { Image, Grid, Row, Col, Button } from 'react-bootstrap';
 import DevInfo from './DevInfo.jsx';
 import GoodName from './common/GoodName.jsx';
 import GoodPrice from './common/GoodPrice.jsx';
-import apiUrls from 'AliasSrc/apiUrls';
+import apiUrls from 'AliasSrc/api/apiUrls';
 import GoodAmountInput from './common/GoodAmountInput.jsx';
 import { removeFromCartAction } from 'AliasReduxActions/cart-actions';
 

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import store from './redux/store';
 import { Provider } from 'react-redux';
 import utils from 'AliasSrc/utils';
-import 'whatwg-fetch'; // window.fetch polyfill
 
 if (!utils.isProduction) {
     console.warn('Looks like we are in development mode!');

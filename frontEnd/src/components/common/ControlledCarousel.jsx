@@ -1,6 +1,6 @@
 import React from 'react';
 import { Carousel } from 'react-bootstrap';
-import apiUrls from 'AliasSrc/apiUrls';
+import apiUrls from 'AliasSrc/api/apiUrls';
 
 
 import './ControlledCarousel.scss';

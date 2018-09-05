@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, NavItem, Badge, NavDropdown, MenuItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import apiUrls from 'AliasSrc/apiUrls';
+import apiUrls from 'AliasSrc/api/apiUrls';
 
 import { unsetActiveCategoryId, setActiveCategoryId } from 'AliasReduxActions/active-category-id-actions';
 import { unsetActiveGoodIdAction } from 'AliasReduxActions/active-good-id-actions';
