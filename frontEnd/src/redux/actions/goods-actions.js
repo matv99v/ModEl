@@ -1,5 +1,7 @@
 import { showSpinnerAction, hideSpinnerAction } from 'AliasReduxActions/spinner-actions';
-import apiUrls from 'AliasSrc/apiUrls';
+import apiUrls from 'AliasSrc/api/apiUrls';
+import api from 'AliasSrc/api/api';
+
 import { spawnNewError } from 'AliasReduxActions/error-actions';
 
 
@@ -7,21 +9,13 @@ export function fetchGoodsActionAsync() {
     return (dispatch) => {
         dispatch(showSpinnerAction());
 
-        fetch(apiUrls.allGoods)
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw response;
-                }
-            })
+        api.get(apiUrls.allGoods)
             .then(data => {
                 dispatch(saveGoodsAction(data));
+                return null;
             })
             .catch(err => {
-              err.text().then(errorMessage => {
-                  dispatch(spawnNewError(errorMessage));
-              })
+                dispatch(spawnNewError(err));
             })
             .finally(() => {
                 dispatch(hideSpinnerAction());
@@ -40,25 +34,18 @@ export function fetchGoodDetailsActionAsync(id) {
   return (dispatch) => {
     dispatch(showSpinnerAction());
 
-    fetch(apiUrls.goodDetails(id))
-      .then(response => {
-          if (response.ok) {
-              return response.json();
-          } else {
-              throw response;
-          }
-      })
-      .then(data => {
-          dispatch(saveGoodDetailsAction(id, data));
-      })
-      .catch(err => {
-        err.text().then(errorMessage => {
-            dispatch(spawnNewError(errorMessage));
-        })
-      })
-      .finally(() => {
-          dispatch(hideSpinnerAction());
-      });
+        api.get(apiUrls.allGoods)
+            .then(data => {
+                dispatch(saveGoodDetailsAction(id, data));
+                return null;
+            })
+            .catch(err => {
+                dispatch(spawnNewError(err));
+            })
+            .finally(() => {
+                dispatch(hideSpinnerAction());
+            });
+
 
 
   };
