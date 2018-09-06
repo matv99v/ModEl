@@ -34,7 +34,7 @@ export function fetchGoodDetailsActionAsync(id) {
   return (dispatch) => {
     dispatch(showSpinnerAction());
 
-        api.get(apiUrls.allGoods)
+        api.get(apiUrls.goodDetails(id))
             .then(data => {
                 dispatch(saveGoodDetailsAction(id, data));
                 return null;
