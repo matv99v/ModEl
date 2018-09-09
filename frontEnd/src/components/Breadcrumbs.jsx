@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Breadcrumb, Grid, Row, Col, Well } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { setActiveCategoryId, unsetActiveCategoryId } from 'AliasReduxActions/active-category-id-actions';
-import { setActiveGoodIdAction, unsetActiveGoodIdAction } from 'AliasReduxActions/active-good-id-actions';
 
 
 
@@ -14,19 +12,10 @@ import './Breadcrumbs.scss';
 
 class Breadcrumbs extends React.Component {
 
-    handleBreadcrumbClick = (k) => {
-        if (k) {
-            this.props.dispatch(unsetActiveGoodIdAction());
-        } else {
-          this.props.dispatch(unsetActiveGoodIdAction());
-          this.props.dispatch(unsetActiveCategoryId());
-        }
-
-    }
 
     render() {
-        const activeCategoryObj = this.props.categories.find(cat => cat.idCategory === this.props.activeCategoryId);
-        const activeGoodObj = this.props.goods.find(good => good.idProduct === this.props.activeGoodId);
+        const activeCategoryObj = this.props.categories.find(cat => cat.idCategory === +this.props.activeCategoryId);
+        const activeGoodObj = this.props.goods.find(good => good.idProduct === +this.props.activeGoodId);
 
         const arr = [activeCategoryObj, activeGoodObj]
             .filter(item => !!item)
@@ -50,14 +39,12 @@ class Breadcrumbs extends React.Component {
                       return (
                         <li className={isTheLastElem ? 'active' : ''} key={k} >
 
-                            {/* <span style={{fontSize: '20px', lineHeight: '15px'}}>&#x21d2;</span> */}
-
                             {
                               isTheLastElem
                                 ?
                                     <p>{item.name}</p>
                                 :
-                                    <Link href={item.url} to={item.url} onClick={() => this.handleBreadcrumbClick(k)} >
+                                    <Link href={item.url} to={item.url} >
                                         {item.name}
                                     </Link>
                             }
@@ -85,9 +72,7 @@ class Breadcrumbs extends React.Component {
 
 const mapStateToProps = (state) => ({
     categories: state.categories,
-    goods: state.goods,
-    activeCategoryId: state.activeCategoryId,
-    activeGoodId: state.activeGoodId
+    goods: state.goods
 });
 
 export default connect(mapStateToProps)(Breadcrumbs);

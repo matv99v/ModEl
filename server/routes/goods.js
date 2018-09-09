@@ -20,7 +20,11 @@ goodsRouter.route('/')
 
         let sharedRows;
 
-        db.getQueryPromise(mysqlQueries.getAllGoods())
+        const query = req.query.catId // TODO: refactor
+            ? mysqlQueries.getGoodsByCategoryId(req.query.catId, req.query.excludegoodid)
+            : mysqlQueries.getGoodById(req.query.goodId);
+
+        db.getQueryPromise(query)
             .then(rows => {
                 sharedRows = rows;
                 const existingGoodsIds = rows.reduce((acc, row) => [...acc, row.idProduct], []);
@@ -43,6 +47,17 @@ goodsRouter.route('/')
 goodsRouter.route('/details/:id')
     .get((req, res, next) => {
         db.getQueryPromise(mysqlQueries.getGoodDetailsById(req.params.id))
+            .then(rows => {
+                res.end(JSON.stringify(rows));
+            })
+            .catch(err => {
+                next(err);
+            });
+    });
+
+goodsRouter.route('/:id')
+    .get((req, res, next) => {
+        db.getQueryPromise(mysqlQueries.getGoodsByCategoryId(req.params.id))
             .then(rows => {
                 res.end(JSON.stringify(rows));
             })

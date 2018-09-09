@@ -2,7 +2,6 @@ import React from 'react';
 import './GoodPrice.scss';
 
 import { Button } from 'react-bootstrap';
-import { setActiveGoodIdAction } from 'AliasReduxActions/active-good-id-actions';
 import { addToCartAction } from 'AliasReduxActions/cart-actions';
 import { connect } from 'react-redux';
 

@@ -1,7 +1,7 @@
 const goodsReducer = (state=[], action) => {
     switch (action.type) {
         case 'SAVE_GOODS':
-            state = [...action.payload].filter(good => good.exist);
+            state = [...action.payload];
             break;
     }
     switch (action.type) {
@@ -12,6 +12,16 @@ const goodsReducer = (state=[], action) => {
             newState[ind] = newGood;
             state = newState;
 
+            break;
+    }
+    switch (action.type) {
+        case 'SAVE_GOODS_PORTION':
+            state = [...state, ...action.payload];
+            break;
+    }
+    switch (action.type) { // // TODO: refactor, the copy of a SAVE_GOODS_PORTION
+        case 'SAVE_GOOD':
+            state = [...state, ...action.payload];
             break;
     }
 

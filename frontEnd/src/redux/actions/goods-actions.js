@@ -5,7 +5,7 @@ import api from 'AliasSrc/api/api';
 import { spawnNewError } from 'AliasReduxActions/error-actions';
 
 
-export function fetchGoodsActionAsync() {
+export function fetchGoodsActionAsync() { // delete after fetchByCategoryId implementation
     return (dispatch) => {
         dispatch(showSpinnerAction());
 
@@ -23,9 +23,34 @@ export function fetchGoodsActionAsync() {
     };
 };
 
+export function fetchGoodsByCategoryActionAsync(catId, excludeGoodId) {
+    return (dispatch) => {
+        dispatch(showSpinnerAction());
+
+        api.get(apiUrls.goodsByCategory(catId, excludeGoodId))
+            .then(data => {
+                dispatch(saveGoodsPortionAction(data));
+                return null;
+            })
+            .catch(err => {
+                dispatch(spawnNewError(err));
+            })
+            .finally(() => {
+                dispatch(hideSpinnerAction());
+            });
+    };
+};
+
 export function saveGoodsAction(goods) {
     return {
         type: 'SAVE_GOODS',
+        payload: goods
+    };
+};
+
+export function saveGoodsPortionAction(goods) {
+    return {
+        type: 'SAVE_GOODS_PORTION',
         payload: goods
     };
 };
@@ -59,6 +84,32 @@ export function saveGoodDetailsAction(id, details) {
     };
     return {
         type: 'SAVE_GOOD_DETAILS',
+        payload: data
+    };
+};
+
+export function fetchGoodByIdActionAsync(goodId) {
+    return (dispatch) => {
+        dispatch(showSpinnerAction());
+
+        api.get(apiUrls.goodById(goodId))
+            .then(data => {
+                dispatch(saveGoodAction(data));
+                return null;
+            })
+            .catch(err => {
+                dispatch(spawnNewError(err));
+            })
+            .finally(() => {
+                dispatch(hideSpinnerAction());
+            });
+    };
+};
+
+
+export function saveGoodAction(data) {
+    return {
+        type: 'SAVE_GOOD',
         payload: data
     };
 };

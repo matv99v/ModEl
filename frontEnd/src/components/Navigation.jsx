@@ -4,9 +4,7 @@ import { Navbar, Nav, NavItem, Badge, NavDropdown, MenuItem } from 'react-bootst
 import { connect } from 'react-redux';
 import apiUrls from 'AliasSrc/api/apiUrls';
 
-import { unsetActiveCategoryId, setActiveCategoryId } from 'AliasReduxActions/active-category-id-actions';
-import { unsetActiveGoodIdAction } from 'AliasReduxActions/active-good-id-actions';
-import { fetchGoodsActionAsync } from 'AliasReduxActions/goods-actions';
+// import { fetchGoodsActionAsync } from 'AliasReduxActions/goods-actions';
 import { fetchExistingCategoriesAsync } from 'AliasReduxActions/categories-actions';
 
 import './Navigation.scss';
@@ -23,25 +21,10 @@ class Navigation extends React.Component {
 
 
     componentWillMount() {
-        if (!this.props.goods.length) {
-            this.props.dispatch(fetchGoodsActionAsync());
-        }
-
-        if (!this.props.categories.length) {
-            this.props.dispatch(fetchExistingCategoriesAsync());
-        }
+        console.warn('fetching initial data, should be printed only one time');
+        this.props.dispatch(fetchExistingCategoriesAsync());
     }
 
-
-    refreshIds = () => {
-        this.props.dispatch(unsetActiveGoodIdAction());
-        this.props.dispatch(unsetActiveCategoryId());
-    }
-
-    handleCategorySelection = (cat) => {
-        this.props.dispatch(setActiveCategoryId(cat));
-        this.props.dispatch(unsetActiveGoodIdAction());
-    }
 
     handleNavToggle = () => {
         this.setState(prevState => ({isOpen: !prevState.isOpen}));
@@ -89,7 +72,6 @@ class Navigation extends React.Component {
                                       componentClass={Link}
                                       href={`/catalog/${cat.idCategory}`}
                                       to={`/catalog/${cat.idCategory}`}
-                                      onClick={() => this.handleCategorySelection(cat.idCategory)}
                                   >
                                       {cat.CategoryName}
                                   </MenuItem>
@@ -97,7 +79,7 @@ class Navigation extends React.Component {
                           }
                       </NavDropdown>
 
-                      <NavItem componentClass={Link} href="/catalog" to='/catalog' onClick={this.refreshIds} className="hidden-xs">
+                      <NavItem componentClass={Link} href="/catalog" to='/catalog' className="hidden-xs">
                           Каталог
                       </NavItem>
 
@@ -120,8 +102,7 @@ class Navigation extends React.Component {
 
 const mapStateToProps = (state) => ({
     cart: state.cart,
-    categories: state.categories,
-    goods: state.goods,
+    categories: state.categories
 });
 
 export default connect(mapStateToProps)(Navigation);

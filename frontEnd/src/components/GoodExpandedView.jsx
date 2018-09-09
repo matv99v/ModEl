@@ -14,29 +14,9 @@ import ControlledCarousel from './common/ControlledCarousel.jsx';
 import apiUrls from 'AliasSrc/api/apiUrls';
 import DevInfo from './DevInfo.jsx';
 
-import { unsetActiveGoodIdAction } from 'AliasReduxActions/active-good-id-actions';
-import { fetchGoodDetailsActionAsync } from 'AliasReduxActions/goods-actions';
 
-import { connect } from 'react-redux';
-
-
-
-
-
-
-
-
-class GoodExpandedView extends React.Component {
-    handleGoodClick() { // temporary not working due to return false in onClick
-      this.props.dispatch(unsetActiveGoodIdAction());
-    }
-
-    componentWillMount() {
-      this.props.dispatch(fetchGoodDetailsActionAsync(this.props.good.idProduct));
-    }
-
+export default class GoodExpandedView extends React.Component {
     render() {
-
         const goodFoldableDetails = [
             {
                 head: "Технические характеристики",
@@ -49,9 +29,7 @@ class GoodExpandedView extends React.Component {
         ].filter(el => !!el.body);
 
         return (
-            <div className='GoodExpandedView__cnt'
-                onClick={(e) => false && this.handleGoodClick(e, this.props.good.idProduct)}
-            >
+            <div className='GoodExpandedView__cnt'>
 
               <div className="GoodExpandedView__head">
 
@@ -75,9 +53,6 @@ class GoodExpandedView extends React.Component {
 
               <div className="GoodExpandedView__descriptionCnt">
 
-                  {false && <FoldableText2 data={goodFoldableDetails} />}
-                  <FoldableText3 />
-
                   {
                       goodFoldableDetails.map((el, i) => (
                           <FoldableText3 head={el.head} body={el.body} key={i}/>
@@ -90,14 +65,7 @@ class GoodExpandedView extends React.Component {
 
               </div>
             </div>
+
         );
     }
 }
-
-
-const mapStateToProps = (state) => {
-  return ({
-    good: state.goods.find(good => good.idProduct === state.activeGoodId)
-})};
-
-export default connect(mapStateToProps)(GoodExpandedView);

@@ -1,5 +1,5 @@
 import React from 'react';
-import GoodsSection from './GoodsSection.jsx';
+import CatalogHoc from './CatalogHoc.jsx';
 import HomePage from './HomePage.jsx';
 import ContactPage from './ContactPage.jsx';
 import Navigation from './Navigation.jsx';
@@ -31,10 +31,10 @@ class Layout extends React.Component {
                     </Row>
 
                     <Row>
-                        <Route exact path='/' component={HomePage} />
-                        <Route path='/catalog' component={GoodsSection} />
-                        <Route exact path='/contacts' component={ContactPage} />
-                        <Route exact path='/cart' component={Cart} />
+                        <Route exact path='/'                         component={HomePage} />
+                        <Route       path='/catalog/:catId?/:goodId?' component={CatalogHoc} /> {/* optional parameters: catId, goodId */}
+                        <Route exact path='/contacts'                 component={ContactPage} />
+                        <Route exact path='/cart'                     component={Cart} />
                     </Row>
 
                     <Row>

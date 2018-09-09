@@ -3,8 +3,15 @@ import config from 'AliasSrc/config';
 export default {
     existingCategories: `http://${config.baseUrl}/categories/existing`,
     allGoods: `http://${config.baseUrl}/goods`,
-    goodDetails(id) {
-      return `http://${config.baseUrl}/goods/details/${id}`;
+    goodsByCategory(catId, excludeGoodId) {
+        const excludeStr = excludeGoodId ? `&excludegoodid=${excludeGoodId}` : '';
+        return `http://${config.baseUrl}/goods?catId=${catId}${excludeStr}`;
+    },
+    goodById(goodId) {
+        return `http://${config.baseUrl}/goods?goodId=${goodId}`;
+    },
+    goodDetails(goodId) {
+      return `http://${config.baseUrl}/goods/details/${goodId}`;
     },
     goodPhotoThumbnail(goodId, imageIndex) {
       return `http://${config.baseUrl}/images/goods/thumbnail/pht_${goodId}_${imageIndex}.jpg`;
