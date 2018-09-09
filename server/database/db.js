@@ -1,13 +1,15 @@
 const mysql = require('mysql');
 const Bluebird = require('bluebird');
-
+const utils = require('../utils/utils.js');
 
 const connectionOptions = {
     host: "109.95.32.134",
     user: "seller",
     password: "_SeLlEr_",
-    database: "goods"
+    database: utils.isProduction() ? "goods" : "goodsdev"
 };
+
+console.log('###############', 'isProd:', utils.isProduction());
 
 
 function getConnection() {

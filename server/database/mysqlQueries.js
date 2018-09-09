@@ -1,6 +1,8 @@
+// TODO: remove db name from all queries, since it is set in db.js via connection
+
 module.exports = {
     getAllCategories() {
-        return 'SELECT * FROM goods.category';
+        return 'SELECT * FROM category';
     },
 
     getExistingCategories() {
@@ -8,7 +10,7 @@ module.exports = {
     },
 
     getAllGoods() {
-        return 'SELECT * FROM goods.products';
+        return 'SELECT * FROM products';
     },
 
     // TODO: make request by id
@@ -16,7 +18,7 @@ module.exports = {
     },
 
     getGoodDetailsById(id) {
-        return `SELECT textDescrip from goods.descrip where idProduct=${id}`;
+        return `SELECT textDescrip from descrip where idProduct=${id}`;
     }
 
 };
