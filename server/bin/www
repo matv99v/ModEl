@@ -8,14 +8,12 @@ var app = require('../app');
 var debug = require('debug')('server:server');
 var http = require('http');
 
-const utils = require('../utils/utils.js');
-
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(utils.getPort());
+var port = normalizePort(process.env.PORT);
 app.set('port', port);
 
 /**
@@ -91,4 +89,10 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+
+  console.warn(
+`Mode: ${process.env.NODE_ENV}
+Port: ${process.env.PORT}
+Database: ${process.env.DB_NAME}`
+  );
 }

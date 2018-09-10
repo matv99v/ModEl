@@ -4,15 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prod": "NODE_ENV=production node_modules/.bin/webpack --progress --config webpack.prod.js",
-    "dev": "NODE_ENV=development node_modules/.bin/webpack --progress --config webpack.dev.js --watch",
-    "test": "NODE_ENV=test node_modules/.bin/webpack       --progress --config webpack.prod.js",
-
-    "dev:win": "SET NODE_ENV=development & node_modules/.bin/webpack --progress --watch --config webpack.dev.js",
-    "prod:win": "SET NODE_ENV=production & node_modules/.bin/webpack --progress --config webpack.prod.js",
-
-    "dev:win": "SET NODE_ENV=development & node_modules\\.bin\\webpack --progress --watch --config webpack.dev.js",
-    "prod:win": "SET NODE_ENV=production & node_modules\\.bin\\webpack --progress --config webpack.prod.js"
+    "prod": "node_modules/.bin/webpack --progress --config webpack.prod.js",
+    "dev": "node_modules/.bin/webpack --progress --config webpack.dev.js --watch"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
