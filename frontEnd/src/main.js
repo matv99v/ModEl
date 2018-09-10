@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import utils from 'AliasSrc/utils';
 
 if (!utils.isProduction) {
-    console.warn('Looks like we are in development mode!');
+    console.warn(`Looks like we are in ${process.env.NODE_ENV} mode!`);
 }
 
 

@@ -4,9 +4,14 @@
   "private": true,
   "scripts": {
     "TODO": "set NODE_ENV=production via pm2",
-    "dev:ubuntu": "NODE_ENV=development nodemon ./bin/www",
-    "dev:win": "SET NODE_ENV=development & nodemon .\/bin\/www",
-    "prod": "prod is handled by pm2"
+
+    "prod": "NODE_ENV=production nodemon ./bin/www",
+    "test": "NODE_ENV=test nodemon ./bin/www",
+    "dev": "NODE_ENV=development nodemon ./bin/www",
+
+    "prod:win": "SET NODE_ENV=production & nodemon .\/bin\/www",
+    "test:win": "SET NODE_ENV=test & nodemon .\/bin\/www",
+    "dev:win": "SET NODE_ENV=development & nodemon .\/bin\/www"
   },
   "dependencies": {
     "bluebird": "^3.5.1",
