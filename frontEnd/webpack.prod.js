@@ -9,6 +9,10 @@ module.exports = merge(common, {
     devtool: 'source-map',
     plugins: [
         new UglifyJSPlugin({ sourceMap: true  }),
-        new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') })
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('production'),
+            'process.env.HOST': JSON.stringify('109.95.32.134'),
+            'process.env.PORT': JSON.stringify('3000')
+        })
     ]
 });

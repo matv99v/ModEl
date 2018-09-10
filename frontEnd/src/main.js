@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import store from './redux/store';
 import { Provider } from 'react-redux';
-import utils from 'AliasSrc/utils';
 
-if (!utils.isProduction) {
-    console.warn(`Looks like we are in ${process.env.NODE_ENV} mode!`);
-}
+console.warn(
+`Mode: ${process.env.NODE_ENV}
+Host: ${process.env.HOST}
+Port: ${process.env.PORT}`
+);
 
 
 import Layout from './components/Layout.jsx';

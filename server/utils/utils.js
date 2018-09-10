@@ -53,21 +53,4 @@ module.exports = {
       });
     },
 
-    isProduction() {
-        return process.env.NODE_ENV === 'production';
-    },
-
-    getPort() {
-        return this.env2port[process.env.NODE_ENV];
-    },
-
-    env2port: {
-        production: '3000',
-        development: '3001',
-        test: '3001'
-    }
-
-
-
-
 };
