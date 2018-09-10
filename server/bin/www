@@ -15,7 +15,7 @@ const utils = require('../utils/utils.js');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(utils.isProduction() ? '3000' : '3001');
+var port = normalizePort(utils.getPort());
 app.set('port', port);
 
 /**

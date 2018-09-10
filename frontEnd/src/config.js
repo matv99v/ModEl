@@ -1,15 +1,14 @@
-import utils from 'AliasSrc/utils';
+// import utils from 'AliasSrc/utils';
 
 export default {
-    prodUrl: '109.95.32.134',
-    devUrl: 'localhost',
-    prodPort: '3000',
-    devPort: '3001',
-
     get baseUrl() {
-        return utils.isProduction
-            ? this.prodUrl + ':' + this.prodPort
-            : this.devUrl + ':' + this.devPort;
+        return this.env2url[process.env.NODE_ENV];
+    },
+
+    env2url: {
+        production: '109.95.32.134:3000',
+        development: 'localhost:3001',
+        test: '109.95.32.134:3001'
     }
 
 };
