@@ -52,20 +52,47 @@ class CatalogHoc extends React.Component {
     amount = 0;
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.match.params.catId && this.filteredGoods.length <= 1 && !this.props.match.params.goodId) {
+        console.log('COMPONENTDIDUPDATE');
+        if (this.fetchByCategoryPredicate()) {
             console.log('fetch goods from category', this.props.match.params.catId);
             this.props.dispatch(fetchGoodsByCategoryActionAsync(+this.props.match.params.catId, this.selectedGood && this.selectedGood.idProduct));
-            this.selectedGood = null;
-            this.filteredGoods = [];
         }
 
-        if (this.amount < 5 && this.props.match.params.goodId && !this.selectedGood) {
+        if (this.fetchByGoodIdPredicate()) {
             this.amount++;
             console.log('fetch good', this.props.match.params.goodId);
             this.props.dispatch(fetchGoodByIdActionAsync(+this.props.match.params.goodId));
         }
 
     }
+
+    fetchByCategoryPredicate() {
+
+        const filteredGoodsByCategoryId = this.props.goods
+            .filter(good => good.idCategory === +this.props.match.params.catId);
+
+        const res =
+               this.props.match.params.catId         // catId is in ULR
+            && filteredGoodsByCategoryId.length <= 1 // one or none goods
+            && !this.props.match.params.goodId;      // no goodId in ULR
+        console.log('fetchByCategoryPredicate', res);
+        return res;
+    }
+
+    fetchByGoodIdPredicate() {
+
+        const foundGood = this.props.goods
+            .find(good => good.idProduct === +this.props.match.params.goodId);
+
+        const res =
+               this.amount < 5                // in case of error boundary
+            && this.props.match.params.goodId // goodId is in ULR
+            && !foundGood;                    // no good in store
+
+        console.log('fetchByGoodIdPredicate', res);
+        return res;
+    }
+
 
 
     render() {
