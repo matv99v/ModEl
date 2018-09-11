@@ -6,6 +6,7 @@ import apiUrls from 'AliasSrc/api/apiUrls';
 
 // import { fetchGoodsActionAsync } from 'AliasReduxActions/goods-actions';
 import { fetchExistingCategoriesAsync } from 'AliasReduxActions/categories-actions';
+import { fetchExistingCategoriesAsync_X } from 'AliasReduxActions/catalog-actions';
 
 import './Navigation.scss';
 
@@ -22,7 +23,8 @@ class Navigation extends React.Component {
 
     componentWillMount() {
         console.warn('fetching initial data, should be printed only one time');
-        this.props.dispatch(fetchExistingCategoriesAsync());
+        // this.props.dispatch(fetchExistingCategoriesAsync());
+        this.props.dispatch(fetchExistingCategoriesAsync_X());
     }
 
 
@@ -49,7 +51,7 @@ class Navigation extends React.Component {
                 <Navbar.Header>
                     <Navbar.Brand>
                         <Link to='/' >
-                            <img style={{height: '30px'}} src={apiUrls.brandLogo}/>
+                            Test
                         </Link>
                     </Navbar.Brand>
                     <Navbar.Toggle />
@@ -102,7 +104,8 @@ class Navigation extends React.Component {
 
 const mapStateToProps = (state) => ({
     cart: state.cart,
-    categories: state.categories
+    categories: Object.keys(state.catalog).map(idCategory => state.catalog[idCategory]) // transform object to array before render
 });
+
 
 export default connect(mapStateToProps)(Navigation);

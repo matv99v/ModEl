@@ -9,6 +9,8 @@ import { Route, Switch } from 'react-router-dom';
 import GoodExpandedView from './GoodExpandedView.jsx';
 import './CatalogHoc.scss';
 import { fetchGoodsByCategoryActionAsync, fetchGoodDetailsActionAsync, fetchGoodByIdActionAsync } from 'AliasReduxActions/goods-actions';
+import { fetchExistingCategoriesAsync_X, fetchGoodsByCategoryActionAsync_X, fetchGoodByIdActionAsync_X  } from 'AliasReduxActions/catalog-actions';
+
 
 
 
@@ -18,19 +20,28 @@ class CatalogHoc extends React.Component {
         this.state = {};
     }
 
+    componentDidMount() {
+      console.log('+ CatalogHoc componentDidMount');
+    }
+
+    componentWillUnmount() {
+      console.log('- CatalogHoc componentWillUnmount');
+    }
+
     renderNoGoods = ({match}) => {
         return (<div className='CatalogHoc__chooseCatDialog hidden-xs'>Выберите категорию</div>);
     }
 
-    filteredGoods = [];
-
     renderGoodsByCategory = ({match}) => {
-        this.filteredGoods = this.props.goods
-            .filter(good => good.idCategory === +this.props.match.params.catId);
+
+        const goodsExist =
+            this.props.catalog[this.props.match.params.catId]
+            && this.props.catalog[this.props.match.params.catId]['goods']
+            && this.props.catalog[this.props.match.params.catId]['goods']['length'];
 
         return (
-            this.filteredGoods.length
-                ? <GoodsList goods={this.filteredGoods} />
+            goodsExist
+                ? <GoodsList goods={this.props.catalog[this.props.match.params.catId]['goods']} />
                 : <div>Loading...</div>
         );
     }
@@ -49,41 +60,55 @@ class CatalogHoc extends React.Component {
 
     }
 
+    fetchedIds = {};
+
     amount = 0;
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log('COMPONENTDIDUPDATE');
+        console.log('COMPONENTDIDUPDATE', this.fetchedIds);
         if (this.fetchByCategoryPredicate()) {
+            this.amount++;
+
+            // this.fetchedIds[this.props.match.params.catId] = true;
             console.log('fetch goods from category', this.props.match.params.catId);
-            this.props.dispatch(fetchGoodsByCategoryActionAsync(+this.props.match.params.catId, this.selectedGood && this.selectedGood.idProduct));
+
+            // const exlcude = !this.fetchedIds[this.props.match.params.catId] && !this.selectedGood ? null : this.selectedGood.idProduct;
+
+            // this.props.dispatch(fetchGoodsByCategoryActionAsync(+this.props.match.params.catId));
+            debugger;
+            this.props.dispatch(fetchGoodsByCategoryActionAsync_X(+this.props.match.params.catId));
         }
 
-        if (this.fetchByGoodIdPredicate()) {
+        if (false && this.fetchByGoodIdPredicate()) {
             this.amount++;
             console.log('fetch good', this.props.match.params.goodId);
-            this.props.dispatch(fetchGoodByIdActionAsync(+this.props.match.params.goodId));
+            // this.props.dispatch(fetchGoodByIdActionAsync(+this.props.match.params.goodId));
+            this.props.dispatch(fetchGoodByIdActionAsync_X(+this.props.match.params.goodId));
         }
 
     }
 
     fetchByCategoryPredicate() {
 
-        const filteredGoodsByCategoryId = this.props.goods
-            .filter(good => good.idCategory === +this.props.match.params.catId);
+        // const filteredGoodsByCategoryId = this.props.goods
+        //     .filter(good => good.idCategory === +this.props.match.params.catId);
 
         const res =
-               this.props.match.params.catId         // catId is in ULR
-            && filteredGoodsByCategoryId.length <= 1 // one or none goods
-            && !this.props.match.params.goodId;      // no goodId in ULR
+            this.amount < 5                // in case of error boundary
+            && this.props.match.params.catId            // catId is in ULR
+            && !this.props.match.params.goodId       // no goodId in ULR
+            // && filteredGoodsByCategoryId.length <= 1 // one or none goods
+            && !this.props.catalog[this.props.match.params.catId]['goods']
+            ;
+
+        debugger;
         console.log('fetchByCategoryPredicate', res);
         return res;
     }
 
     fetchByGoodIdPredicate() {
 
-        const foundGood = this.props.goods
-            .find(good => good.idProduct === +this.props.match.params.goodId);
-
+        debugger;
         const res =
                this.amount < 5                // in case of error boundary
             && this.props.match.params.goodId // goodId is in ULR
@@ -112,7 +137,7 @@ class CatalogHoc extends React.Component {
                     <Col xs={12} sm={4} md={4}>
 
                         <Categories
-                            categories={this.props.categories}
+                            categories={ Object.keys(this.props.catalog).map(idCategory => this.props.catalog[idCategory]) }
                             dispatch={this.props.dispatch}
                             activeCategoryId={this.props.match.params.catId}
                         />
@@ -137,8 +162,7 @@ class CatalogHoc extends React.Component {
 
 
 const mapStateToProps = (state) => ({
-    goods: state.goods,
-    categories: state.categories,
+    catalog: state.catalog
 });
 
 export default connect(mapStateToProps)(CatalogHoc);
