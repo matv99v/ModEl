@@ -34,7 +34,6 @@ export function saveGoodsCategories_X(categories) {
 
 
 export function fetchGoodsByCategoryActionAsync_X(catId, excludeGoodId) {
-    debugger;
     return (dispatch) => {
         dispatch(showSpinnerAction());
 

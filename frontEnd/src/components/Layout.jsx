@@ -4,7 +4,7 @@ import HomePage from './HomePage.jsx';
 import ContactPage from './ContactPage.jsx';
 import Navigation from './Navigation.jsx';
 import Cart from './Cart.jsx';
-import { hot } from 'react-hot-loader'
+import { hot } from 'react-hot-loader';
 import ErrorWindow from './ErrorWindow.jsx';
 import Spinner from './common/Spinner.jsx';
 import './Layout.scss';

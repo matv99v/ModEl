@@ -25,4 +25,4 @@ function get(url) {
 
 export default {
     get
-}
+};
