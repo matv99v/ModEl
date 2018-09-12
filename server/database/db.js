@@ -1,14 +1,12 @@
 const mysql = require('mysql');
 const Bluebird = require('bluebird');
 
-
 const connectionOptions = {
     host: "109.95.32.134",
     user: "seller",
     password: "_SeLlEr_",
-    database: "goods"
+    database: process.env.DB_NAME
 };
-
 
 function getConnection() {
     const connection = mysql.createConnection(connectionOptions);

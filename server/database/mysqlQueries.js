@@ -1,6 +1,8 @@
+// TODO: remove db name from all queries, since it is set in db.js via connection
+
 module.exports = {
     getAllCategories() {
-        return 'SELECT * FROM goods.category';
+        return 'SELECT * FROM category';
     },
 
     getExistingCategories() {
@@ -8,51 +10,49 @@ module.exports = {
     },
 
     getAllGoods() {
-        return 'SELECT * FROM goods.products';
+        return 'SELECT * FROM products';
     },
 
     getGoodsByCategoryId(catId, excludegoodid) {
-        const excludeStr = excludegoodid ? ` AND goods.products.idProduct !=${excludegoodid}` : '';
+        const excludeStr = excludegoodid ? ` AND products.idProduct !=${excludegoodid}` : '';
         return  `SELECT
-                    goods.products.idProduct,
-                    goods.products.productName,
-                    goods.products.idCategory,
-                    goods.products.productParams,
-                    goods.products.declarePrice,
-                    goods.products.detailName,
-                    goods.descrip.textDescrip
+                    products.idProduct,
+                    products.productName,
+                    products.idCategory,
+                    products.productParams,
+                    products.declarePrice,
+                    products.detailName,
+                    descrip.textDescrip
                 FROM
-                    goods.products
+                    products
                 LEFT JOIN
-                    goods.descrip ON goods.products.idProduct = goods.descrip.idProduct
+                    descrip ON products.idProduct = descrip.idProduct
                 WHERE
-                    goods.products.exist = 1
+                    products.exist = 1
                     AND
-                        goods.products.idCategory = ${catId}
+                        products.idCategory = ${catId}
                     ${excludeStr}`;
     },
 
     getGoodById(goodId) {
         return  `SELECT
-                    goods.products.idProduct,
-                    goods.products.productName,
-                    goods.products.idCategory,
-                    goods.products.productParams,
-                    goods.products.declarePrice,
-                    goods.products.detailName,
-                    goods.descrip.textDescrip
+                    products.idProduct,
+                    products.productName,
+                    products.idCategory,
+                    products.productParams,
+                    products.declarePrice,
+                    products.detailName,
+                    descrip.textDescrip
                 FROM
-                    goods.products
+                    products
                 LEFT JOIN
-                    goods.descrip ON goods.products.idProduct = goods.descrip.idProduct
+                    descrip ON products.idProduct = descrip.idProduct
                 WHERE
-                    goods.products.exist = 1 AND goods.products.idProduct = ${goodId}`;
+                    products.exist = 1 AND products.idProduct = ${goodId}`;
     },
 
     getGoodDetailsById(id) {
-        return `SELECT textDescrip from goods.descrip where idProduct=${id}`;
-    },
-
-
+        return `SELECT textDescrip from descrip where idProduct=${id}`;
+    }
 
 };

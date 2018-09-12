@@ -9,7 +9,7 @@ module.exports = merge(common, {
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development'),
-            'process.env.HOST': JSON.stringify('localhost'),
+            'process.env.HOST': JSON.stringify('109.95.32.134'),
             'process.env.PORT': JSON.stringify('3001'),
         })
     ]
