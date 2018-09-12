@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 
@@ -14,23 +14,23 @@ class ErrorWindow extends React.Component {
     render() {
         return (
             <div className='ErrorWindow__cnt'>
-              <Modal show={!!this.props.error} bsSize="large">
-                 <Modal.Header>
-                     <Modal.Title>Server error</Modal.Title>
-                 </Modal.Header>
-                 <Modal.Body>
+                <Modal show={!!this.props.error} bsSize="large">
+                    <Modal.Header>
+                        <Modal.Title>Server error</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
 
-                   <p dangerouslySetInnerHTML={{__html: this.props.error}}></p>
+                        <p dangerouslySetInnerHTML={{__html: this.props.error}}></p>
 
-                 </Modal.Body>
-               </Modal>
+                    </Modal.Body>
+                </Modal>
             </div>
         );
     }
-};
+}
 
 const mapStateToProps = (state) => ({
-  error: state.error
+    error: state.error
 });
 
 export default connect(mapStateToProps)(ErrorWindow);

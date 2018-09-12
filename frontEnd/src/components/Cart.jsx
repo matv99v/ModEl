@@ -1,12 +1,10 @@
 import React from 'react';
 import './Cart.scss';
-import { Image, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { removeFromCartAction, updateGoodQuantityAction } from 'AliasReduxActions/cart-actions';
 import PlaceOrderModalForm from './PlaceOrderModalForm.jsx';
-import DevInfo from './DevInfo.jsx';
 
 import GoodsList from './GoodsList.jsx';
 
@@ -41,24 +39,24 @@ class Cart extends React.Component {
     }
 
     getTotal() {
-      const {cart, goods} = this.props;
-      const cartKeys = Object.keys(cart);
+        const {cart, goods} = this.props;
+        const cartKeys = Object.keys(cart);
 
-      return cartKeys.reduce((acc, key) => {
-        const good = goods.find(good => good.idProduct === +key);
-        return cart[key] * good.declarePrice + acc;
-      }, 0);
+        return cartKeys.reduce((acc, key) => {
+            const good = goods.find(good => good.idProduct === +key);
+            return cart[key] * good.declarePrice + acc;
+        }, 0);
     }
 
     render() {
 
-      const pickedGoods = Object.keys(this.props.cart)
-          .map(goodId => {
-              const goodObj = this.props.goods.find(good => {
-                  return good.idProduct == goodId;
-              });
-              return goodObj;
-          });
+        const pickedGoods = Object.keys(this.props.cart)
+            .map(goodId => {
+                const goodObj = this.props.goods.find(good => {
+                    return good.idProduct == goodId;
+                });
+                return goodObj;
+            });
 
         return (
             <div className="Cart__cnt">
@@ -70,7 +68,7 @@ class Cart extends React.Component {
                 </div>
 
                 <div className="Order__cnt">
-                    <Button bsSize="large" bsStyle="success" onClick={(e) => this.handlePlaceOrderClick()} >Оформить заказ</Button>
+                    <Button bsSize="large" bsStyle="success" onClick={() => this.handlePlaceOrderClick()} >Оформить заказ</Button>
                 </div>
 
                 <PlaceOrderModalForm
@@ -82,7 +80,7 @@ class Cart extends React.Component {
 
         );
     }
-};
+}
 
 
 const mapStateToProps = (state) => ({

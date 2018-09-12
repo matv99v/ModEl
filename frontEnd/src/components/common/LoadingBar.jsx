@@ -2,6 +2,7 @@ import React from 'react';
 import './LoadingBar.scss';
 import { connect } from 'react-redux';
 
+// TODO: make dumb component
 
 class LoadingBar extends React.Component {
     constructor(props) {
@@ -13,9 +14,9 @@ class LoadingBar extends React.Component {
         return (
             <div className={this.props.isLoading ? 'LoadingBar__cnt' : 'hidden'} >
                 <div className="load-bar">
-                  <div className="bar"></div>
-                  <div className="bar"></div>
-                  <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
                 </div>
             </div>
         );

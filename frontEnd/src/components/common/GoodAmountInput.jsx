@@ -4,6 +4,8 @@ import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { updateGoodQuantityAction } from 'AliasReduxActions/cart-actions';
 
+// TODO: make dumb component
+
 
 
 
@@ -25,9 +27,9 @@ class GoodAmountInput extends React.Component {
     changeHandler = (e, amount, isReplace=false) => {
         e.stopPropagation();
         const payload = {
-          goodId: this.props.good.idProduct,
-          amount,
-          isReplace
+            goodId: this.props.good.idProduct,
+            amount,
+            isReplace
         };
         this.props.dispatch(updateGoodQuantityAction(payload));
     };
@@ -51,12 +53,12 @@ class GoodAmountInput extends React.Component {
             </span>
         );
     }
-};
+}
 
 
 
 const mapStateToProps = (state) => ({
-  cart: state.cart
+    cart: state.cart
 });
 
 export default connect(mapStateToProps)(GoodAmountInput);

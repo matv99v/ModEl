@@ -68,4 +68,4 @@ export default class PlaceOrderModalForm extends React.Component {
 
         );
     }
-};
+}

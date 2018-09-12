@@ -3,4 +3,4 @@ export function spawnNewError(err) {
         type: 'SPAWN_NEW_ERROR',
         payload: err
     };
-};
+}

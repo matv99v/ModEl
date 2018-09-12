@@ -23,51 +23,53 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [
-                    { loader: "style-loader" },
-                    { loader: "css-loader" }
+                    { loader: 'style-loader' },
+                    { loader: 'css-loader' }
                 ]
             },
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: "babel-loader"
+                use: ['babel-loader', 'eslint-loader']
             },
-            {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                use: "babel-loader"
-            },
+            // {
+            //     test: /\.js$/,
+            //     exclude: /node_modules/,
+            //     use: ['eslint-loader']
+            // },
             {
                 test: /\.scss$/,
                 use: [
-                    "style-loader", // creates style nodes from JS strings
-                    "css-loader", // translates CSS into CommonJS
-                    "sass-loader" // compiles Sass to CSS
+                    'style-loader', // creates style nodes from JS strings
+                    'css-loader', // translates CSS into CommonJS
+                    'sass-loader' // compiles Sass to CSS
                 ]
             },
             {
-              test: /\.png$/,
-              loader: "url-loader?limit=100000"
+                test: /\.png$/,
+                exclude: /node_modules/,
+                loader: 'url-loader?limit=100000'
             },
             {
-              test: /\.jpg$/,
-              loader: "file-loader"
+                test: /\.jpg$/,
+                exclude: /node_modules/,
+                loader: 'file-loader'
             },
             {
-              test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-              loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+                test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url-loader?limit=10000&mimetype=application/font-woff'
             },
             {
-              test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-              loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
+                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
             },
             {
-              test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-              loader: 'file-loader'
+                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'file-loader'
             },
             {
-              test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-              loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
             }
 
         ]

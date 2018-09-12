@@ -4,15 +4,13 @@ import api from 'AliasSrc/api/api';
 
 import { spawnNewError } from 'AliasReduxActions/error-actions';
 
-
-export function fetchExistingCategoriesAsync_X() {
-
+export function fetchExistingCategoriesAsync() {
     return (dispatch) => {
         dispatch(showSpinnerAction());
 
         api.get(apiUrls.existingCategories)
             .then(data => {
-                dispatch(saveGoodsCategories_X(data));
+                dispatch(saveGoodsCategories(data));
                 return null;
             })
             .catch(err => {
@@ -23,23 +21,22 @@ export function fetchExistingCategoriesAsync_X() {
             });
 
     };
-};
+}
 
-export function saveGoodsCategories_X(categories) {
+function saveGoodsCategories(categories) {
     return {
-        type: 'SAVE_CATEGORIES_X',
+        type: 'SAVE_CATEGORIES',
         payload: categories
     };
-};
+}
 
-
-export function fetchGoodsByCategoryActionAsync_X(catId, excludeGoodId) {
+export function fetchGoodsByCategoryActionAsync(catId, excludeGoodId) {
     return (dispatch) => {
         dispatch(showSpinnerAction());
 
         api.get(apiUrls.goodsByCategory(catId, excludeGoodId))
             .then(data => {
-                dispatch(saveGoodsPortionAction_X({data, catId}));
+                dispatch(saveGoodsPortionAction({data, catId}));
                 return null;
             })
             .catch(err => {
@@ -49,22 +46,22 @@ export function fetchGoodsByCategoryActionAsync_X(catId, excludeGoodId) {
                 dispatch(hideSpinnerAction());
             });
     };
-};
+}
 
-export function saveGoodsPortionAction_X(payload) {
+function saveGoodsPortionAction(payload) {
     return {
-        type: 'SAVE_GOODS_BY_CATEGORY_X',
+        type: 'SAVE_GOODS_BY_CATEGORY',
         payload: payload
     };
-};
+}
 
-export function fetchGoodByIdActionAsync_X(goodId) {
+export function fetchGoodByIdActionAsync(goodId) {
     return (dispatch) => {
         dispatch(showSpinnerAction());
 
         api.get(apiUrls.goodById(goodId))
             .then(data => {
-                dispatch(saveGoodAction_X(data));
+                dispatch(saveGoodAction(data));
                 return null;
             })
             .catch(err => {
@@ -74,18 +71,11 @@ export function fetchGoodByIdActionAsync_X(goodId) {
                 dispatch(hideSpinnerAction());
             });
     };
-};
+}
 
-
-export function saveGoodAction_X(data) {
+function saveGoodAction(data) {
     return {
-        type: 'SAVE_GOOD_X',
+        type: 'SAVE_GOOD',
         payload: data
     };
-};
-
-
-
-
-// fetchGoodsByCategoryActionAsync_X
-// fetchGoodByIdActionAsync_X
+}

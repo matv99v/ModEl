@@ -1,7 +1,7 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import { Image, Grid, Row, Col, Button, ListGroupItem, ListGroup } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 import './GoodsList.scss';
 import GoodFoldedView from './GoodFoldedView.jsx';
 
@@ -27,9 +27,9 @@ export default class GoodsList extends React.Component {
                                     <GoodFoldedView good={good}/>
                                 </Link>
                             </li>
-                    ))
+                        ))
                 }
-          </ListGroup>
+            </ListGroup>
         );
     }
-};
+}

@@ -18,8 +18,8 @@ export default class ContactPage extends React.Component {
                         <p>Контактное лицо - Валерий.</p>
                         <p>Связаться можно одним из способов:</p>
                         <ul>
-                          <li>Телефон - 050-487-7079; 096-575-5429</li>
-                          <li>E-Mail - ZAIKA.VALERII@gmail.com</li>
+                            <li>Телефон - 050-487-7079; 096-575-5429</li>
+                            <li>E-Mail - ZAIKA.VALERII@gmail.com</li>
                         </ul>
                     </Panel.Body>
                 </Panel>

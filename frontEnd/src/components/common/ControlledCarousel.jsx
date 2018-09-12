@@ -6,61 +6,61 @@ import apiUrls from 'AliasSrc/api/apiUrls';
 import './ControlledCarousel.scss';
 
 export default class ControlledCarousel extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+    constructor(props, context) {
+        super(props, context);
 
-    this.handleSelect = this.handleSelect.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
 
-    this.state = {
-      index: 0,
-      direction: null
-    };
-  }
+        this.state = {
+            index: 0,
+            direction: null
+        };
+    }
 
-  handleSelect(selectedIndex, e) {
-    this.setState({
-      index: selectedIndex,
-      direction: e.direction
-    });
-  }
+    handleSelect(selectedIndex, e) {
+        this.setState({
+            index: selectedIndex,
+            direction: e.direction
+        });
+    }
 
-  render() {
-    const { index, direction } = this.state;
+    render() {
+        const { index, direction } = this.state;
 
-    return (
-      <Carousel
-        activeIndex={index}
-        direction={direction}
-        onSelect={this.handleSelect}
-        className="ControlledCarousel__cnt"
-      >
+        return (
+            <Carousel
+                activeIndex={index}
+                direction={direction}
+                onSelect={this.handleSelect}
+                className="ControlledCarousel__cnt"
+            >
 
-        {
-          Array
-            .apply(null, {length: this.props.good.photosAmount || 1}) // if no photo, apply the standart one
-            .map((el, i) => {
+                {
+                    Array
+                        .apply(null, {length: this.props.good.photosAmount || 1}) // if no photo, apply the standart one
+                        .map((el, i) => {
 
-              const imgSrc = this.props.good.photosAmount ? apiUrls.goodPhotoMedium(this.props.good.idProduct, i+1) : apiUrls.defaultGoodPhoto;
+                            const imgSrc = this.props.good.photosAmount ? apiUrls.goodPhotoMedium(this.props.good.idProduct, i+1) : apiUrls.defaultGoodPhoto;
 
-              return (
-                <Carousel.Item key={i}>
-                  {false && <img alt={this.props.good.productName} src={imgSrc} />}
+                            return (
+                                <Carousel.Item key={i}>
+                                    {false && <img alt={this.props.good.productName} src={imgSrc} />}
 
-                  <div
-                      className='ControlledCarousel__imgCnt'
-                      style={{background: `url(${imgSrc}) no-repeat center center / contain`}}
-                  >
+                                    <div
+                                        className='ControlledCarousel__imgCnt'
+                                        style={{background: `url(${imgSrc}) no-repeat center center / contain`}}
+                                    >
 
-                  </div>
+                                    </div>
 
-                  <div className="ControlledCarousel__goodId">ID: {this.props.good.idProduct}</div>
-                </Carousel.Item>
-              )
-            })
-        }
+                                    <div className="ControlledCarousel__goodId">ID: {this.props.good.idProduct}</div>
+                                </Carousel.Item>
+                            );
+                        })
+                }
 
 
-      </Carousel>
-    );
-  }
+            </Carousel>
+        );
+    }
 }

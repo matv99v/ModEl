@@ -3,6 +3,8 @@ import './Spinner.scss';
 import { connect } from 'react-redux';
 
 
+// TODO: make dumb component
+
 class Spinner extends React.Component {
     constructor(props) {
         super(props);

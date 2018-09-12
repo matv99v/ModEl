@@ -6,7 +6,7 @@ export default class GoodName extends React.Component {
     render() {
         return (
             <h4 className="GoodName__cnt">
-              {this.props.value}
+                {this.props.value}
             </h4>
 
         );

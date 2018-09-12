@@ -3,15 +3,9 @@ import thunk from 'redux-thunk';
 import reducers from './reducers';
 
 
-
-
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const initStore = {
-    cart: [],
-    isLoading: false,
-    goods: []
 };
 
 const store = createStore(
