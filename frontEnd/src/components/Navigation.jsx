@@ -61,7 +61,7 @@ class Navigation extends React.Component {
                             Инфо
                         </NavItem>
 
-                        <NavDropdown title="Каталог" id="basic-nav-dropdown" className="visible-xs">
+                        <NavDropdown title="Каталог" id="cat-nav-dropdown" className="visible-xs">
                             {
                                 categories.map((cat, i) => (
                                     <MenuItem

@@ -27,6 +27,7 @@ class CatalogHoc extends React.Component {
 
         const categoryLength =
             this.props.catalog[this.props.match.params.catId]
+            && this.props.catalog[this.props.match.params.catId]['goods']
             && this.props.catalog[this.props.match.params.catId]['goods']['length'];
 
         return (
@@ -50,7 +51,7 @@ class CatalogHoc extends React.Component {
 
     }
 
-    componentDidUpdate() {
+    fetchIfNecessary() {
         if (this.fetchByCategoryPredicate()) {
             const exlcudeId = this.props.catalog[this.props.match.params.catId]['goods']['length'] === 1
                 ? this.props.catalog[this.props.match.params.catId]['goods'][0]['idProduct']
@@ -68,18 +69,29 @@ class CatalogHoc extends React.Component {
         const res =
             this.props.match.params.catId            // catId is in ULR
             && !this.props.match.params.goodId       // no goodId in ULR
-            && this.props.catalog[this.props.match.params.catId]['goods']['length'] <= 1;
+            && this.props.catalog[this.props.match.params.catId]
+            && this.props.catalog[this.props.match.params.catId]['goods']
+            && this.props.catalog[this.props.match.params.catId]['goods']['length'] <= 1; // get from DB on fetching catalog  amount of goods in each category
         return res;
     }
 
     fetchByGoodIdPredicate() {
         const res =
             this.props.match.params.goodId // goodId is in ULR
+            && this.props.catalog[this.props.match.params.catId]
+            && this.props.catalog[this.props.match.params.catId]['goods']
             && !this.props.catalog[this.props.match.params.catId]['goods']['length']; // no goods in particular category
 
         return res;
     }
 
+    componentDidMount() {
+        this.fetchIfNecessary();
+    }
+
+    componentDidUpdate() {
+        this.fetchIfNecessary();
+    }
 
 
     render() {

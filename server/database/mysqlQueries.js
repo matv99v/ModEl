@@ -6,6 +6,7 @@ module.exports = {
     },
 
     getExistingCategories() {
+        // TODO: get amount of each good in each category
         return 'SELECT * FROM category where idcategory in (select distinct idcategory from products where exist=1)';
     },
 

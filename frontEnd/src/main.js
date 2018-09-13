@@ -5,8 +5,8 @@ import { Provider } from 'react-redux';
 
 console.warn(
     `Mode: ${process.env.NODE_ENV}
-    Host: ${process.env.HOST}
-    Port: ${process.env.PORT}`
+Host: ${process.env.HOST}
+Port: ${process.env.PORT}`
 );
 
 
