@@ -1,59 +1,47 @@
-// TODO: remove db name from all queries, since it is set in db.js via connection
-
 module.exports = {
-    getAllCategories() {
-        return 'SELECT * FROM category';
+    getCategories(obj) {
+        // TODO: append amount of each good in each category
+
+        const pickExisting = `WHERE idcategory IN (
+                                SELECT DISTINCT idcategory FROM goodsdev.products
+                                WHERE exist=1)`;
+
+        return `SELECT * FROM goodsdev.category ${obj.enabled && pickExisting}`;
     },
 
-    getExistingCategories() {
-        // TODO: get amount of each good in each category
-        return 'SELECT * FROM category where idcategory in (select distinct idcategory from products where exist=1)';
-    },
+    getGoods(obj) {
+        // enabled - is a special flag for showing the product on UI
+        // excludegoodid - exclude one good by id from query
+        // catId - get all goods by category
+        // goodId - get single good
 
-    getAllGoods() {
-        return 'SELECT * FROM products';
-    },
+        const excludeStr = obj.excludegoodid
+            ? `products.idProduct !=${obj.excludegoodid}`
+            : '';
 
-    getGoodsByCategoryId(catId, excludegoodid) {
-        const excludeStr = excludegoodid ? ` AND products.idProduct !=${excludegoodid}` : '';
-        return  `SELECT
-                    products.idProduct,
-                    products.productName,
-                    products.idCategory,
-                    products.productParams,
-                    products.declarePrice,
-                    products.detailName,
-                    descrip.textDescrip
-                FROM
-                    products
-                LEFT JOIN
-                    descrip ON products.idProduct = descrip.idProduct
-                WHERE
-                    products.exist = 1
-                    AND
-                        products.idCategory = ${catId}
-                    ${excludeStr}`;
-    },
+        const existStr = obj.enabled
+            ? `products.exist = ${obj.enabled}`
+            : '';
 
-    getGoodById(goodId) {
-        return  `SELECT
-                    products.idProduct,
-                    products.productName,
-                    products.idCategory,
-                    products.productParams,
-                    products.declarePrice,
-                    products.detailName,
-                    descrip.textDescrip
-                FROM
-                    products
-                LEFT JOIN
-                    descrip ON products.idProduct = descrip.idProduct
-                WHERE
-                    products.exist = 1 AND products.idProduct = ${goodId}`;
-    },
+        const goodStr = obj.goodId
+            ? `products.idProduct = ${obj.goodId}`
+            : '';
 
-    getGoodDetailsById(id) {
-        return `SELECT textDescrip from descrip where idProduct=${id}`;
-    }
+        const catStr = obj.catId
+            ? `products.idCategory = ${obj.catId}`
+            : '';
+
+        let queryStr = [excludeStr, existStr, goodStr, catStr]
+            .filter(str => !!str)
+            .join(' AND ');
+
+        queryStr = queryStr
+            ? `WHERE ${queryStr}`
+            : '';
+
+        return  `SELECT * FROM products
+                    LEFT JOIN
+                        descrip ON products.idProduct = descrip.idProduct ${queryStr}`;
+    },
 
 };
