@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const Bluebird = require('bluebird');
+const mysqlQueries = require('./mysqlQueries');
 
 const connectionOptions = {
     host: "109.95.32.134",
@@ -14,7 +15,7 @@ function getConnection() {
         if (err) {
             return;
         }
-        console.log('connected as id ' + connection.threadId);
+        console.log(`Connected to ${process.env.DB_NAME} as ${connection.threadId}`);
     });
     return connection;
 }
@@ -34,6 +35,16 @@ function getQueryPromise(queryStr) {
     });
 }
 
+function getCategories(options) {
+    return getQueryPromise(mysqlQueries.getCategories(options));
+}
+
+function getGoods(options) {
+    return getQueryPromise(mysqlQueries.getGoods(options));
+}
+
 module.exports = {
-    getQueryPromise
+    getQueryPromise,
+    getCategories,
+    getGoods
 };

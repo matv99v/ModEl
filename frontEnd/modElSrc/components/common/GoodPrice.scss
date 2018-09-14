@@ -1,0 +1,28 @@
+.GoodPrice__cnt {
+
+  font-size: 18px;
+
+  .GoodPrice__actualValue {
+    white-space: nowrap;
+  }
+
+  &.vertical {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &.horizontal {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  &.stretched {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    text-align: center;
+  }
+}

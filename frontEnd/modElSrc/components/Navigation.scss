@@ -1,0 +1,10 @@
+@import "~AliasModelSrc/variables_override";
+
+.Navigation__Cnt .Navigation__brandImg {
+    background-image: url("~AliasModelSrc/assets/brand_logo.svg");
+    height: 30px;
+    width: 234px;
+    background-repeat: no-repeat;
+    width: auto; /*or your image's width*/
+    height: auto; /*or your image's height*/
+}
