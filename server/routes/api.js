@@ -44,5 +44,23 @@ apiRouter.route('/goods')
             });
     });
 
+apiRouter.route('/stock')
+    .all((req, res, next) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        next();
+    })
+    .get((req, res, next) => {
+        console.log('AAAAAAAAA');
+
+        db.getStock(req.query)
+            .then(rows => {
+                res.end(JSON.stringify(rows));
+            })
+            .catch(err => {
+                next(err);
+            });
+    });
+
 
 module.exports = apiRouter;

@@ -11,7 +11,7 @@ var html = require('./routes/html');
 var admin = require('./routes/admin');
 
 
-const cors = require('cors');
+const cors = require('cors'); // !!!!!!!
 
 var app = express();
 
@@ -31,11 +31,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', api);
 app.use('/images', images);
 app.use('/html', html); // this is temporary route, remove it after DB is updated
-app.use('/admin($|/$)', admin);
+app.use('/admin(/$|/*)?', admin);
 
 // handle every other route with index.html, which will contain
 // a script tag to your application's JavaScript file(s).
-app.get('*', (request, response) => {
+app.get('(/$|$)|(/catalog(/$|/*)?)|(/contacts($|/$)?)', (request, response) => {
     response.sendFile(path.resolve(__dirname, 'public', 'model-index.html'));
 });
 

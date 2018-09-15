@@ -11,6 +11,10 @@ export default {
         return `http://${helpers.base}/api/goods` + helpers.obj2query(obj);
     },
 
+    stock(obj) {
+        return `http://${helpers.base}/api/stock` + helpers.obj2query(obj);
+    },
+
 
 
 

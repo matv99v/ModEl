@@ -1,4 +1,4 @@
-const goodsReducer = (state={}, action) => {
+const catalogReducer = (state={}, action) => {
     let newState;
     switch (action.type) {
     case 'SAVE_CATEGORIES':
@@ -25,4 +25,4 @@ const goodsReducer = (state={}, action) => {
     return state;
 };
 
-export default goodsReducer;
+export default catalogReducer;

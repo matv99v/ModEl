@@ -93,6 +93,7 @@ module.exports = {
     resolve: {
         alias: {
             AliasModelSrc: path.resolve(__dirname, 'modElSrc'),
+            AliasAdminToolSrc: path.resolve(__dirname, 'adminToolSrc'),
             AliasApi: path.resolve(__dirname, 'api')
         }
     },

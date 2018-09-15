@@ -46,9 +46,9 @@ export default class Goods extends React.Component {
                             <th>Name</th>
                             <th>GoodId</th>
                             <th>CatId</th>
-                            {/* <th>Название2</th> */}
                             <th>Price</th>
                             <th>Exist</th>
+                            {/* <th>Название2</th> */}
                             {/*
                             <th>Техдетали</th>
                             <th>Описание</th>
@@ -58,14 +58,14 @@ export default class Goods extends React.Component {
                     <tbody>
                         {
                             this.state.goods.map((good, i) => (
-                                <tr key={i+1}>
-                                    <td>{i}</td>
+                                <tr key={i}>
+                                    <td>{i+1}</td>
                                     <td>{good.productName}</td>
                                     <td>{good.idProduct}</td>
                                     <td>{good.idCategory}</td>
-                                    {/* <td>{good.detailName}</td> */}
                                     <td>{good.declarePrice}</td>
                                     <td>{good.exist}</td>
+                                    {/* <td>{good.detailName}</td> */}
                                     {/*
                                     <td>{good.productParams}</td>
                                     <td>{good.textDescrip}</td>

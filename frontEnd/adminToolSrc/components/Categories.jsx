@@ -48,8 +48,8 @@ export default class Categories extends React.Component {
                     <tbody>
                         {
                             this.state.catregories.map((cat, i) => (
-                                <tr key={i+1}>
-                                    <td>{i}</td>
+                                <tr key={i}>
+                                    <td>{i+1}</td>
                                     <td>{cat.CategoryName}</td>
                                     <td>{cat.idCategory}</td>
                                 </tr>

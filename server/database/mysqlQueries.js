@@ -44,4 +44,8 @@ module.exports = {
                         descrip ON products.idProduct = descrip.idProduct ${queryStr}`;
     },
 
+    getStock(obj) {
+        return `SELECT * FROM zakupka`;
+    }
+
 };
