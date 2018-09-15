@@ -28,8 +28,13 @@ function getGoods(obj) {
     return get(urls.goods(obj));
 }
 
+function getStock(obj) {
+    return get(urls.stock(obj));
+}
+
 export default {
     get,
     getCategories,
-    getGoods
+    getGoods,
+    getStock
 };

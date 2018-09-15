@@ -43,8 +43,13 @@ function getGoods(options) {
     return getQueryPromise(mysqlQueries.getGoods(options));
 }
 
+function getStock(options) {
+    return getQueryPromise(mysqlQueries.getStock(options));
+}
+
 module.exports = {
     getQueryPromise,
     getCategories,
-    getGoods
+    getGoods,
+    getStock
 };
