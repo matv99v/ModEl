@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, NavItem, Nav, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, MenuItem } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
 
@@ -21,35 +21,76 @@ export default class Navigation extends React.Component {
                 </Navbar.Header>
 
                 <Nav>
-                    <NavItem
-                        eventKey={1}
-                        componentClass={NavLink}
-                        to="/categories"
-                        href="/categories"
-                        activeStyle={{color: 'red'}}
-                    >
-                        Категории
-                    </NavItem>
 
-                    <NavItem
-                        eventKey={2}
-                        componentClass={NavLink}
-                        to="/goods"
-                        href="/goods"
-                        activeStyle={{color: 'red'}}
-                    >
-                        Товары
-                    </NavItem>
+                    <NavDropdown eventKey={1} title="Категории" id="categories-nav-dropdown">
+                        <MenuItem
+                            eventKey={1.1}
+                            componentClass={NavLink}
+                            to="/categories/add"
+                            href="/categories/add"
+                            activeStyle={{color: 'red'}}
+                        >
+                            Добавить категорию
+                        </MenuItem>
 
-                    <NavDropdown eventKey={3} title="Закупка" id="stock-nav-dropdown">
+                        <MenuItem divider />
+
+                        <MenuItem
+                            eventKey={1.2}
+                            componentClass={NavLink}
+                            to="/categories/search"
+                            href="/categories/search"
+                            activeStyle={{color: 'red'}}
+                        >
+                            Поиск
+                        </MenuItem>
+
+                    </NavDropdown>
+
+
+
+
+
+
+
+                    <NavDropdown eventKey={2} title="Товары" id="goods-nav-dropdown">
+                        <MenuItem
+                            eventKey={2.1}
+                            componentClass={NavLink}
+                            to="/goods/add"
+                            href="/goods/add"
+                            activeStyle={{color: 'red'}}
+                        >
+                            Добавить товар
+                        </MenuItem>
+
+                        <MenuItem divider />
+
+                        <MenuItem
+                            eventKey={2.2}
+                            componentClass={NavLink}
+                            to="/goods/search"
+                            href="/goods/search"
+                            activeStyle={{color: 'red'}}
+                        >
+                            Поиск
+                        </MenuItem>
+
+                    </NavDropdown>
+
+
+
+
+
+                    <NavDropdown eventKey={3} title="Склад" id="barn-nav-dropdown">
                         <MenuItem
                             eventKey={3.1}
                             componentClass={NavLink}
-                            to="/stock/add"
-                            href="/stock/add"
+                            to="/barn/add"
+                            href="/barn/add"
                             activeStyle={{color: 'red'}}
                         >
-                            Добавить
+                            Оформить поступление
                         </MenuItem>
 
                         <MenuItem divider />
@@ -57,8 +98,8 @@ export default class Navigation extends React.Component {
                         <MenuItem
                             eventKey={3.2}
                             componentClass={NavLink}
-                            to="/stock/search"
-                            href="/stock/search"
+                            to="/barn/search"
+                            href="/barn/search"
                             activeStyle={{color: 'red'}}
                         >
                             Поиск

@@ -5,18 +5,29 @@ import DevInfo from './DevInfo.jsx';
 import GoodName from './common/GoodName.jsx';
 import GoodPrice from './common/GoodPrice.jsx';
 import urls from '../../api/urls';
+import DefaultGoodImg from './common/DefaultGoodImg.jsx';
+
 
 
 export default class GoodFoldedView extends React.Component {
 
-    render() {
-        const imgSrc = this.props.good.photosAmount ? urls.goodPhotoThumbnail(this.props.good.idProduct, 1) : '../assets/good_default_image.svg';
+    renderDefaultImg() {
+        return (
+            <DefaultGoodImg />
+        );
+    }
 
+
+    render() {
         return (
             <div className="GoodFoldedView__cnt" >
 
                 <div className="GoodFoldedView__imageCnt">
-                    <Image src={imgSrc} thumbnail />
+                    {
+                        this.props.good.photosAmount
+                            ? <Image src={urls.goodPhotoThumbnail(this.props.good.idProduct, 1)} thumbnail />
+                            : <DefaultGoodImg />
+                    }
 
                     <div className="GoodFoldedView__priceCnt__small visible-xs">
                         <GoodPrice

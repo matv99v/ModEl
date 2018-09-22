@@ -4,6 +4,7 @@ import { Navbar, Nav, NavItem, Badge, NavDropdown, MenuItem } from 'react-bootst
 import { connect } from 'react-redux';
 import { fetchEnabledCategoriesAsync } from 'AliasModelSrc/redux/actions/catalog-actions';
 import './Navigation.scss';
+import BrandLogo from './common/BrandLogo.jsx';
 
 
 
@@ -46,6 +47,7 @@ class Navigation extends React.Component {
                 <Navbar.Header>
                     <Navbar.Brand>
                         <Link to='/' >
+                            <BrandLogo />
                             <img className='Navigation__brandImg' />
                         </Link>
                     </Navbar.Brand>

@@ -8,8 +8,8 @@ import { hot } from 'react-hot-loader';
 import ErrorWindow from './ErrorWindow.jsx';
 import Spinner from './common/Spinner.jsx';
 import './Layout.scss';
-
-
+import ReactGA from 'react-ga';
+import WithTracker from './WithTracker.jsx';
 
 import { Grid, Row } from 'react-bootstrap';
 import { Route, BrowserRouter } from 'react-router-dom';
@@ -17,6 +17,13 @@ import { Route, BrowserRouter } from 'react-router-dom';
 
 
 class Layout extends React.Component {
+    componentWillMount() {
+        if (process.env.NODE_ENV === 'production') {
+            ReactGA.initialize('UA-125424604-1');
+        }
+        ReactGA.pageview(window.location.pathname + window.location.search);
+    }
+
     render() {
         return (
             <BrowserRouter>
@@ -31,10 +38,10 @@ class Layout extends React.Component {
                     </Row>
 
                     <Row>
-                        <Route exact path='/'                         component={HomePage} />
-                        <Route       path='/catalog/:catId?/:goodId?' component={CatalogHoc} /> {/* optional parameters: catId, goodId */}
-                        <Route exact path='/contacts'                 component={ContactPage} />
-                        <Route exact path='/cart'                     component={Cart} />
+                        <Route exact path='/'                         component={WithTracker(HomePage)} />
+                        <Route       path='/catalog/:catId?/:goodId?' component={WithTracker(CatalogHoc)} /> {/* optional parameters: catId, goodId */}
+                        <Route exact path='/contacts'                 component={WithTracker(ContactPage)} />
+                        <Route exact path='/cart'                     component={WithTracker(Cart)} />
                     </Row>
 
                     <Row>

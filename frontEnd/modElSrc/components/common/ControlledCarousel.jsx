@@ -40,18 +40,18 @@ export default class ControlledCarousel extends React.Component {
                         .apply(null, {length: this.props.good.photosAmount || 1}) // if no photo, apply the standart one
                         .map((el, i) => {
 
-                            const imgSrc = this.props.good.photosAmount ? urls.goodPhotoMedium(this.props.good.idProduct, i+1) : '../assets/good_default_image.svg';
 
                             return (
                                 <Carousel.Item key={i}>
-                                    {false && <img alt={this.props.good.productName} src={imgSrc} />}
 
-                                    <div
-                                        className='ControlledCarousel__imgCnt'
-                                        style={{background: `url(${imgSrc}) no-repeat center center / contain`}}
-                                    >
-
-                                    </div>
+                                    {
+                                        this.props.good.photosAmount
+                                            ? <div
+                                                className='ControlledCarousel__imgCnt'
+                                                style={{background: `url(${urls.goodPhotoMedium(this.props.good.idProduct, i+1)}) no-repeat center center / contain`}}
+                                            ></div>
+                                            : <div className='ControlledCarousel__imgDefault'></div>
+                                    }
 
                                     <div className="ControlledCarousel__goodId">ID: {this.props.good.idProduct}</div>
                                 </Carousel.Item>

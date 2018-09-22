@@ -43,13 +43,44 @@ function getGoods(options) {
     return getQueryPromise(mysqlQueries.getGoods(options));
 }
 
-function getStock(options) {
-    return getQueryPromise(mysqlQueries.getStock(options));
+function getBarn(options) {
+    return getQueryPromise(mysqlQueries.getBarn(options));
 }
+
+// function getGoodsViaAutocomplete(options) {
+//     return getQueryPromise(mysqlQueries.performGoodsAutocomplete(options));
+// }
+//
+// function getCategoriesViaAutocomplete(options) {
+//     return getQueryPromise(mysqlQueries.performCategoriesAutocomplete(options));
+// }
+
+function postItemToBarn(obj) {
+    return getQueryPromise(mysqlQueries.postItemToBarn(obj));
+}
+
+function updateItemInBarn(obj) {
+    return getQueryPromise(mysqlQueries.updateItemInBarn(obj));
+}
+
+function getBarnTransactionById(obj) {
+    return getQueryPromise(mysqlQueries.getBarnTransactionById(obj));
+}
+
+function getAutocomplete(obj) {
+    return getQueryPromise(mysqlQueries.getAutocomplete(obj));
+}
+
 
 module.exports = {
     getQueryPromise,
     getCategories,
     getGoods,
-    getStock
+    getBarn,
+    // getGoodsViaAutocomplete,
+    // getCategoriesViaAutocomplete,
+    postItemToBarn,
+    getBarnTransactionById,
+    getAutocomplete,
+    updateItemInBarn
 };
