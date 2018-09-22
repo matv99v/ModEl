@@ -21,7 +21,6 @@ class Layout extends React.Component {
         if (process.env.NODE_ENV === 'production') {
             ReactGA.initialize('UA-125424604-1');
         }
-        ReactGA.pageview(window.location.pathname + window.location.search);
     }
 
     render() {
