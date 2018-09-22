@@ -1,15 +1,16 @@
 import { combineReducers } from 'redux';
-
+import { reducer as formReducer } from 'redux-form';
 
 import spinnerReducer from './spinner-reducer';
-import stockReducer from './stock-reducer';
-import { reducer as formReducer } from 'redux-form';
+import barnReducer from './barn-reducer';
+import catalogReducer from './catalog-reducer';
 
 
 const reducers = combineReducers({
     isLoading: spinnerReducer,
-    stock: stockReducer,
-    form: formReducer
+    barn: barnReducer,
+    form: formReducer,
+    catalog: catalogReducer
 });
 
 

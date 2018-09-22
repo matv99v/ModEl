@@ -48,7 +48,7 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: ['babel-loader', 'eslint-loader']
+                use: ['babel-loader']
             },
             {
                 test: /\.scss$/,
@@ -82,7 +82,7 @@ module.exports = {
             },
             {
                 test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
+                loader: 'url-loader?limit=15000&mimetype=image/svg+xml'
             }
 
         ]

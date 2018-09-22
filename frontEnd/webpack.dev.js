@@ -12,6 +12,16 @@ module.exports = merge(common, {
             'process.env.HOST': JSON.stringify('localhost'),
             'process.env.PORT': JSON.stringify('3001'),
         })
-    ]
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: ['babel-loader', 'eslint-loader']
+            }
+        ]
+    },
+
 
 });

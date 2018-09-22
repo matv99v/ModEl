@@ -4,14 +4,15 @@ import { Field } from 'redux-form';
 
 const FormItem = (props) => (
     <div className="form-group">
-        <label htmlFor={props.id} className="col-sm-4 control-label" >{props.label}</label>
-        <div className="col-sm-8">
+        <label htmlFor={props.id} className="col-sm-3 control-label" >{props.label}</label>
+        <div className="col-sm-9">
             <Field
                 id={props.id}
                 name={props.id}
                 component={props.component}
                 type={props.type}
-                className="form-control"
+                className={props.type === 'checkbox' ? 'checkbox' : 'form-control'}
+                disabled={props.disabled}
             />
         </div>
 

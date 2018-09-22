@@ -11,34 +11,28 @@ export default {
         return `http://${helpers.base}/api/goods` + helpers.obj2query(obj);
     },
 
-    stock(obj) {
-        return `http://${helpers.base}/api/stock` + helpers.obj2query(obj);
+    barn(obj) {
+        return `http://${helpers.base}/api/barn` + helpers.obj2query(obj);
+    },
+
+    putBarn(hash, obj) {
+        return `http://${helpers.base}/api/barn/${hash}` + helpers.obj2query(obj);
+    },
+
+    autocomplete(obj) {
+        return `http://${helpers.base}/api/autocomplete` + helpers.obj2query(obj);
     },
 
 
 
-
-    defaultGoodPhoto: `http://${helpers.base}/svg-images/good_default_image.svg`,
-    brandLogo: `http://${helpers.base}/svg-images/brand_logo.svg`,
+    // TODO: get photos by query
     goodPhotoThumbnail(goodId, imageIndex) {
         return `http://${helpers.base}/images/goods/thumbnail/pht_${goodId}_${imageIndex}.jpg`;
     },
+
     goodPhotoMedium(goodId, imageIndex) {
         return `http://${helpers.base}/images/goods/medium/pht_${goodId}_${imageIndex}.jpg`;
     },
-
-
-    allGoods: `http://${helpers.base}/goods`,
-
-
-    // goodsByCategory(catId, excludeGoodId) {
-    //     const excludeStr = excludeGoodId ? `&excludegoodid=${excludeGoodId}` : '';
-    //     return `http://${helpers.base}/goods?catId=${catId}${excludeStr}`;
-    // },
-    goodById(goodId) {
-        return `http://${helpers.base}/goods?goodId=${goodId}`;
-    },
-
 
 
 

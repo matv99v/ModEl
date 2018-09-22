@@ -2,10 +2,15 @@ import React from 'react';
 import { Grid, Row } from 'react-bootstrap';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import Navigation from './Navigation.jsx';
-import Categories from './Categories.jsx';
-import Goods from './Goods.jsx';
-import StockSearch from './StockSearch.jsx';
-import StockForm from './StockForm.jsx';
+import CategoriesSearch from './CategoriesSearch.jsx';
+import GoodsSearch from './GoodsSearch.jsx';
+import BarnSearch from './BarnSearch.jsx';
+import BarnForm from './BarnForm.jsx';
+import BarnFormEdit from './BarnFormEdit.jsx';
+import GoodForm from './GoodForm.jsx';
+import CategoryForm from './CategoryForm.jsx';
+import Spinner from './common/Spinner.jsx';
+import './Layout.scss';
 
 
 
@@ -20,7 +25,11 @@ export default class Layout extends React.Component {
         return (
 
             <BrowserRouter basename="/admin">
-                <Grid>
+                <Grid className="Layout__cnt">
+
+                    <div className="Layout__spinnerCnt">
+                        <Spinner size="15" />
+                    </div>
 
                     <Row>
                         <Navigation />
@@ -28,13 +37,14 @@ export default class Layout extends React.Component {
 
                     <Row>
                         <Switch>
-                            <Route exact path='/'               render={() => <div>home</div>} />
-                            <Route exact path='/categories'     component={Categories} />
-                            <Route exact path='/categories/add' render={() => <div>add new category form</div>} />
-                            <Route exact path='/goods'          component={Goods} />
-                            <Route exact path='/goods/add'      render={() => <div>add new good form</div>} />
-                            <Route exact path='/stock/search'   component={StockSearch} />
-                            <Route exact path='/stock/add'      component={StockForm} />
+                            <Route exact path='/'                  render={() => <div>home</div>} />
+                            <Route exact path='/categories/search' component={CategoriesSearch} />
+                            <Route exact path='/categories/add'    component={CategoryForm} />
+                            <Route exact path='/goods/search'      component={GoodsSearch} />
+                            <Route exact path='/goods/add'         component={GoodForm} />
+                            <Route exact path='/barn/search'       component={BarnSearch} />
+                            <Route exact path='/barn/add'          component={BarnForm} />
+                            <Route exact path='/barn/edit/:hash'   component={BarnFormEdit} />
                         </Switch>
                     </Row>
 
