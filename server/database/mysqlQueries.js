@@ -144,5 +144,10 @@ module.exports = {
             WHERE idProduct = ${obj.idProduct}
                 AND zakNumber = ${obj.zakNumber}
         `;
+    },
+
+    getUserHash(obj) {
+        return `SELECT * FROM userlist
+            WHERE usrLogin = '${obj.username}'`;
     }
 };

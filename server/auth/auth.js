@@ -1,23 +1,34 @@
+const db = require('../database/db.js');
+var crypto = require('crypto')
 var basicAuth = require('basic-auth');
 
+function sha1(data) {
+    return crypto.createHash("sha1").update(data, "binary").digest("hex");
+}
 
-const auth = function (req, res, next) {
-    function unauthorized(res) {
-        res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-        return res.send(401);
-    };
+function unauthorized(res) {
+    res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+    return res.sendStatus(401);
+};
 
-    var user = basicAuth(req);
+async function auth (req, res, next) {
+    const currUser = basicAuth(req);
 
-    if (!user || !user.name || !user.pass) {
+    if (!currUser || !currUser.name || !currUser.pass) {
         return unauthorized(res);
     };
 
-    if (user.name === 'foo' && user.pass === 'bar') {
+    const savedUserRowData = await db.getUserHash({username: currUser.name});
+    const savedUserStr = JSON.stringify(savedUserRowData);
+    const savedUser = JSON.parse(savedUserStr)[0];
+    const currUserHash = sha1(currUser.pass);
+
+    if (savedUser && savedUser.usrLogin === currUser.name && savedUser.passUsr === currUserHash) {
         return next();
     } else {
         return unauthorized(res);
     };
+
 };
 
 
