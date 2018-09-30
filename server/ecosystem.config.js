@@ -12,6 +12,15 @@ module.exports = {
             }
         },
         {
+            name: 'staging_ME',
+            script: 'bin/www',
+            env: {
+                NODE_ENV: "development",
+                PORT: 3001,
+                DB_NAME: "goodsdev"
+            }
+        },
+        {
             name: 'develop_ME',
             script: 'bin/www',
             env: {
@@ -19,7 +28,7 @@ module.exports = {
                 PORT: 3001,
                 DB_NAME: "goodsdev"
             },
-            watch: true
+            watch: '../'
         }
     ]
 
