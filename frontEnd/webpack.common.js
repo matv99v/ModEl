@@ -12,12 +12,12 @@ module.exports = {
     },
 
     output: {
-        path: path.resolve('../server/public'),
+        path: path.resolve('../server/public/bundle'),
         filename: '[name].bundle.js'
     },
 
     plugins: [
-        new CleanWebpackPlugin('../server/public',{
+        new CleanWebpackPlugin('../server/public/bundle',{
             allowExternal: true
         }),
 
