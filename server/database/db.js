@@ -71,6 +71,10 @@ function getAutocomplete(obj) {
     return getQueryPromise(mysqlQueries.getAutocomplete(obj));
 }
 
+function getUserHash(obj) {
+    return getQueryPromise(mysqlQueries.getUserHash(obj));
+}
+
 
 module.exports = {
     getQueryPromise,
@@ -82,5 +86,6 @@ module.exports = {
     postItemToBarn,
     getBarnTransactionById,
     getAutocomplete,
-    updateItemInBarn
+    updateItemInBarn,
+    getUserHash
 };
