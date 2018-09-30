@@ -13,7 +13,7 @@ imagesRouter.route('/goods/thumbnail/:id')
         next();
     })
     .get((req, res, next) => {
-        sharp(`./assets/goods-photos/${req.params.id}`)
+        sharp(`./public/goods-photos/${req.params.id}`)
           .resize(150)
           .toBuffer()
           .then(data => {
@@ -29,7 +29,7 @@ imagesRouter.route('/goods/medium/:id')
         next();
     })
     .get((req, res, next) => {
-        sharp(`./assets/goods-photos/${req.params.id}`)
+        sharp(`./public/goods-photos/${req.params.id}`)
           .resize(500)
           .toBuffer()
           .then(data => {

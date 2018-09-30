@@ -36,7 +36,7 @@ app.use('/admin(/$|/*)?', admin);
 // handle every other route with index.html, which will contain
 // a script tag to your application's JavaScript file(s).
 app.get('(/$|$)|(/catalog(/$|/*)?)|(/contacts($|/$)?)', (request, response) => {
-    response.sendFile(path.resolve(__dirname, 'public', 'model-index.html'));
+    response.sendFile(path.resolve(__dirname, 'public/bundle', 'model-index.html'));
 });
 
 // catch 404 and forward to error handler

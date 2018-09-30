@@ -16,7 +16,7 @@ adminRouter.route('/')
     //     next();
     // })
     .get(auth, (req, res, next) => {
-        res.sendFile(path.resolve(__dirname, '../public', 'admin-index.html'));
+        res.sendFile(path.resolve(__dirname, '../public/bundle', 'admin-index.html'));
     });
 
 
