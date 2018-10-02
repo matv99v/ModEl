@@ -1,12 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const apiRouter = express.Router();
-const db = require('../database/db.js');
-const mysqlQueries = require('../database/mysqlQueries.js');
-const utils = require('../utils/utils');
-
-
 apiRouter.use(bodyParser.json());
+
+const db = require('../database/db.js');
+const utils = require('../utils/utils');
 
 
 apiRouter.route('/categories')
@@ -16,17 +15,14 @@ apiRouter.route('/categories')
         next();
     })
     .get((req, res, next) => {
-
         db.getCategories(req.query)
-            .then(rows => {
+            .then((rows) => {
                 res.end(JSON.stringify(rows));
             })
-            .catch(err => {
+            .catch((err) => {
                 next(err);
             });
     });
-
-
 
 
 apiRouter.route('/goods')
@@ -36,26 +32,22 @@ apiRouter.route('/goods')
         next();
     })
     .get((req, res, next) => {
-
         let sharedRows;
 
         db.getGoods(req.query)
-            .then(rows => {
-
+            .then((rows) => {
                 sharedRows = rows;
                 const existingGoodsIds = rows.reduce((acc, row) => [...acc, row.idProduct], []);
                 return utils.getAmountOfPhotos(existingGoodsIds);
             })
-            .then(photosAmount => {
-                const results = sharedRows.map(row => {
-                    return {
-                        ...row,
-                        photosAmount: photosAmount[row.idProduct]
-                    };
-                });
+            .then((photosAmount) => {
+                const results = sharedRows.map(row => ({
+                    ...row,
+                    photosAmount: photosAmount[row.idProduct],
+                }));
                 res.end(JSON.stringify(results));
             })
-            .catch(err => {
+            .catch((err) => {
                 next(err);
             });
     });
@@ -69,10 +61,10 @@ apiRouter.route('/barn')
         res.statusCode = 200;
 
         db.getBarn(req.query)
-            .then(rows => {
+            .then((rows) => {
                 res.end(JSON.stringify(rows));
             })
-            .catch(err => {
+            .catch((err) => {
                 next(err);
             });
     })
@@ -80,10 +72,10 @@ apiRouter.route('/barn')
         res.statusCode = 201;
 
         db.postItemToBarn(req.body)
-            .then(resp => {
+            .then((resp) => {
                 res.end(JSON.stringify(resp));
             })
-            .catch(err => {
+            .catch((err) => {
                 next(err);
             });
     });
@@ -95,18 +87,18 @@ apiRouter.route('/barn/:id')
         next();
     })
     .get((req, res, next) => {
-        ids = req.params.id.split('-');
+        const ids = req.params.id.split('-');
 
         const queryObj = {
             zakNumber: +ids[0],
-            idProduct: +ids[1]
+            idProduct: +ids[1],
         };
 
         db.getBarnTransactionById(queryObj)
-            .then(rows => {
+            .then((rows) => {
                 res.end(JSON.stringify(rows));
             })
-            .catch(err => {
+            .catch((err) => {
                 next(err);
             });
     })
@@ -114,31 +106,29 @@ apiRouter.route('/barn/:id')
         res.statusCode = 200;
 
         db.updateItemInBarn(req.body)
-            .then(resp => {
+            .then((resp) => {
                 res.end(JSON.stringify(resp));
             })
-            .catch(err => {
+            .catch((err) => {
                 next(err);
             });
     });
 
-    apiRouter.route('/autocomplete') // TODO: move to good query
-        .all((req, res, next) => {
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
-            next();
-        })
-        .get((req, res, next) => {
-            db.getAutocomplete(req.query)
-                .then(rows => {
-                    res.end(JSON.stringify(rows));
-                })
-                .catch(err => {
-                    next(err);
-                });
-        });
-
-
+apiRouter.route('/autocomplete') // TODO: move to good query
+    .all((req, res, next) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        next();
+    })
+    .get((req, res, next) => {
+        db.getAutocomplete(req.query)
+            .then((rows) => {
+                res.end(JSON.stringify(rows));
+            })
+            .catch((err) => {
+                next(err);
+            });
+    });
 
 
 // apiRouter.route('/goods/autocomplete') // TODO: move to good query
@@ -172,7 +162,6 @@ apiRouter.route('/barn/:id')
 //                 next(err);
 //             });
 //     });
-
 
 
 module.exports = apiRouter;

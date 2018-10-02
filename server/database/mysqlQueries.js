@@ -52,13 +52,14 @@ module.exports = {
 
         const queryStr = createQuery([excludeStr, existStr, goodStr, catStr]);
 
-        return  `SELECT * FROM products
+        return `SELECT * FROM products
                     LEFT JOIN
                         descrip ON products.idProduct = descrip.idProduct ${queryStr}`;
     },
 
     getBarn(obj) {
         const replaceIdStr = 'zakupka.idProduct = products.idProduct';
+        const replaceCategoryStr = 'category.idCategory = (SELECT idCategory FROM products WHERE idProduct = zakupka.idProduct)';
 
         let hashStr;
         if (obj.hash) {
@@ -66,24 +67,44 @@ module.exports = {
             hashStr = `zakNumber = ${hashArr[0]} AND zakupka.idProduct = ${hashArr[1]}`;
         }
 
-        const queryStr = createQuery([replaceIdStr, hashStr]);
+        const queryStr = createQuery([replaceIdStr, hashStr, replaceCategoryStr]);
+
 
         // productName is from another table
 
-        return `SELECT  curRate,
-                        frozQnty,
-                        zakupka.idProduct,
-                        productName,
-                        restQnty,
-                        zakLink,
-                        zakNumber,
-                        zakQnty,
-                        zakSum,
-                        DATE_FORMAT(zakDate, "%Y-%m-%d") AS zakDate,
-                        DATE_FORMAT(zakDateRcv, "%Y-%m-%d") AS zakDateRcv,
-                        DATE_FORMAT(zakDateShp, "%Y-%m-%d") AS zakDateShp,
-                        DATE_FORMAT(zakDateProtct, "%Y-%m-%d") AS zakDateProtct
-                    FROM zakupka, products ${queryStr}`;
+        // return `SELECT  curRate,
+        //                 frozQnty,
+        //                 zakupka.idProduct,
+        //                 productName,
+        //                 restQnty,
+        //                 zakLink,
+        //                 zakNumber,
+        //                 zakQnty,
+        //                 zakSum,
+        //                 DATE_FORMAT(zakDate, "%Y-%m-%d") AS zakDate,
+        //                 DATE_FORMAT(zakDateRcv, "%Y-%m-%d") AS zakDateRcv,
+        //                 DATE_FORMAT(zakDateShp, "%Y-%m-%d") AS zakDateShp,
+        //                 DATE_FORMAT(zakDateProtct, "%Y-%m-%d") AS zakDateProtct
+        //             FROM zakupka, products ${queryStr}`;
+
+        return `SELECT
+                    CategoryName,
+                    products.idCategory,
+                    curRate,
+                    frozQnty,
+                    zakupka.idProduct,
+                    productName,
+                    restQnty,
+                    zakLink,
+                    zakNumber,
+                    zakQnty,
+                    zakSum,
+                    DATE_FORMAT(zakDate, "%Y-%m-%d") AS zakDate,
+                    DATE_FORMAT(zakDateRcv, "%Y-%m-%d") AS zakDateRcv,
+                    DATE_FORMAT(zakDateShp, "%Y-%m-%d") AS zakDateShp,
+                    DATE_FORMAT(zakDateProtct, "%Y-%m-%d") AS zakDateProtct
+
+                FROM zakupka, products, category ${queryStr}`;
     },
 
     addStock(obj) {
