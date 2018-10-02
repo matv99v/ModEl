@@ -104,7 +104,9 @@ module.exports = {
                     DATE_FORMAT(zakDateShp, "%Y-%m-%d") AS zakDateShp,
                     DATE_FORMAT(zakDateProtct, "%Y-%m-%d") AS zakDateProtct
 
-                FROM zakupka, products, category ${queryStr}`;
+                FROM zakupka, products, category
+                ${queryStr}
+                ORDER BY CategoryName, productName`;
     },
 
     addStock(obj) {

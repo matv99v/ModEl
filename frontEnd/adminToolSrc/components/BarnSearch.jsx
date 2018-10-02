@@ -13,7 +13,7 @@ export default class Barn extends React.Component {
         this.state = {
             barn: [],
             sortBy: '',
-            reverse: 1
+            reverse: -1
         };
     }
 
@@ -30,16 +30,18 @@ export default class Barn extends React.Component {
 
     handleSortClick(field) {
 
+        const reverse = field === this.state.sortBy ? this.state.reverse * (-1) : this.state.reverse;
+
         const newBarn = this.state.barn
             .map(a => ({...a})) // do not mutate data!
             .sort((a, b) => {
                 const nameA = a[field];
                 const nameB = b[field];
                 if (nameA < nameB) {
-                    return -1 * this.state.reverse;
+                    return -1 * reverse;
                 }
                 if (nameA > nameB) {
-                    return 1 * this.state.reverse;
+                    return 1 * reverse;
                 }
                 return 0;
             });
@@ -47,7 +49,7 @@ export default class Barn extends React.Component {
         this.setState({
             sortBy: field,
             barn: newBarn,
-            reverse: field === this.state.sortBy ? this.state.reverse * (-1) : 1
+            reverse: reverse
         });
     }
 
