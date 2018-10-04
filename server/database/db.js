@@ -26,6 +26,7 @@ function getQueryPromise(queryStr) {
     return new Bluebird((resolve, reject) => {
         connection.query(queryStr, (error, results, fields) => {
             if (error) {
+                console.log('AAAAAAAAAAAA');
                 reject(error);
             }
 
@@ -87,5 +88,5 @@ module.exports = {
     getBarnTransactionById,
     getAutocomplete,
     updateItemInBarn,
-    getUserHash
+    getUserHash,
 };

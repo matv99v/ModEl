@@ -12,7 +12,10 @@ export default class BarnFormEdit extends React.Component {
     }
 
     componentDidMount() {
-        api.getBarn({hash: this.props.match.params.hash})
+        api.getBarn({
+            hash: this.props.match.params.hash,
+            exclideFields: ['CategoryName', 'products.idCategory'] 
+        })
             .then(json => {
                 this.setState({initialValues: json[0]});
                 console.log(this.state);
