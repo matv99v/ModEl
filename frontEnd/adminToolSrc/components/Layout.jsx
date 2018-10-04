@@ -10,17 +10,13 @@ import BarnFormEdit from './BarnFormEdit.jsx';
 import GoodForm from './GoodForm.jsx';
 import CategoryForm from './CategoryForm.jsx';
 import Spinner from './common/Spinner.jsx';
+import BarnPurchase from './BarnPurchase.jsx';
 import './Layout.scss';
 
 
 
 
 export default class Layout extends React.Component {
-
-    func = (values) => {
-        console.log(values);
-    }
-
     render() {
         return (
 
@@ -45,6 +41,7 @@ export default class Layout extends React.Component {
                             <Route exact path='/barn/search'       component={BarnSearch} />
                             <Route exact path='/barn/add'          component={BarnForm} />
                             <Route exact path='/barn/edit/:hash'   component={BarnFormEdit} />
+                            <Route exact path='/barn/purchase'     component={BarnPurchase} />
                         </Switch>
                     </Row>
 

@@ -1,5 +1,5 @@
 function createQuery(arr) {
-    let queryStr = arr
+    const queryStr = arr
         .filter(str => !!str)
         .join(' AND ');
 
@@ -58,6 +58,26 @@ module.exports = {
     },
 
     getBarn(obj) {
+        const exludeFields = obj.exclideFields ? obj.exclideFields.split(',') : [];
+
+        const fields = [
+            'CategoryName',
+            'products.idCategory',
+            'curRate',
+            'frozQnty',
+            'zakupka.idProduct',
+            'productName',
+            'restQnty',
+            'zakLink',
+            'zakNumber',
+            'zakQnty',
+            'zakSum',
+            'DATE_FORMAT(zakDate, "%Y-%m-%d") AS zakDate',
+            'DATE_FORMAT(zakDateRcv, "%Y-%m-%d") AS zakDateRcv',
+            'DATE_FORMAT(zakDateShp, "%Y-%m-%d") AS zakDateShp',
+            'DATE_FORMAT(zakDateProtct, "%Y-%m-%d") AS zakDateProtct', // TODO: think on date formatting (maybe return as epoch)
+        ].filter(field => !exludeFields.some(exF => field.match(new RegExp(exF, 'i'))));
+
         const replaceIdStr = 'zakupka.idProduct = products.idProduct';
         const replaceCategoryStr = 'category.idCategory = (SELECT idCategory FROM products WHERE idProduct = zakupka.idProduct)';
 
@@ -69,41 +89,7 @@ module.exports = {
 
         const queryStr = createQuery([replaceIdStr, hashStr, replaceCategoryStr]);
 
-
-        // productName is from another table
-
-        // return `SELECT  curRate,
-        //                 frozQnty,
-        //                 zakupka.idProduct,
-        //                 productName,
-        //                 restQnty,
-        //                 zakLink,
-        //                 zakNumber,
-        //                 zakQnty,
-        //                 zakSum,
-        //                 DATE_FORMAT(zakDate, "%Y-%m-%d") AS zakDate,
-        //                 DATE_FORMAT(zakDateRcv, "%Y-%m-%d") AS zakDateRcv,
-        //                 DATE_FORMAT(zakDateShp, "%Y-%m-%d") AS zakDateShp,
-        //                 DATE_FORMAT(zakDateProtct, "%Y-%m-%d") AS zakDateProtct
-        //             FROM zakupka, products ${queryStr}`;
-
-        return `SELECT
-                    CategoryName,
-                    products.idCategory,
-                    curRate,
-                    frozQnty,
-                    zakupka.idProduct,
-                    productName,
-                    restQnty,
-                    zakLink,
-                    zakNumber,
-                    zakQnty,
-                    zakSum,
-                    DATE_FORMAT(zakDate, "%Y-%m-%d") AS zakDate,
-                    DATE_FORMAT(zakDateRcv, "%Y-%m-%d") AS zakDateRcv,
-                    DATE_FORMAT(zakDateShp, "%Y-%m-%d") AS zakDateShp,
-                    DATE_FORMAT(zakDateProtct, "%Y-%m-%d") AS zakDateProtct
-
+        return `SELECT ${fields}
                 FROM zakupka, products, category
                 ${queryStr}
                 ORDER BY CategoryName, productName`;
@@ -128,19 +114,17 @@ module.exports = {
         return `SELECT *
                    FROM ${obj.table}
                    WHERE ${obj.field} LIKE '%${obj.like}%'`;
+   },
 
-    },
 
     // text fields
     quotes: ['zakDate', 'zakLink', 'zakDateShp', 'zakDateRcv', 'zakDateProtct'],
 
     postItemToBarn(obj) {
         const fields = Object.keys(obj);
-        const values = fields.map(key => {
-            return this.quotes.includes(key) && obj[key] !== null
-                ? `'${obj[key]}'`
-                : obj[key];
-        });
+        const values = fields.map(key => (this.quotes.includes(key) && obj[key] !== null
+            ? `'${obj[key]}'`
+            : obj[key]));
 
         return `INSERT INTO zakupka (${fields})
                     VALUES (${values})
@@ -151,8 +135,9 @@ module.exports = {
         const fields = Object.keys(obj);
 
         const queryStr = fields
-            .map(key => this.quotes.includes(key) && obj[key] !== null ? `'${obj[key]}'` : obj[key])
+            .map(key => (this.quotes.includes(key) && obj[key] !== null ? `'${obj[key]}'` : obj[key]))
             .map((val, i) => `${fields[i]}=${val}`);
+
 
         return `UPDATE zakupka
                     SET ${queryStr}
@@ -172,5 +157,5 @@ module.exports = {
     getUserHash(obj) {
         return `SELECT * FROM userlist
             WHERE usrLogin = '${obj.username}'`;
-    }
+    },
 };

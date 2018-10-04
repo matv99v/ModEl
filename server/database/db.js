@@ -87,5 +87,5 @@ module.exports = {
     getBarnTransactionById,
     getAutocomplete,
     updateItemInBarn,
-    getUserHash
+    getUserHash,
 };

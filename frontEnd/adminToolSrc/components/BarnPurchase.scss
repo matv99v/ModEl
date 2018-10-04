@@ -1,0 +1,21 @@
+@import "~AliasModelSrc/variables_override";
+
+
+.BarnPurchase__Cnt {
+    & > tbody > tr > td ,
+    & > tbody > tr > th,
+    & > tfoot > tr > td,
+    & > tfoot > tr > th,
+    & > thead > tr > td,
+    & > thead > tr > th {
+        border: none !important;
+    }
+
+    tbody tr.cat.prod {
+        box-shadow: 0 -1px 0 $table-border-color;
+    }
+
+    tbody tr.prod td:not(:first-child){
+        box-shadow: 0 -1px 0 $table-border-color;
+    }
+}
