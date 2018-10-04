@@ -89,14 +89,10 @@ module.exports = {
 
         const queryStr = createQuery([replaceIdStr, hashStr, replaceCategoryStr]);
 
-        const res = `SELECT ${fields}
+        return `SELECT ${fields}
                 FROM zakupka, products, category
                 ${queryStr}
                 ORDER BY CategoryName, productName`;
-
-        console.log(res);
-
-        return res;
     },
 
     addStock(obj) {
@@ -143,14 +139,10 @@ module.exports = {
             .map((val, i) => `${fields[i]}=${val}`);
 
 
-        const res = `UPDATE zakupka
+        return `UPDATE zakupka
                     SET ${queryStr}
                     WHERE idProduct = ${obj.idProduct} AND zakNumber = ${obj.zakNumber}
                 `;
-
-        console.warn(res);
-
-        return res;
     },
 
     getBarnTransactionById(obj) {

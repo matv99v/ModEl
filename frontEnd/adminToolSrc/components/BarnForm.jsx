@@ -61,20 +61,15 @@ class BarnForm extends React.Component {
                 .then(resp => {
                     // dispatch(addToBarnAsync(data));
                     this.setState({dbMessage: resp, dbError: false});
-                    debugger;
-
                     // this.resetForm();
                     return null;
                 })
                 .catch(err => {
                     // console.error(err);
-                    debugger;
                     this.setState({dbMessage: JSON.parse(err.message), dbError: true});
                 })
                 .finally(() => {
                     // dispatch(hideSpinnerAction());
-                    debugger;
-
                 });
         }
     }
