@@ -74,7 +74,7 @@ export default class Barn extends React.Component {
                             <tr key={i} className={this.getTrClass(i, transaction)}>
                                 <td>{this.renderDublicatePredicate(i, 'CategoryName', transaction) && transaction.CategoryName}</td>
                                 <td>{this.renderDublicatePredicate(i, 'productName', transaction) && transaction.productName}</td>
-                                <td>{transaction.zakNumber}</td>
+                                <td><a href={transaction.zakLink} target='_blank' rel='noopener noreferrer'>{transaction.zakNumber}</a></td>
                                 <td>{transaction.zakDate}</td>
                                 <td>{transaction.zakDateRcv}</td>
                                 <td>{transaction.zakDateShp}</td>

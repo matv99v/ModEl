@@ -18,4 +18,8 @@
     tbody tr.prod td:not(:first-child){
         box-shadow: 0 -1px 0 $table-border-color;
     }
+
+    tbody tr td:nth-child(4) {
+      white-space: nowrap;
+    }
 }
