@@ -101,11 +101,11 @@ class BarnForm extends React.Component {
     render() {
         return (
 
-            <Grid>
+            <Grid style={{paddingBottom: '25px'}}>
 
                 <Row>
                     <Col>
-                        <h3>{this.props.type === 'put' ? 'Правка транзакции' : 'Новая транзакция'}</h3>
+                        <h3 className='text-center'>{this.props.type === 'put' ? 'Правка транзакции' : 'Новая транзакция'}</h3>
                     </Col>
                 </Row>
 
@@ -138,107 +138,97 @@ class BarnForm extends React.Component {
 
                             <FormItem
                                 id="idProduct"
-                                component="input"
                                 type="number"
-                                label="1 - Good ID"
+                                label="1 - idProduct"
                                 disabled
                             />
 
                             <FormItem
                                 id="zakNumber"
-                                component="input"
                                 type="number"
-                                label="2 - Order number"
+                                label="2 - zakNumber"
                                 disabled={this.props.type === 'put'}
                             />
 
                             <FormItem
                                 id="zakLink"
-                                component="input"
                                 type="text"
-                                label="3 - Order link"
+                                label="3 - zakLink"
                             />
 
                             <FormItem
                                 id="zakQnty"
-                                component="input"
                                 type="number"
-                                label="4 - Ordered qty"
+                                label="4 - zakQnty"
                             />
 
                             <FormItem
                                 id="frozQnty"
-                                component="input"
                                 type="number"
-                                label="5 - Frozen qty"
+                                label="5 - frozQnty"
                             />
 
                             <FormItem
                                 id="restQnty"
-                                component="input"
                                 type="number"
-                                label="6 - In stock qty"
+                                label="6 - restQnty"
                             />
 
                             <FormItem
                                 id="zakSum"
-                                component="input"
                                 type="number"
-                                label="7 - Total, uah"
+                                label="7 - zakSum"
                             />
 
                             <FormItem
                                 id="curRate"
-                                component="input"
                                 type="number"
-                                label="8 - Currency exchange rate"
+                                label="8 - curRate"
+                                step="0.01"
                             />
 
                             <FormItem
                                 id="zakDate"
-                                component="input"
                                 type="date"
-                                label="9 - Date of order"
+                                label="9 - zakDate"
                             />
 
                             <FormItem
                                 id="zakDateShp"
-                                component="input"
                                 type="date"
-                                label="10 - Date of shipment"
+                                label="10 - zakDateShp"
                             />
 
                             <FormItem
                                 id="zakDateRcv"
-                                component="input"
                                 type="date"
-                                label="11 - Date of recieving"
+                                label="11 - zakDateRcv"
                             />
 
                             <FormItem
                                 id="zakDateProtct"
-                                component="input"
                                 type="date"
-                                label="12 - Date of protection"
+                                label="12 - zakDateProtct"
                             />
 
-                            <Button bsStyle="primary" type="submit">Submit</Button>
 
+                            <Row style={{display: this.state.dbMessage.sqlMessage || this.state.dbMessage.affectedRows  ? 'block' : 'none'}}>
+                                <Alert bsStyle={this.state.dbError ? 'danger' : 'success'}>
+                                    <h4>{this.state.dbError ? 'Error' : 'Success'}</h4>
+                                    <div>{this.state.dbMessage.code}</div>
+                                    <div>{this.state.dbMessage.sqlMessage}</div>
+                                    <div>{this.state.dbMessage.message}</div>
+                                </Alert>;
+                            </Row>
+
+                            <div className='text-center' >
+                                <Button bsStyle="primary" type="submit" bsSize='large'>Submit</Button>
+                            </div>
 
                         </form>
                     </Col>
 
                 </Row>
-
-                <Row style={{display: this.state.dbMessage.sqlMessage || this.state.dbMessage.affectedRows  ? 'block' : 'none'}}>
-                    <Alert bsStyle={this.state.dbError ? 'danger' : 'success'}>
-                        <h4>{this.state.dbError ? 'Error' : 'Success'}</h4>
-                        <div>{this.state.dbMessage.code}</div>
-                        <div>{this.state.dbMessage.sqlMessage}</div>
-                        <div>{this.state.dbMessage.message}</div>
-                    </Alert>;
-                </Row>
-
 
             </Grid>
 
@@ -253,13 +243,91 @@ function mapStateToProps(state, ownProps) {
 }
 
 
-const ReduxBarnForm = reduxForm(
-    {
-        // a unique name for the form
-        form: 'BarnForm',
-        // enableReinitialize: true
+const ReduxBarnForm = reduxForm({
+    // a unique name for the form
+    form: 'BarnForm',
+    // enableReinitialize: true
+    validate(values) {
+        const errors = {};
+
+        // idProduct
+        if (!values.idProduct) {
+            errors.idProduct = 'ожидается idProduct';
+        }
+        // zakNumber
+        if (!values.zakNumber) {
+            errors.zakNumber = 'ожидается zakNumber';
+        }
+        if (values.zakNumber && !values.zakNumber.toString().match(/^\d+$/)) {
+            errors.zakNumber = 'возможно ввести только числа';
+        }
+
+        // zakLink
+        if (values.zakLink && !values.zakLink.match(/^https:\/\/.*aliexpress.*\?order_id=\d+$/)) {
+            errors.zakLink = 'неправильная ссылка zakLink';
+        }
+        if (values.zakNumber && values.zakLink && values.zakLink.match(/\d+(?=$)/) && values.zakLink.match(/\d+(?=$)/)[0] !== values.zakNumber.toString()) {
+            errors.zakLink = 'zakNumber и zakLink должны соответсвовать';
+        }
+        if (values.zakNumber && !values.zakLink) {
+            errors.zakLink = 'ожидается zakLink';
+        }
+
+        // zakQnty
+        if (!values.zakQnty) {
+            errors.zakQnty = 'ожидается zakQnty';
+        }
+        if (values.zakQnty && !values.zakQnty.toString().match(/^\d+$/)) {
+            errors.zakQnty = 'возможно ввести только числа';
+        }
+
+        // frozQnty
+        if (values.frozQnty && !values.frozQnty.toString().match(/^\d+$/)) {
+            errors.frozQnty = 'возможно ввести только числа';
+        }
+
+        // restQnty
+        if (values.restQnty && !values.restQnty.toString().match(/^\d+$/)) {
+            errors.restQnty = 'возможно ввести только числа';
+        }
+
+        // zakSum
+        if (!values.zakSum) {
+            errors.zakSum = 'ожидается zakSum';
+        }
+
+        // curRate
+        if (!values.curRate) {
+            errors.curRate = 'ожидается curRate';
+        }
+        if (values.curRate && !values.curRate.toString().match(/^\d+(.\d{1,4})?$/)) {
+            errors.curRate = 'возможно ввести только числа не больше 100 с 4 знаками после точки';
+        }
+        if (values.curRate >= 100) {
+            errors.curRate = 'curRate ожидается меньше 100';
+        }
+
+        // zakDate
+        if (!values.zakDate) {
+            errors.zakDate = 'ожидается zakDate';
+        }
+
+        // if (!values.zakDateShp) {
+        //     errors.zakDateShp = 'Required zakDateShp';
+        // }
+        //
+        // if (!values.zakDateRcv) {
+        //     errors.zakDateRcv = 'Required zakDateRcv';
+        // }
+        //
+        // if (!values.zakDateProtct) {
+        //     errors.zakDateProtct = 'Required zakDateProtct';
+        // }
+
+        return errors;
     },
-    mapStateToProps
+
+}, mapStateToProps
 )(BarnForm);
 
 
