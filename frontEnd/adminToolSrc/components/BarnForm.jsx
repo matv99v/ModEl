@@ -23,15 +23,11 @@ class BarnForm extends React.Component {
         this.state = {
             isLoading: false,
             options: [],
-            // dbMessage: { code: '', sqlMessage: '', message: ''},
-            // dbError: false,
-            // showModal: false
         };
     }
 
     // resetForm() {
     //     this.props.dispatch(reset('BarnForm'));
-    //
     // }
 
     print = (data) => {
@@ -39,13 +35,9 @@ class BarnForm extends React.Component {
         const copyData = {...data}; // do not mutate data!!!!
         delete copyData.productName; // this field for view only and belongs to another table
 
-        console.log(data);
-
         if (this.props.type === 'put') {
             api.updateBarn(this.props.hash, copyData)
                 .then(resp => {
-                    // this.setState({dbMessage: resp, dbError: false});
-                    // this.resetForm();
                     this.props.dispatch(alertMessage({
                         msg: `Заказ номер ${data.zakNumber} для продукта "${data.productName}" обновлен`,
                         type: 'success'
@@ -58,35 +50,22 @@ class BarnForm extends React.Component {
                         msg: `Вознкла ошибка при обновлении заказа номер ${data.zakNumber} для продукта "${data.productName}"`,
                         type: 'danger'
                     }));
-                    // this.setState({dbMessage: JSON.parse(err.message), dbError: true});
-                })
-                .finally(() => {
-                    // this.handleShowModal();
                 });
         } else {
             api.postToBarn(copyData)
                 .then(resp => {
-                    // this.setState({dbMessage: resp, dbError: false});
-                    // this.resetForm();
-
                     this.props.dispatch(alertMessage({
                         msg: `Заказ номер ${data.zakNumber} для продукта "${data.productName}" добавлен`,
                         type: 'success'
                     }));
-
                     this.props.history.push('/barn/purchase');
-
                     return null;
                 })
                 .catch(err => {
-                    // this.setState({dbMessage: JSON.parse(err.message), dbError: true});
                     this.props.dispatch(alertMessage({
                         msg: `Вознкла ошибка при добавлении заказа номер ${data.zakNumber} для продукта "${data.productName}"`,
                         type: 'danger'
                     }));
-                })
-                .finally(() => {
-                    // this.handleShowModal();
                 });
         }
     }
@@ -327,13 +306,6 @@ const ReduxBarnForm = reduxForm({
         if (!values.zakDate) {
             errors.zakDate = 'ожидается zakDate';
         }
-        // const d = moment(values.zakDate, 'YYYY-MM-DD');
-        // const now = moment();
-        //
-        // if (d.isAfter(now)) {
-        //     errors.zakDate = 'дата заказа не может быть в будущем';
-        // }
-
 
         // zakDateShp
         if (values.zakDate && values.zakDateShp && !moment(values.zakDateShp, 'YYYY-MM-DD').isSameOrAfter(moment(values.zakDate, 'YYYY-MM-DD'))) {
