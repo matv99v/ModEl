@@ -2,24 +2,29 @@
 
 
 .BarnPurchase__Cnt {
-    & > tbody > tr > td ,
-    & > tbody > tr > th,
-    & > tfoot > tr > td,
-    & > tfoot > tr > th,
-    & > thead > tr > td,
-    & > thead > tr > th {
-        border: none !important;
+    &.table > tbody > tr > td,
+    &.table > tbody > tr > th,
+    &.table > tfoot > tr > td,
+    &.table > tfoot > tr > th,
+    &.table > thead > tr > td,
+    &.table > thead > tr > th {
+        border: 0;
     }
 
-    tbody tr.cat.prod {
-        box-shadow: 0 -1px 0 $table-border-color;
+    & > tbody > tr.cat.prod {
+        border-top: 1px solid $table-border-color;
     }
 
-    tbody tr.prod td:not(:first-child){
-        box-shadow: 0 -1px 0 $table-border-color;
+    & > tbody > tr.prod > td:not(:first-child){
+        border-top: 1px solid $table-border-color;
     }
 
-    tbody tr td:nth-child(4) {
-      white-space: nowrap;
+    & > tbody > tr > td:nth-child(4) {
+        white-space: nowrap;
     }
+
+    & > tbody > tr {
+        cursor: pointer;
+    }
+
 }

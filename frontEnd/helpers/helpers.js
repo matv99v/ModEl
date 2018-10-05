@@ -16,7 +16,25 @@ function obj2query(obj={}) {
 const base = process.env.HOST + ':' + process.env.PORT;
 
 
+function sortByPropName(filed) {
+    return function(a, b) {
+        const nameA = a[filed].toLowerCase();
+        const nameB = b[filed].toLowerCase();
+        if (nameA < nameB) {
+            return -1;
+        }
+        if (nameA > nameB) {
+            return 1;
+        }
+        return 0;
+    };
+}
+
+
+
+
 export default {
     obj2query,
-    base
+    base,
+    sortByPropName
 };

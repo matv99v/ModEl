@@ -1,16 +1,18 @@
 import React from 'react';
 import { reduxForm, reset } from 'redux-form';
 import FormItem from './common/FormItem.jsx';
-import { Button, Grid, Row, Col, Alert } from 'react-bootstrap';
+import { Button, Grid, Row, Col } from 'react-bootstrap';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 import { connect } from 'react-redux';
 import { change } from 'redux-form';
 
-// import { postToBarnAsync, putToBarnAsync } from 'AliasAdminToolSrc/redux/actions/barn-actions.js';
-
 import api from 'AliasApi/api';
+
+import { alertMessage } from '../redux/actions/sysdialogs-actions.js';
+import { withRouter } from 'react-router-dom';
+import moment from 'moment';
 
 
 
@@ -21,55 +23,49 @@ class BarnForm extends React.Component {
         this.state = {
             isLoading: false,
             options: [],
-            dbMessage: { code: '', sqlMessage: '', message: ''},
-            dbError: false
         };
     }
 
-    resetForm() {
-        this.props.dispatch(reset('BarnForm'));
-
-    }
+    // resetForm() {
+    //     this.props.dispatch(reset('BarnForm'));
+    // }
 
     print = (data) => {
+        // TODO: get only changed fields
         const copyData = {...data}; // do not mutate data!!!!
         delete copyData.productName; // this field for view only and belongs to another table
 
         if (this.props.type === 'put') {
-            // this.props.dispatch(putToBarnAsync(data));
             api.updateBarn(this.props.hash, copyData)
                 .then(resp => {
-                    // dispatch(addToBarnAsync(data));
-                    this.setState({dbMessage: resp, dbError: false});
-                    // this.resetForm();
+                    this.props.dispatch(alertMessage({
+                        msg: `Заказ номер ${data.zakNumber} для продукта "${data.productName}" обновлен`,
+                        type: 'success'
+                    }));
+                    this.props.history.push('/barn/purchase');
                     return null;
                 })
                 .catch(err => {
-                    // console.error(err);
-                    console.log(err);
-                    this.setState({dbMessage: JSON.parse(err.message), dbError: true});
-                })
-                .finally(() => {
-                    // dispatch(hideSpinnerAction());
+                    this.props.dispatch(alertMessage({
+                        msg: `Вознкла ошибка при обновлении заказа номер ${data.zakNumber} для продукта "${data.productName}"`,
+                        type: 'danger'
+                    }));
                 });
-
-
         } else {
-            // this.props.dispatch(postToBarnAsync(data));
-
             api.postToBarn(copyData)
                 .then(resp => {
-                    // dispatch(addToBarnAsync(data));
-                    this.setState({dbMessage: resp, dbError: false});
-                    // this.resetForm();
+                    this.props.dispatch(alertMessage({
+                        msg: `Заказ номер ${data.zakNumber} для продукта "${data.productName}" добавлен`,
+                        type: 'success'
+                    }));
+                    this.props.history.push('/barn/purchase');
                     return null;
                 })
                 .catch(err => {
-                    // console.error(err);
-                    this.setState({dbMessage: JSON.parse(err.message), dbError: true});
-                })
-                .finally(() => {
-                    // dispatch(hideSpinnerAction());
+                    this.props.dispatch(alertMessage({
+                        msg: `Вознкла ошибка при добавлении заказа номер ${data.zakNumber} для продукта "${data.productName}"`,
+                        type: 'danger'
+                    }));
                 });
         }
     }
@@ -91,10 +87,13 @@ class BarnForm extends React.Component {
     }
 
     handleGoodInputChange = (selected) => {
+        console.log(selected);
         if (selected && selected.length > 0) {
             this.props.dispatch(change('BarnForm', 'idProduct', selected[0].idProduct));
+            this.props.dispatch(change('BarnForm', 'productName', selected[0].productName));
         } else {
             this.props.dispatch(change('BarnForm', 'idProduct', ''));
+            this.props.dispatch(change('BarnForm', 'productName', ''));
         }
     }
 
@@ -104,8 +103,8 @@ class BarnForm extends React.Component {
             <Grid style={{paddingBottom: '25px'}}>
 
                 <Row>
-                    <Col>
-                        <h3 className='text-center'>{this.props.type === 'put' ? 'Правка транзакции' : 'Новая транзакция'}</h3>
+                    <Col smOffset={3}>
+                        <h3>{this.props.type === 'put' ? 'Правка транзакции' : 'Новая транзакция'}</h3>
                     </Col>
                 </Row>
 
@@ -184,13 +183,14 @@ class BarnForm extends React.Component {
                                 id="curRate"
                                 type="number"
                                 label="8 - curRate"
-                                step="0.01"
+                                step="0.1"
                             />
 
                             <FormItem
                                 id="zakDate"
                                 type="date"
                                 label="9 - zakDate"
+                                disabled={!this.props.type}
                             />
 
                             <FormItem
@@ -211,19 +211,11 @@ class BarnForm extends React.Component {
                                 label="12 - zakDateProtct"
                             />
 
-
-                            <Row style={{display: this.state.dbMessage.sqlMessage || this.state.dbMessage.affectedRows  ? 'block' : 'none'}}>
-                                <Alert bsStyle={this.state.dbError ? 'danger' : 'success'}>
-                                    <h4>{this.state.dbError ? 'Error' : 'Success'}</h4>
-                                    <div>{this.state.dbMessage.code}</div>
-                                    <div>{this.state.dbMessage.sqlMessage}</div>
-                                    <div>{this.state.dbMessage.message}</div>
-                                </Alert>;
+                            <Row>
+                                <Col smOffset={3}>
+                                    <Button bsStyle="primary" type="submit" bsSize='large'>Submit</Button>
+                                </Col>
                             </Row>
-
-                            <div className='text-center' >
-                                <Button bsStyle="primary" type="submit" bsSize='large'>Submit</Button>
-                            </div>
 
                         </form>
                     </Col>
@@ -237,10 +229,13 @@ class BarnForm extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
+    console.log('mapStateToProps');
     return {
         initialValues: ownProps.initialValues
     };
 }
+
+const withRouterBarnForm = withRouter(BarnForm);
 
 
 const ReduxBarnForm = reduxForm({
@@ -263,7 +258,7 @@ const ReduxBarnForm = reduxForm({
         }
 
         // zakLink
-        if (values.zakLink && !values.zakLink.match(/^https:\/\/.*aliexpress.*\?order_id=\d+$/)) {
+        if (values.zakLink && !values.zakLink.match(/^https:\/\/.*aliexpress.*\?(order_id=|orderId=)\d+$/)) {
             errors.zakLink = 'неправильная ссылка zakLink';
         }
         if (values.zakNumber && values.zakLink && values.zakLink.match(/\d+(?=$)/) && values.zakLink.match(/\d+(?=$)/)[0] !== values.zakNumber.toString()) {
@@ -312,23 +307,26 @@ const ReduxBarnForm = reduxForm({
             errors.zakDate = 'ожидается zakDate';
         }
 
-        // if (!values.zakDateShp) {
-        //     errors.zakDateShp = 'Required zakDateShp';
-        // }
-        //
-        // if (!values.zakDateRcv) {
-        //     errors.zakDateRcv = 'Required zakDateRcv';
-        // }
-        //
-        // if (!values.zakDateProtct) {
-        //     errors.zakDateProtct = 'Required zakDateProtct';
-        // }
+        // zakDateShp
+        if (values.zakDate && values.zakDateShp && !moment(values.zakDateShp, 'YYYY-MM-DD').isSameOrAfter(moment(values.zakDate, 'YYYY-MM-DD'))) {
+            errors.zakDateShp = 'zakDateShp не может быть меньше zakDate';
+        }
+
+        // zakDateRcv
+        if (values.zakDateShp && values.zakDateRcv && !moment(values.zakDateRcv, 'YYYY-MM-DD').isSameOrAfter(moment(values.zakDateShp, 'YYYY-MM-DD'))) {
+            errors.zakDateRcv = 'zakDateRcv не может быть меньше zakDateShp';
+        }
+
+        // zakDateProtct
+        if (values.zakDateRcv && values.zakDateProtct && !moment(values.zakDateProtct, 'YYYY-MM-DD').isSameOrAfter(moment(values.zakDateRcv, 'YYYY-MM-DD'))) {
+            errors.zakDateProtct = 'zakDateProtct не может быть меньше zakDateRcv';
+        }
 
         return errors;
     },
 
 }, mapStateToProps
-)(BarnForm);
+)(withRouterBarnForm);
 
 
 

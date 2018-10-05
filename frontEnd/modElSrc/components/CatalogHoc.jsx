@@ -9,9 +9,7 @@ import { Route, Switch } from 'react-router-dom';
 import GoodExpandedView from './GoodExpandedView.jsx';
 import './CatalogHoc.scss';
 import { fetchGoodsByCategoryActionAsync, fetchGoodByIdActionAsync  } from 'AliasModelSrc/redux/actions/catalog-actions';
-
-
-
+import helpers from '../../helpers/helpers.js';
 
 class CatalogHoc extends React.Component {
     constructor(props) {
@@ -122,7 +120,7 @@ class CatalogHoc extends React.Component {
                     <Col xs={12} sm={4} md={4}>
 
                         <Categories
-                            categories={ Object.keys(this.props.catalog).map(idCategory => this.props.catalog[idCategory]) }
+                            categories={ Object.keys(this.props.catalog).map(idCategory => this.props.catalog[idCategory]).sort(helpers.sortByPropName('CategoryName')) }
                             dispatch={this.props.dispatch}
                             activeCategoryId={this.props.match.params.catId}
                         />
