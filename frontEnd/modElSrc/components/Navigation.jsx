@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { fetchEnabledCategoriesAsync } from 'AliasModelSrc/redux/actions/catalog-actions';
 import './Navigation.scss';
 import BrandLogo from './common/BrandLogo.jsx';
+import helpers from '../../helpers/helpers.js';
+
 
 
 
@@ -39,7 +41,7 @@ class Navigation extends React.Component {
         }, 0);
         const displayCart = amount > 0 ? 'block' : 'none';
         // transform object to array before render
-        const categories = Object.keys(this.props.catalog).map(idCategory => this.props.catalog[idCategory]);
+        const categories = Object.keys(this.props.catalog).map(idCategory => this.props.catalog[idCategory]).sort(helpers.sortByPropName('CategoryName'));
 
         return (
             <Navbar inverse onToggle={this.handleNavToggle} expanded={this.state.isOpen} onSelect={this.handleNavSelect} className="Navigation__Cnt">

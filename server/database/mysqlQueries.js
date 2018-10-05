@@ -25,7 +25,8 @@ module.exports = {
 
         const queryStr = createQuery([enabledStr, likeStr]);
 
-        return `SELECT * FROM category ${queryStr}`;
+        const re = `SELECT * FROM category ${queryStr} ORDER BY CategoryName`;
+        return re;
     },
 
     getGoods(obj) {
