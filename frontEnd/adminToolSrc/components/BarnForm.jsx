@@ -36,7 +36,7 @@ class BarnForm extends React.Component {
         delete copyData.productName; // this field for view only and belongs to another table
 
         if (this.props.type === 'put') {
-            api.updateBarn(this.props.hash, copyData)
+            return api.updateBarn(this.props.hash, copyData)
                 .then(resp => {
                     this.props.dispatch(alertMessage({
                         msg: `Заказ номер ${data.zakNumber} для продукта "${data.productName}" обновлен`,
@@ -52,7 +52,7 @@ class BarnForm extends React.Component {
                     }));
                 });
         } else {
-            api.postToBarn(copyData)
+            return api.postToBarn(copyData)
                 .then(resp => {
                     this.props.dispatch(alertMessage({
                         msg: `Заказ номер ${data.zakNumber} для продукта "${data.productName}" добавлен`,
@@ -213,7 +213,7 @@ class BarnForm extends React.Component {
 
                             <Row>
                                 <Col smOffset={3}>
-                                    <Button bsStyle="primary" type="submit" bsSize='large'>Submit</Button>
+                                    <Button bsStyle="primary" type="submit" bsSize='large' disabled={this.props.submitting || this.props.pristine}>Submit</Button>
                                 </Col>
                             </Row>
 
