@@ -2,7 +2,11 @@ import moment from 'moment';
 
 
 export function exist(val) {
-    return !!val;
+    return !(typeof val === 'undefined' || val === null || val.length === 0);
+}
+
+export function isZero(val) {
+    return +val === 0;
 }
 
 export function isNumericInt(val) {
@@ -22,8 +26,12 @@ export function isEqualStrings(valA, valB) {
     return valA.toString() === valB.toString();
 }
 
-export function isReal2d4(val) {
+export function isReal6d4(val) {
     return val.toString().match(/^\d{1,2}?(.\d{1,4})?$/);
+}
+
+export function isReal8d2(val) {
+    return val.toString().match(/^\d{1,6}?(.\d{1,2})?$/);
 }
 
 export function isBetween0And100(val) {

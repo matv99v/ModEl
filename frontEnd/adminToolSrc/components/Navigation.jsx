@@ -90,7 +90,7 @@ export default class Navigation extends React.Component {
                             href="/barn/add"
                             activeStyle={{color: 'red'}}
                         >
-                            Оформить поступление
+                            Новая транзакция
                         </MenuItem>
 
                         <MenuItem divider />
