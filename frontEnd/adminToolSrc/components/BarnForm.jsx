@@ -39,7 +39,7 @@ class BarnForm extends React.Component {
             return api.updateBarn(this.props.hash, copyData)
                 .then(resp => {
                     this.props.dispatch(alertMessage({
-                        msg: `Заказ номер ${data.zakNumber} для продукта "${data.productName}" обновлен`,
+                        msg: `Заказ номер ${data.zakNumber} для продукта '${data.productName}' обновлен`,
                         type: 'success'
                     }));
                     this.props.history.push('/barn/purchase');
@@ -47,7 +47,7 @@ class BarnForm extends React.Component {
                 })
                 .catch(err => {
                     this.props.dispatch(alertMessage({
-                        msg: `Вознкла ошибка при обновлении заказа номер ${data.zakNumber} для продукта "${data.productName}"`,
+                        msg: `Вознкла ошибка при обновлении заказа номер ${data.zakNumber} для продукта '${data.productName}'`,
                         type: 'danger'
                     }));
                 });
@@ -55,7 +55,7 @@ class BarnForm extends React.Component {
             return api.postToBarn(copyData)
                 .then(resp => {
                     this.props.dispatch(alertMessage({
-                        msg: `Заказ номер ${data.zakNumber} для продукта "${data.productName}" добавлен`,
+                        msg: `Заказ номер ${data.zakNumber} для продукта '${data.productName}' добавлен`,
                         type: 'success'
                     }));
                     this.props.history.push('/barn/purchase');
@@ -63,7 +63,7 @@ class BarnForm extends React.Component {
                 })
                 .catch(err => {
                     this.props.dispatch(alertMessage({
-                        msg: `Вознкла ошибка при добавлении заказа номер ${data.zakNumber} для продукта "${data.productName}"`,
+                        msg: `Вознкла ошибка при добавлении заказа номер ${data.zakNumber} для продукта '${data.productName}'`,
                         type: 'danger'
                     }));
                 });
@@ -111,13 +111,13 @@ class BarnForm extends React.Component {
                 <Row>
                     <Col>
                         <form
-                            className="form-horizontal"
+                            className='form-horizontal'
                             onSubmit={this.props.handleSubmit(this.print)}
                         >
 
-                            <div className="form-group">
-                                <label className="col-sm-3 control-label">0 - Good name</label>
-                                <div className="col-sm-9">
+                            <div className='form-group'>
+                                <label className='col-sm-3 control-label'>0 - Good name</label>
+                                <div className='col-sm-9'>
                                     <AsyncTypeahead
                                         labelKey='productName'
                                         isLoading={this.state.isLoading}
@@ -136,83 +136,83 @@ class BarnForm extends React.Component {
                             </div>
 
                             <FormItem
-                                id="idProduct"
-                                type="number"
-                                label="1 - idProduct"
+                                id='idProduct'
+                                type='number'
+                                label='1 - idProduct'
                                 disabled
                             />
 
                             <FormItem
-                                id="zakNumber"
-                                type="number"
-                                label="2 - zakNumber"
+                                id='zakNumber'
+                                type='number'
+                                label='2 - zakNumber'
                                 disabled={this.props.type === 'put'}
                             />
 
                             <FormItem
-                                id="zakLink"
-                                type="text"
-                                label="3 - zakLink"
+                                id='zakLink'
+                                type='text'
+                                label='3 - zakLink'
                             />
 
                             <FormItem
-                                id="zakQnty"
-                                type="number"
-                                label="4 - zakQnty"
+                                id='zakQnty'
+                                type='number'
+                                label='4 - zakQnty'
                             />
 
                             <FormItem
-                                id="frozQnty"
-                                type="number"
-                                label="5 - frozQnty"
+                                id='frozQnty'
+                                type='number'
+                                label='5 - frozQnty'
                             />
 
                             <FormItem
-                                id="restQnty"
-                                type="number"
-                                label="6 - restQnty"
+                                id='restQnty'
+                                type='number'
+                                label='6 - restQnty'
                             />
 
                             <FormItem
-                                id="zakSum"
-                                type="number"
-                                label="7 - zakSum"
+                                id='zakSum'
+                                type='number'
+                                label='7 - zakSum'
                             />
 
                             <FormItem
-                                id="curRate"
-                                type="number"
-                                label="8 - curRate"
-                                step="0.1"
+                                id='curRate'
+                                type='number'
+                                label='8 - curRate'
+                                step='0.1'
                             />
 
                             <FormItem
-                                id="zakDate"
-                                type="date"
-                                label="9 - zakDate"
+                                id='zakDate'
+                                type='date'
+                                label='9 - zakDate'
                             />
 
                             <FormItem
-                                id="zakDateShp"
-                                type="date"
-                                label="10 - zakDateShp"
+                                id='zakDateShp'
+                                type='date'
+                                label='10 - zakDateShp'
                             />
 
                             <FormItem
-                                id="zakDateRcv"
-                                type="date"
-                                label="11 - zakDateRcv"
+                                id='zakDateRcv'
+                                type='date'
+                                label='11 - zakDateRcv'
                             />
 
                             <FormItem
-                                id="zakDateProtct"
-                                type="date"
-                                label="12 - zakDateProtct"
+                                id='zakDateProtct'
+                                type='date'
+                                label='12 - zakDateProtct'
                             />
 
                             <Row>
                                 <Col smOffset={3}>
-                                    <Button bsStyle="primary" type="submit" bsSize='large' disabled={this.props.submitting || this.props.pristine}>Submit</Button>
+                                    <Button bsStyle='primary' type='submit' bsSize='large' disabled={this.props.submitting || this.props.pristine}>Submit</Button>
                                 </Col>
                             </Row>
 
@@ -254,7 +254,7 @@ const ReduxBarnForm = reduxForm({
             zakDate: validateBarnForm.zakDate(values.zakDate),
             zakDateShp: validateBarnForm.zakDateShp(values.zakDateShp, values.zakDate),
             zakDateRcv: validateBarnForm.zakDateRcv(values.zakDateRcv, values.zakDateShp),
-            zakDateProtct: validateBarnForm.zakDateProtct(values.zakDateProtct, values.zakDateRcv),
+            zakDateProtct: validateBarnForm.zakDateProtct(values.zakDateProtct, values.zakDateShp),
         };
     },
 

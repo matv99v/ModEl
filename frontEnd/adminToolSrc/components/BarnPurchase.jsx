@@ -51,13 +51,13 @@ class Barn extends React.Component {
                                 'CategoryName',
                                 'productName',
                                 'zakNumber',
-                                'zakDate',
-                                'zakDateRcv',
-                                'zakDateShp',
                                 'zakDateProtct',
+                                'zakDateShp',
+                                'zakDateRcv',
+                                'zakDate',
                                 'zakQnty',
-                                'restQnty',
                                 'frozQnty',
+                                'restQnty',
                                 'zakSum',
                                 'curRate',
                             ].map((field, i) => (
@@ -77,13 +77,13 @@ class Barn extends React.Component {
                                 <td>{this.renderDuplicatePredicate(i, 'CategoryName', transaction) && transaction.CategoryName}</td>
                                 <td>{this.renderDuplicatePredicate(i, 'productName', transaction) && transaction.productName}</td>
                                 <td><a href={transaction.zakLink} target='_blank' rel='noopener noreferrer'>{transaction.zakNumber}</a></td>
-                                <td>{transaction.zakDate}</td>
-                                <td>{transaction.zakDateRcv}</td>
-                                <td>{transaction.zakDateShp}</td>
                                 <td>{transaction.zakDateProtct}</td>
+                                <td>{transaction.zakDateShp}</td>
+                                <td>{transaction.zakDateRcv}</td>
+                                <td>{transaction.zakDate}</td>
                                 <td>{transaction.zakQnty}</td>
-                                <td>{transaction.restQnty}</td>
                                 <td>{transaction.frozQnty}</td>
+                                <td>{transaction.restQnty}</td>
                                 <td>{transaction.zakSum}</td>
                                 <td>{transaction.curRate}</td>
                             </tr>

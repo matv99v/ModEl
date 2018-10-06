@@ -4,10 +4,12 @@ import {
     isAliexpressUrl,
     getUrlOrderId,
     isEqualStrings,
-    isReal2d4,
+    isReal6d4,
+    isReal8d2,
     isBetween0And100,
     isDateInFuture,
     isSameOrAfter,
+    isZero,
 } from './basic.js';
 
 export default {
@@ -39,7 +41,12 @@ export default {
     },
 
     zakQnty(val) {
-        if (!exist(val)) {
+        const a = exist(val);
+        const b = isZero(val);
+        debugger;
+
+
+        if (!exist(val) || isZero(val)) {
             return 'ожидается zakQnty';
         }
         if (!isNumericInt(val)) {
@@ -48,7 +55,7 @@ export default {
     },
 
     frozQnty(val) {
-        if (!isNumericInt(val)) {
+        if (exist(val) && !isNumericInt(val)) {
             return 'ожидается комбинация цифр';
         }
     },
@@ -66,8 +73,8 @@ export default {
         if (!exist(val)) {
             return 'ожидается zakSum';
         }
-        if (!isNumericInt(val)) {
-            return 'ожидается комбинация цифр';
+        if (!isReal8d2(val)) {
+            return 'ожидается положительное число в формате dddddd.dd';
         }
     },
 
@@ -75,11 +82,11 @@ export default {
         if (!exist(val)) {
             return 'ожидается curRate';
         }
-        if (!isReal2d4(val)) {
-            return 'ожидается число в формате dd.dddd';
+        if (!isReal6d4(val)) {
+            return 'ожидается положительное число в формате dd.dddd';
         }
         if (!isBetween0And100(val)) {
-            return 'ожидается в диапазоне от 1 до 99.9999 включительно';
+            return 'ожидается curRate в диапазоне от 1 до 99.9999 включительно';
         }
     },
 
@@ -116,15 +123,15 @@ export default {
         }
     },
 
-    zakDateProtct(zakDateProtct, zakDateRcv) {
+    zakDateProtct(zakDateProtct, zakDateShp) {
         if (exist(zakDateProtct) && isDateInFuture(zakDateProtct)) {
             return 'zakDateProtct не может быть в будущем';
         }
-        if (exist(zakDateProtct) && exist(zakDateRcv) && !isSameOrAfter(zakDateProtct, zakDateRcv)) {
-            return 'zakDateProtct не может быть раньше zakDateRcv';
+        if (exist(zakDateProtct) && exist(zakDateShp) && !isSameOrAfter(zakDateProtct, zakDateShp)) {
+            return 'zakDateProtct не может быть раньше zakDateShp';
         }
-        if (exist(zakDateProtct) && !exist(zakDateRcv)) {
-            return 'zakDateProtct не может быть без zakDateRcv';
+        if (exist(zakDateProtct) && !exist(zakDateShp)) {
+            return 'zakDateProtct не может быть без zakDateShp';
         }
 
     },
