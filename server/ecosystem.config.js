@@ -1,23 +1,35 @@
+// pm2 start ecosystem.config.js --only <<name of the app>>
+
 module.exports = {
-    apps : [
+    apps: [
         {
             name: 'prod_ME',
             script: 'bin/www',
             env: {
-                NODE_ENV: "production",
+                NODE_ENV: 'production',
                 PORT: 3000,
-                DB_NAME: "goods"
-            }
+                DB_NAME: 'goods',
+            },
+        },
+        {
+            name: 'staging_ME',
+            script: 'bin/www',
+            env: {
+                NODE_ENV: 'development',
+                PORT: 3001,
+                DB_NAME: 'goodsdev',
+            },
         },
         {
             name: 'develop_ME',
             script: 'bin/www',
             env: {
-                NODE_ENV: "development",
+                NODE_ENV: 'development',
                 PORT: 3001,
-                DB_NAME: "goodsdev"
-            }
-        }
-    ]
+                DB_NAME: 'goodsdev',
+            },
+            watch: '../',
+        },
+    ],
 
 };

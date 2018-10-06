@@ -8,7 +8,7 @@ module.exports = {
 
     getFilesByGoodId(goodId) {
         const pattern = new RegExp(`pht_${goodId}_`);
-        return fs.readdirAsync('./assets/goods-photos')
+        return fs.readdirAsync('./public/goods-photos')
             .then(files => {
                 const mathcedFiles = files.filter(file => file.match(pattern));
                 return {[goodId]: mathcedFiles.length};

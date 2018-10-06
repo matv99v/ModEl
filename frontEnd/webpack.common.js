@@ -1,73 +1,88 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-    template: './src/index.html',
-    inject: 'body'
-});
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+
 
 
 module.exports = {
-    entry: ['@babel/polyfill', './src/main.js'],
-
-    plugins: [
-        HtmlWebpackPluginConfig
-    ],
+    entry: {
+        modEl: ['@babel/polyfill', './modElSrc/main.js'],
+        admin: ['@babel/polyfill', './adminToolSrc/main.js']
+    },
 
     output: {
-        path: path.resolve('../server/public'),
-        filename: 'bundle.js'
+        path: path.resolve('../server/public/bundle'),
+        filename: '[name].bundle.js'
     },
+
+    plugins: [
+        new CleanWebpackPlugin('../server/public/bundle',{
+            allowExternal: true
+        }),
+
+        new HtmlWebpackPlugin({
+            template: './modElSrc/model-index.html',
+            inject: 'body',
+            chunks: ['modEl'],
+            filename: 'model-index.html'
+        }),
+
+        new HtmlWebpackPlugin({
+            template: './adminToolSrc/admin-index.html',
+            inject: 'body',
+            chunks: ['admin'],
+            filename: 'admin-index.html'
+        })
+    ],
 
     module: {
         rules: [
             {
                 test: /\.css$/,
                 use: [
-                    { loader: "style-loader" },
-                    { loader: "css-loader" }
+                    { loader: 'style-loader' },
+                    { loader: 'css-loader' }
                 ]
             },
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: "babel-loader"
-            },
-            {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                use: "babel-loader"
+                use: ['babel-loader']
             },
             {
                 test: /\.scss$/,
                 use: [
-                    "style-loader", // creates style nodes from JS strings
-                    "css-loader", // translates CSS into CommonJS
-                    "sass-loader" // compiles Sass to CSS
+                    'style-loader', // creates style nodes from JS strings
+                    'css-loader', // translates CSS into CommonJS
+                    'sass-loader' // compiles Sass to CSS
                 ]
             },
             {
-              test: /\.png$/,
-              loader: "url-loader?limit=100000"
+                test: /\.png$/,
+                exclude: /node_modules/,
+                loader: 'url-loader?limit=100000'
             },
             {
-              test: /\.jpg$/,
-              loader: "file-loader"
+                test: /\.jpg$/,
+                exclude: /node_modules/,
+                loader: 'file-loader'
             },
             {
-              test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-              loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+                test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url-loader?limit=10000&mimetype=application/font-woff'
             },
             {
-              test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-              loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
+                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url-loader?limit=15000&mimetype=application/octet-stream'
             },
             {
-              test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-              loader: 'file-loader'
+                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'file-loader'
             },
             {
-              test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-              loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url-loader?limit=15000&mimetype=image/svg+xml'
             }
 
         ]
@@ -77,8 +92,10 @@ module.exports = {
 
     resolve: {
         alias: {
-            AliasSrc: path.resolve(__dirname, 'src'),
-            AliasReduxActions: path.resolve(__dirname, 'src/redux/actions/'),
+            AliasModelSrc: path.resolve(__dirname, 'modElSrc'),
+            AliasAdminToolSrc: path.resolve(__dirname, 'adminToolSrc'),
+            AliasApi: path.resolve(__dirname, 'api'),
+            AliasRoot: path.resolve(__dirname, './'),
         }
     },
 

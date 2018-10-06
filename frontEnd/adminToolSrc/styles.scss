@@ -1,0 +1,30 @@
+// override bootstrap styles
+@import "variables_override";
+
+
+// import bootstrap
+$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+@import '~bootstrap-sass/assets/stylesheets/bootstrap';
+
+// fontface
+
+// @font-face {
+//     font-family: "Comfortaa";
+//     src: url("fonts/Comfortaa-Light.ttf");
+//     font-weight: 100;
+// }
+// @font-face {
+//     font-family: "Comfortaa";
+//     src: url("fonts/Comfortaa-Regular.ttf");
+//     font-weight: 400;
+// }
+// @font-face {
+//     font-family: "Comfortaa";
+//     src: url("fonts/Comfortaa-Bold.ttf");
+//     font-weight: 900;
+// }
+//
+body {
+    // font-family: 'Comfortaa', cursive;
+    overflow-y: scroll;
+}

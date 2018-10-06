@@ -1,0 +1,13 @@
+@import "~AliasModelSrc/variables_override";
+
+
+.GoodsList__container {
+  // .list-group-item.hoverable:hover {
+  //   cursor: pointer;
+  //   background-color: $list-group-hover-bg;
+  // }
+
+  a:hover {
+    text-decoration: none;
+  }
+}
