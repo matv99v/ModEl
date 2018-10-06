@@ -52,7 +52,8 @@ module.exports = {
 
         const queryStr = createQuery([excludeStr, existStr, goodStr, catStr]);
 
-        return `SELECT * FROM products
+        return `SELECT idCategory, products.idProduct, productName, productParams, declarePrice, detailName, textDescrip
+                    FROM products
                     LEFT JOIN
                         descrip ON products.idProduct = descrip.idProduct ${queryStr}`;
     },
