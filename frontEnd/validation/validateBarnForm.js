@@ -41,11 +41,6 @@ export default {
     },
 
     zakQnty(val) {
-        const a = exist(val);
-        const b = isZero(val);
-        debugger;
-
-
         if (!exist(val) || isZero(val)) {
             return 'ожидается zakQnty';
         }
