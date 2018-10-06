@@ -94,7 +94,8 @@ module.exports = {
         alias: {
             AliasModelSrc: path.resolve(__dirname, 'modElSrc'),
             AliasAdminToolSrc: path.resolve(__dirname, 'adminToolSrc'),
-            AliasApi: path.resolve(__dirname, 'api')
+            AliasApi: path.resolve(__dirname, 'api'),
+            AliasRoot: path.resolve(__dirname, './'),
         }
     },
 
