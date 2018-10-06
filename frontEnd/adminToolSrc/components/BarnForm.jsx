@@ -12,7 +12,7 @@ import api from 'AliasApi/api';
 
 import { alertMessage } from '../redux/actions/sysdialogs-actions.js';
 import { withRouter } from 'react-router-dom';
-import moment from 'moment';
+import validateBarnForm from 'AliasRoot/validation/validateBarnForm';
 
 
 
@@ -190,7 +190,6 @@ class BarnForm extends React.Component {
                                 id="zakDate"
                                 type="date"
                                 label="9 - zakDate"
-                                disabled={!this.props.type}
                             />
 
                             <FormItem
@@ -243,86 +242,20 @@ const ReduxBarnForm = reduxForm({
     form: 'BarnForm',
     // enableReinitialize: true
     validate(values) {
-        const errors = {};
-
-        // idProduct
-        if (!values.idProduct) {
-            errors.idProduct = 'ожидается idProduct';
-        }
-        // zakNumber
-        if (!values.zakNumber) {
-            errors.zakNumber = 'ожидается zakNumber';
-        }
-        if (values.zakNumber && !values.zakNumber.toString().match(/^\d+$/)) {
-            errors.zakNumber = 'возможно ввести только числа';
-        }
-
-        // zakLink
-        if (values.zakLink && !values.zakLink.match(/^https:\/\/.*aliexpress.*\?(order_id=|orderId=)\d+$/)) {
-            errors.zakLink = 'неправильная ссылка zakLink';
-        }
-        if (values.zakNumber && values.zakLink && values.zakLink.match(/\d+(?=$)/) && values.zakLink.match(/\d+(?=$)/)[0] !== values.zakNumber.toString()) {
-            errors.zakLink = 'zakNumber и zakLink должны соответсвовать';
-        }
-        if (values.zakNumber && !values.zakLink) {
-            errors.zakLink = 'ожидается zakLink';
-        }
-
-        // zakQnty
-        if (!values.zakQnty) {
-            errors.zakQnty = 'ожидается zakQnty';
-        }
-        if (values.zakQnty && !values.zakQnty.toString().match(/^\d+$/)) {
-            errors.zakQnty = 'возможно ввести только числа';
-        }
-
-        // frozQnty
-        if (values.frozQnty && !values.frozQnty.toString().match(/^\d+$/)) {
-            errors.frozQnty = 'возможно ввести только числа';
-        }
-
-        // restQnty
-        if (values.restQnty && !values.restQnty.toString().match(/^\d+$/)) {
-            errors.restQnty = 'возможно ввести только числа';
-        }
-
-        // zakSum
-        if (!values.zakSum) {
-            errors.zakSum = 'ожидается zakSum';
-        }
-
-        // curRate
-        if (!values.curRate) {
-            errors.curRate = 'ожидается curRate';
-        }
-        if (values.curRate && !values.curRate.toString().match(/^\d+(.\d{1,4})?$/)) {
-            errors.curRate = 'возможно ввести только числа не больше 100 с 4 знаками после точки';
-        }
-        if (values.curRate >= 100) {
-            errors.curRate = 'curRate ожидается меньше 100';
-        }
-
-        // zakDate
-        if (!values.zakDate) {
-            errors.zakDate = 'ожидается zakDate';
-        }
-
-        // zakDateShp
-        if (values.zakDate && values.zakDateShp && !moment(values.zakDateShp, 'YYYY-MM-DD').isSameOrAfter(moment(values.zakDate, 'YYYY-MM-DD'))) {
-            errors.zakDateShp = 'zakDateShp не может быть меньше zakDate';
-        }
-
-        // zakDateRcv
-        if (values.zakDateShp && values.zakDateRcv && !moment(values.zakDateRcv, 'YYYY-MM-DD').isSameOrAfter(moment(values.zakDateShp, 'YYYY-MM-DD'))) {
-            errors.zakDateRcv = 'zakDateRcv не может быть меньше zakDateShp';
-        }
-
-        // zakDateProtct
-        if (values.zakDateRcv && values.zakDateProtct && !moment(values.zakDateProtct, 'YYYY-MM-DD').isSameOrAfter(moment(values.zakDateRcv, 'YYYY-MM-DD'))) {
-            errors.zakDateProtct = 'zakDateProtct не может быть меньше zakDateRcv';
-        }
-
-        return errors;
+        return {
+            idProduct: validateBarnForm.idProduct(values.idProduct),
+            zakNumber: validateBarnForm.zakNumber(values.zakNumber),
+            zakLink: validateBarnForm.zakLink(values.zakLink, values.zakNumber),
+            zakQnty: validateBarnForm.zakQnty(values.zakQnty),
+            frozQnty: validateBarnForm.frozQnty(values.frozQnty),
+            restQnty: validateBarnForm.restQnty(values.restQnty),
+            zakSum: validateBarnForm.zakSum(values.zakSum),
+            curRate: validateBarnForm.curRate(values.curRate),
+            zakDate: validateBarnForm.zakDate(values.zakDate),
+            zakDateShp: validateBarnForm.zakDateShp(values.zakDateShp, values.zakDate),
+            zakDateRcv: validateBarnForm.zakDateRcv(values.zakDateRcv, values.zakDateShp),
+            zakDateProtct: validateBarnForm.zakDateProtct(values.zakDateProtct, values.zakDateRcv),
+        };
     },
 
 }, mapStateToProps
