@@ -251,6 +251,7 @@ const ReduxBarnForm = reduxForm({
             restQnty: validateBarnForm.restQnty(values.restQnty),
             zakSum: validateBarnForm.zakSum(values.zakSum),
             curRate: validateBarnForm.curRate(values.curRate),
+
             zakDate: validateBarnForm.zakDate(values.zakDate),
             zakDateShp: validateBarnForm.zakDateShp(values.zakDateShp, values.zakDate),
             zakDateRcv: validateBarnForm.zakDateRcv(values.zakDateRcv, values.zakDateShp),

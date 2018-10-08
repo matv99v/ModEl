@@ -51,10 +51,10 @@ class Barn extends React.Component {
                                 'CategoryName',
                                 'productName',
                                 'zakNumber',
-                                'zakDateProtct',
+                                'zakDate',
                                 'zakDateShp',
                                 'zakDateRcv',
-                                'zakDate',
+                                'zakDateProtct',
                                 'zakQnty',
                                 'frozQnty',
                                 'restQnty',
@@ -77,10 +77,10 @@ class Barn extends React.Component {
                                 <td>{this.renderDuplicatePredicate(i, 'CategoryName', transaction) && transaction.CategoryName}</td>
                                 <td>{this.renderDuplicatePredicate(i, 'productName', transaction) && transaction.productName}</td>
                                 <td><a href={transaction.zakLink} target='_blank' rel='noopener noreferrer'>{transaction.zakNumber}</a></td>
-                                <td>{transaction.zakDateProtct}</td>
+                                <td>{transaction.zakDate}</td>
                                 <td>{transaction.zakDateShp}</td>
                                 <td>{transaction.zakDateRcv}</td>
-                                <td>{transaction.zakDate}</td>
+                                <td>{transaction.zakDateProtct}</td>
                                 <td>{transaction.zakQnty}</td>
                                 <td>{transaction.frozQnty}</td>
                                 <td>{transaction.restQnty}</td>

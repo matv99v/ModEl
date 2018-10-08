@@ -7,9 +7,17 @@ import {
     isReal6d4,
     isReal8d2,
     isBetween0And100,
-    isDateInFuture,
-    isSameOrAfter,
     isZero,
+
+    // isDateInFuture,
+    // isSameOrAfter,
+    // isDateInPast,
+
+    isSameDay,
+    isIncOrderDays,
+    isPresentDay,
+    isFutureDay,
+    isPastDay,
 } from './basic.js';
 
 export default {
@@ -89,46 +97,42 @@ export default {
         if (!exist(zakDate)) {
             return 'ожидается zakDate';
         }
-        if (isDateInFuture(zakDate)) {
+        if (isFutureDay(zakDate)) {
             return 'zakDate не может быть в будущем';
         }
     },
 
     zakDateShp(zakDateShp, zakDate) {
-        if (exist(zakDateShp) && isDateInFuture(zakDateShp)) {
-            return 'zakDateShp не может быть в будущем';
-        }
-        if (exist(zakDateShp) && exist(zakDate) && !isSameOrAfter(zakDateShp, zakDate)) {
-            return 'zakDateShp не может быть раньше zakDate';
-        }
         if (exist(zakDateShp) && !exist(zakDate)) {
             return 'zakDateShp не может быть без zakDate';
+        }
+        if (exist(zakDateShp) && isFutureDay(zakDateShp)) {
+            return 'zakDateShp не может быть в будущем';
+        }
+        if (exist(zakDateShp) && exist(zakDate) && isIncOrderDays(zakDateShp, zakDate)) {
+            return 'zakDateShp не может быть раньше zakDate';
         }
     },
 
     zakDateRcv(zakDateRcv, zakDateShp) {
-        if (exist(zakDateRcv) && isDateInFuture(zakDateRcv)) {
-            return 'zakDateRcv не может быть в будущем';
-        }
-        if (exist(zakDateRcv) && exist(zakDateShp) && !isSameOrAfter(zakDateRcv, zakDateShp)) {
-            return 'zakDateRcv не может быть раньше zakDateShp';
-        }
         if (exist(zakDateRcv) && !exist(zakDateShp)) {
             return 'zakDateRcv не может быть без zakDateShp';
+        }
+        if (exist(zakDateRcv) && isFutureDay(zakDateRcv)) {
+            return 'zakDateRcv не может быть в будущем';
+        }
+        if (exist(zakDateRcv) && exist(zakDateShp) && isIncOrderDays(zakDateRcv, zakDateShp)) {
+            return 'zakDateRcv не может быть раньше zakDateShp';
         }
     },
 
     zakDateProtct(zakDateProtct, zakDateShp) {
-        if (exist(zakDateProtct) && isDateInFuture(zakDateProtct)) {
-            return 'zakDateProtct не может быть в будущем';
-        }
-        if (exist(zakDateProtct) && exist(zakDateShp) && !isSameOrAfter(zakDateProtct, zakDateShp)) {
-            return 'zakDateProtct не может быть раньше zakDateShp';
-        }
         if (exist(zakDateProtct) && !exist(zakDateShp)) {
             return 'zakDateProtct не может быть без zakDateShp';
         }
-
+        if (exist(zakDateProtct) && isPastDay(zakDateProtct)) {
+            return 'zakDateProtct не может быть в прошлом';
+        }
     },
 
 
