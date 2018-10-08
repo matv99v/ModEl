@@ -38,21 +38,6 @@ export function isBetween0And100(val) {
     return val > 0 && val < 100;
 }
 
-// export function isDateInFuture(val, format = 'YYYY-MM-DD') {
-//     const vv = moment(val, format);
-//     const tod = moment();
-//
-//     const res = vv.isSameOrAfter(tod, 'day');
-//     debugger;
-//
-//     return res;
-// }
-//
-// export function isDateInPast(val, format = 'YYYY-MM-DD') {
-//     return moment(val, format).isBefore(moment());
-// }
-//
-
 export function isSameDay(valA, valB, format = 'YYYY-MM-DD') {
     return moment(valA, format).isSame(moment(valB, format), 'day');
 }
