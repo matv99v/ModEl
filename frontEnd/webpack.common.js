@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const exec = require('child_process').exec;
+const makeSymlinks = require('make-symlinks');
 
 function recursiveIssuer(m) {
     if (m.issuer) {
@@ -14,20 +14,12 @@ function recursiveIssuer(m) {
     }
 }
 
-// function getSymlinkShellScripts() {
-//     return [
-//         'goods-photos',
-//         'Manuals',
-//         'html'
-//     ].map(folder => `mklink /D C:\\WServ\\data\\htdocs\\ModEl\\server\\public\\${folder} C:\\WServ\\data\\htdocs\\assets\\${folder}`);
-// }
-
-
 module.exports = {
     entry: {
         modEl: ['@babel/polyfill', './modElSrc/main.js'],
         admin: ['@babel/polyfill', './adminToolSrc/main.js']
     },
+
     optimization: {
         splitChunks: {
             cacheGroups: {
@@ -53,7 +45,7 @@ module.exports = {
     },
 
     plugins: [
-        new CleanWebpackPlugin('../server/public/bundle',{
+        new CleanWebpackPlugin('../server/public',{
             allowExternal: true
         }),
         new HtmlWebpackPlugin({
@@ -73,21 +65,20 @@ module.exports = {
             chunkFilename: '[id].css'
         }),
         {
-            // chmod +x ./postbuildscript.sh
+            // create symlinks after build
+            // # ln -s ~/Koding/Projects/assets/html ~/Koding/Projects/ModEl/server/public/
+            // # mklink /D C:/WServ/data/htdocs/ModEl/server/public/goods-photos C:/WServ/data/htdocs/assets/goods-photos
+
             apply: (compiler) => {
                 compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
-                    exec('./postbuildscript.sh', (err, stdout, stderr) => {
-                        if (stdout) process.stdout.write(stdout);
-                        if (stderr) process.stderr.write(stderr);
+                    const sources = ['../../assets/*'];
+                    const outputpath = '../server/public/';
+                    makeSymlinks(sources, outputpath).then(symlinks => {
+                        console.log('Symlinks created');
                     });
                 });
             }
         }
-
-
-
-
-
 
 
     ],
@@ -103,21 +94,6 @@ module.exports = {
                     'sass-loader'
                 ]
             },
-            // {
-            //     test: /\.scss$/,
-            //     use: [
-            //         'style-loader', // creates style nodes from JS strings
-            //         'css-loader', // translates CSS into CommonJS
-            //         'sass-loader' // compiles Sass to CSS
-            //     ]
-            // },
-            // {
-            //     test: /\.css$/,
-            //     use: [
-            //         { loader: 'style-loader' },
-            //         { loader: 'css-loader' }
-            //     ]
-            // },
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
@@ -152,8 +128,6 @@ module.exports = {
 
         ]
     },
-
-
 
     resolve: {
         alias: {
