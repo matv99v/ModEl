@@ -1,6 +1,7 @@
 const Bluebird = require('bluebird');
 const fs = Bluebird.promisifyAll(require('fs'));
 const http = require('http');
+const chalk = require('chalk');
 
 
 module.exports = {
@@ -56,6 +57,34 @@ module.exports = {
                     reject(err);
                 });
         });
+    },
+
+    log({ msg, bg = '' }) {
+        const avaliableColors = [
+            'bgBlack',
+            'bgRed',
+            'bgGreen',
+            'bgYellow',
+            'bgBlue',
+            'bgMagenta',
+            'bgCyan',
+            'bgWhite',
+            'bgBlackBright',
+            'bgRedBright',
+            'bgGreenBright',
+            'bgYellowBright',
+            'bgBlueBright',
+            'bgMagentaBright',
+            'bgCyanBright',
+            'bgWhiteBright',
+        ];
+
+        let currColor = 'bg' + bg.charAt(0).toUpperCase() + bg.substr(1);
+
+        if (!avaliableColors.includes(currColor)) {
+            currColor = 'bgMagentaBright';
+        }
+        console.log(chalk[currColor](msg));
     },
 
 };

@@ -66,8 +66,8 @@ module.exports = {
         }),
         {
             // create symlinks after build
-            // # ln -s ~/Koding/Projects/assets/html ~/Koding/Projects/ModEl/server/public/
-            // # mklink /D C:/WServ/data/htdocs/ModEl/server/public/goods-photos C:/WServ/data/htdocs/assets/goods-photos
+            // ln -s ~/Koding/Projects/assets/html ~/Koding/Projects/ModEl/server/public/
+            // mklink /D C:\WServ\data\htdocs\ModEl-test\server\public\html C:\WServ\data\htdocs\assets\html
 
             apply: (compiler) => {
                 compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
