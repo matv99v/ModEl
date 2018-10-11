@@ -4,31 +4,33 @@ module.exports = {
     apps: [
         {
             name: 'prod_ME',
-            script: 'bin/www',
             env: {
                 NODE_ENV: 'production',
                 PORT: 3000,
                 DB_NAME: 'goods',
             },
+            script: 'bin/www',
         },
         {
             name: 'staging_ME',
-            script: 'bin/www',
             env: {
                 NODE_ENV: 'development',
                 PORT: 3001,
                 DB_NAME: 'goodsdev',
             },
+            script: 'bin/www',
         },
         {
             name: 'develop_ME',
-            script: 'bin/www',
             env: {
                 NODE_ENV: 'development',
                 PORT: 3001,
                 DB_NAME: 'goodsdev',
             },
+            script: 'bin/www',
+            ignoreWatch: ['node_modules', 'public'],
             watch: '../',
+            args: ['--color'],
         },
     ],
 

@@ -1,3 +1,5 @@
+const utils = require('../utils/utils');
+
 function createQuery(arr) {
     const queryStr = arr
         .filter(str => !!str)
@@ -25,7 +27,9 @@ module.exports = {
 
         const queryStr = createQuery([enabledStr, likeStr]);
 
-        return `SELECT * FROM category ${queryStr} ORDER BY CategoryName`;
+        const res = `SELECT * FROM category ${queryStr} ORDER BY CategoryName`;
+        utils.log({ msg: res, bg: 'yellow' });
+        return res;
     },
 
     getGoods(obj) {
