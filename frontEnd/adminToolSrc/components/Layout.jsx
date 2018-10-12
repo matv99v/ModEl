@@ -4,7 +4,6 @@ import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import Navigation from './Navigation.jsx';
 import CategoriesSearch from './CategoriesSearch.jsx';
 import GoodsSearch from './GoodsSearch.jsx';
-import BarnSearch from './BarnSearch.jsx';
 import BarnForm from './BarnForm.jsx';
 import BarnFormEdit from './BarnFormEdit.jsx';
 import GoodForm from './GoodForm.jsx';
@@ -39,7 +38,6 @@ export default class Layout extends React.Component {
                                 <Route exact path='/categories/add'           component={CategoryForm} />
                                 <Route exact path='/goods/search'             component={GoodsSearch} />
                                 <Route exact path='/goods/add'                component={GoodForm} />
-                                <Route exact path='/barn/search'              component={BarnSearch} />
                                 <Route exact path='/barn/add'                 render={() => <BarnForm initialValues={{zakDate: moment().format('YYYY-MM-DD'), productName: ''}}/>} />
                                 <Route exact path='/barn/edit/:hash'          component={BarnFormEdit} />
                                 <Route exact path='/barn/purchase/:type'      component={BarnPurchase} />
