@@ -1,12 +1,25 @@
-.Spinner__cnt {
+@import "~AliasModelSrc/variables_override";
+
+
+.Spinner__cnt__visible {
     border-style: solid;
-    border-color: grey;
-    border-top-color: white;
+    border-color: $gray-lighter;
+    border-top-color: $body-bg;
     border-radius: 50%;
     z-index: 9999;
     margin: auto;
     animation: spin 2s linear infinite;
+
+    & ~ * {
+        display: none;
+    }
 }
+
+.Spinner__cnt__hidden {
+    display: none;
+}
+
+
 
 @keyframes spin {
     0% { transform: rotate(0deg); }

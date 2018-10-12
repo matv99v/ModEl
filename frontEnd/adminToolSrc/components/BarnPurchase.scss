@@ -1,6 +1,18 @@
 @import "~AliasModelSrc/variables_override";
 
 .BarnPurchase__Cnt {
+
+    .BarnPurchase__nodata {
+        font-size: 30px;
+        font-weight: bold;
+        color: $gray-lighter;
+    }
+
+    .BarnPurchase__hideMe {
+        display: none;
+    }
+
+
     .BarnPurchase__controls {
         margin-bottom: 20px;
     }

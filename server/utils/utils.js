@@ -59,7 +59,7 @@ module.exports = {
         });
     },
 
-    log({ msg, bg = '' }) {
+    log(msg, bg = 'green') {
         const avaliableColors = [
             'bgBlack',
             'bgRed',
