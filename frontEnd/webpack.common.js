@@ -1,62 +1,124 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const makeSymlinks = require('make-symlinks');
+
+const isWin = process.platform === 'win32';
 
 
-
+// function recursiveIssuer(m) {
+//     if (m.issuer) {
+//         return recursiveIssuer(m.issuer);
+//     } else if (m.name) {
+//         return m.name;
+//     } else {
+//         return false;
+//     }
+// }
 
 module.exports = {
     entry: {
         modEl: ['@babel/polyfill', './modElSrc/main.js'],
-        admin: ['@babel/polyfill', './adminToolSrc/main.js']
+        admin: ['@babel/polyfill', './adminToolSrc/main.js'],
+    },
+
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                // create css files for each bundle
+                // modElStyles: {
+                //     name: 'modEl',
+                //     test: (m,c,entry = 'modEl') => m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
+                //     chunks: 'all',
+                //     enforce: true,
+                //     reuseExistingChunk: true
+                // },
+                // adminStyles: {
+                //     name: 'admin',
+                //     test: (m,c,entry = 'admin') => m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
+                //     chunks: 'all',
+                //     reuseExistingChunk: true
+                // },
+                // admin: {
+                //     test: /[\\/]adminToolSrc[\\/]/,
+                //     reuseExistingChunk: true
+                //
+                // },
+                // modEl: {
+                //     test: /[\\/]modElSrc[\\/]/,
+                //     reuseExistingChunk: true
+                // },
+                // vendor: {
+                //     // sync + async chunks
+                //     chunks: 'all',
+                //     // import file path containing node_modules
+                //     test: /node_modules/
+                // }
+
+
+
+            }
+        },
+
     },
 
     output: {
         path: path.resolve('../server/public/bundle'),
-        filename: '[name].bundle.js'
+        filename: '[name].bundle.js',
     },
 
     plugins: [
-        new CleanWebpackPlugin('../server/public/bundle',{
+        new CleanWebpackPlugin('../server/public',{
             allowExternal: true
         }),
-
         new HtmlWebpackPlugin({
             template: './modElSrc/model-index.html',
             inject: 'body',
-            chunks: ['modEl'],
+            chunks: ['modEl', 'vendor'],
             filename: 'model-index.html'
         }),
-
         new HtmlWebpackPlugin({
             template: './adminToolSrc/admin-index.html',
             inject: 'body',
-            chunks: ['admin'],
+            chunks: ['admin', 'vendor'],
             filename: 'admin-index.html'
-        })
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: '[id].css'
+        }),
+        {
+            apply: (compiler) => {
+                if (!isWin) {
+                    compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
+                        const sources = ['../../assets/*'];
+                        const outputpath = '../server/public/';
+                        makeSymlinks(sources, outputpath).then(symlinks => {
+                            console.log('Symlinks created');
+                        });
+                    });
+                }
+
+            }
+        }
     ],
 
     module: {
         rules: [
             {
-                test: /\.css$/,
+                test: /\.(scss|css)$/,
                 use: [
-                    { loader: 'style-loader' },
-                    { loader: 'css-loader' }
+                    // 'style-loader',
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader'
                 ]
             },
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                use: ['babel-loader']
-            },
-            {
-                test: /\.scss$/,
-                use: [
-                    'style-loader', // creates style nodes from JS strings
-                    'css-loader', // translates CSS into CommonJS
-                    'sass-loader' // compiles Sass to CSS
-                ]
+                use: ['babel-loader'],
             },
             {
                 test: /\.png$/,
@@ -87,8 +149,6 @@ module.exports = {
 
         ]
     },
-
-
 
     resolve: {
         alias: {

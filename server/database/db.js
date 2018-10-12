@@ -3,10 +3,10 @@ const Bluebird = require('bluebird');
 const mysqlQueries = require('./mysqlQueries');
 
 const connectionOptions = {
-    host: "109.95.32.134",
-    user: "seller",
-    password: "_SeLlEr_",
-    database: process.env.DB_NAME
+    host: '109.95.32.134',
+    user: 'seller',
+    password: '_SeLlEr_',
+    database: process.env.DB_NAME,
 };
 
 function getConnection() {

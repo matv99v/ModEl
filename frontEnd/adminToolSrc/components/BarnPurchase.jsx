@@ -1,38 +1,65 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
+import { Grid, Row, Col, Table, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import api from 'AliasApi/api';
+import Bluebird from 'bluebird';
+import BarnPurchaseTableCat from './BarnPurchaseTableCat.jsx';
 import './BarnPurchase.scss';
+import helpers from '../../helpers/helpers.js';
+import Spinner from './common/Spinner.jsx';
+
+
 
 
 class Barn extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            barn: [],
-        };
+        this.state = { barn: {}, isLoading: false };
+        this.handleRowClick = this.handleRowClick.bind(this);
+        this.handleTypeChange = this.handleTypeChange.bind(this);
     }
 
-    componentDidMount() {
-        api.getBarn()
-            .then(json=> json.filter(el => el.restQnty !== el.frozQnty))
-            .then(json => this.setState({barn: json}));
+    fetchData() {
+        let data = {};
+        let isData = true;
+
+        this.setState({isLoading: true});
+        Bluebird.all([
+            api.getCategories(),
+            api.getBarn({queryAddition: this.queryAddition[this.props.match.params.type]})
+        ])
+            .then(resp => {
+                const cats = resp[0];
+                const barn = resp[1];
+                isData = !!barn.length;
+
+                const fullBarn = cats.reduce((acc, cat) => { // TODO: move this logic to BE!!
+                    return {
+                        ...acc,
+                        ...{[cat.idCategory]: {
+                            ...cat,
+                            goods: barn.filter(el => el.idCategory === cat.idCategory) || []
+                        }}
+                    };
+                }, {});
+                data = fullBarn;
+            })
+            .catch(err => console.log(err))
+            .finally(() =>  this.setState({
+                isLoading: false,
+                barn: data,
+                isData
+            }));
     }
 
-    renderDuplicatePredicate(i, field, transaction) {
-        return !(i && transaction[field] === this.state.barn[i-1][field]);
-    }
-
-    getTrClass(i, transaction) {
-        let classList= [];
-
-        if (this.renderDuplicatePredicate(i, 'CategoryName', transaction)) {
-            classList.push('cat');
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.type !== prevProps.match.params.type) {
+            this.fetchData();
         }
-        if (this.renderDuplicatePredicate(i, 'productName', transaction)) {
-            classList.push('prod');
-        }
-        return classList.join(' ');
+    }
+
+    componentWillMount() {
+        this.fetchData();
     }
 
     handleRowClick(transaction, e) {
@@ -41,62 +68,102 @@ class Barn extends React.Component {
         }
     }
 
+    handleTypeChange(val) {
+        this.props.history.push(`/barn/purchase/${val}`);
+    }
+
+    queryAddition = {
+        all:        '',
+        actual:     'restQnty <> frozQnty',
+        pendingshp: 'zakDateShp IS NULL',
+        intransit:  'zakDateShp IS NOT NULL AND zakDateRcv IS NULL'
+    }
+
     render() {
         return (
-            <Table condensed responsive hover className='BarnPurchase__Cnt'>
-                <thead>
-                    <tr>
-                        {
-                            [
-                                'CategoryName',
-                                'productName',
-                                'zakNumber',
-                                'zakDate',
-                                'zakDateShp',
-                                'zakDateRcv',
-                                'zakDateProtct',
-                                'zakQnty',
-                                'frozQnty',
-                                'restQnty',
-                                'zakSum',
-                                'curRate',
-                            ].map((field, i) => (
-                                <th key={i}>{field}</th>
-                            ))
-                        }
+            <Grid className='BarnPurchase__Cnt'>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        this.state.barn.map((transaction, i) => (
-                            <tr key={i}
-                                className={this.getTrClass(i, transaction)}
-                                onClick={(e) => this.handleRowClick(transaction, e)}
+                <Spinner show={this.state.isLoading} />
+
+                <Row className='BarnPurchase__controls'>
+                    <Col smPush={9}>
+                        <ButtonToolbar>
+                            <ToggleButtonGroup
+                                type='radio'
+                                name='options'
+                                value={this.props.match.params.type}
+                                onChange={this.handleTypeChange}
                             >
-                                <td>{this.renderDuplicatePredicate(i, 'CategoryName', transaction) && transaction.CategoryName}</td>
-                                <td>{this.renderDuplicatePredicate(i, 'productName', transaction) && transaction.productName}</td>
-                                <td><a href={transaction.zakLink} target='_blank' rel='noopener noreferrer'>{transaction.zakNumber}</a></td>
-                                <td>{transaction.zakDate}</td>
-                                <td>{transaction.zakDateShp}</td>
-                                <td>{transaction.zakDateRcv}</td>
-                                <td>{transaction.zakDateProtct}</td>
-                                <td>{transaction.zakQnty}</td>
-                                <td>{transaction.frozQnty}</td>
-                                <td>{transaction.restQnty}</td>
-                                <td>{transaction.zakSum}</td>
-                                <td>{transaction.curRate}</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </Table>
+                                <ToggleButton value={'all'}>Все</ToggleButton>
+                                <ToggleButton value={'actual'}>Актуальные</ToggleButton>
+                                <ToggleButton value={'pendingshp'}>Ожидающие отправки</ToggleButton>
+                                <ToggleButton value={'intransit'}>Отправленные</ToggleButton>
+                            </ToggleButtonGroup>
+                        </ButtonToolbar>
+                    </Col>
+                </Row>
+
+                <Row className={this.state.isData ? 'BarnPurchase__hideMe' : 'BarnPurchase__nodata'} >
+                    <Col>No data</Col>
+                </Row>
+
+                <Row className={this.state.isData ? null : 'BarnPurchase__hideMe'} >
+                    <Col>
+                        <Table condensed responsive hover className='BarnPurchase__table'>
+                            <thead>
+                                <tr>
+                                    {
+                                        [
+                                            '', // empty for padding
+                                            'productName',
+                                            'zakNumber',
+                                            'zakDate',
+                                            'zakDateShp',
+                                            'zakDateRcv',
+                                            'zakDateProtct',
+                                            'zakQnty',
+                                            'frozQnty',
+                                            'restQnty',
+                                            'zakSum',
+                                            'curRate',
+                                        ].map((field, i) => (
+                                            <th key={i}>{field}</th>
+                                        ))
+                                    }
+
+                                </tr>
+                            </thead>
+
+                            {
+                                Array.prototype.sort.call( // sort by category name
+                                    Object.keys(this.state.barn).map(key => this.state.barn[key]),
+                                    helpers.sortByPropName('CategoryName')
+                                )
+                                    .filter(cat => { // filter out empty categories but not for 'view all'
+                                        return this.props.match.params.type == 'all' ? true : !!cat.goods.length;
+                                    })
+                                    .map((transaction, i) => {
+                                        return (
+                                            <BarnPurchaseTableCat
+                                                key={i}
+                                                name={transaction.CategoryName}
+                                                items={transaction.goods}
+                                                rowClick={this.handleRowClick}
+                                            />
+                                        );
+                                    })
+                            }
+                        </Table>
+
+                    </Col>
+                </Row>
+
+            </Grid>
+
         );
     }
 }
 
-const withRouterBarn = withRouter(({ history }) => (
-    <Barn history={history}/>
-));
 
+const withRouterBarn = withRouter(Barn);
 export default withRouterBarn;

@@ -1,3 +1,5 @@
+const utils = require('../utils/utils');
+
 function createQuery(arr) {
     const queryStr = arr
         .filter(str => !!str)
@@ -25,7 +27,8 @@ module.exports = {
 
         const queryStr = createQuery([enabledStr, likeStr]);
 
-        return `SELECT * FROM category ${queryStr} ORDER BY CategoryName`;
+        const res = `SELECT * FROM category ${queryStr} ORDER BY CategoryName`;
+        return res;
     },
 
     getGoods(obj) {
@@ -88,12 +91,14 @@ module.exports = {
             hashStr = `zakNumber = ${hashArr[0]} AND zakupka.idProduct = ${hashArr[1]}`;
         }
 
-        const queryStr = createQuery([replaceIdStr, hashStr, replaceCategoryStr]);
+        const queryStr = createQuery([replaceIdStr, hashStr, replaceCategoryStr, obj.queryAddition]);
 
-        return `SELECT ${fields}
+        const res = `SELECT ${fields}
                 FROM zakupka, products, category
                 ${queryStr}
                 ORDER BY CategoryName, productName`;
+
+        return res;
     },
 
     addStock(obj) {
