@@ -98,8 +98,8 @@ export default class Navigation extends React.Component {
                         <MenuItem
                             eventKey={3.2}
                             componentClass={NavLink}
-                            to="/barn/purchase"
-                            href="/barn/purchase"
+                            to="/barn/purchase/all"
+                            href="/barn/purchase/all"
                             activeStyle={{color: 'red'}}
                         >
                             Закупка

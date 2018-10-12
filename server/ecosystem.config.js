@@ -16,7 +16,7 @@ module.exports = {
             env: {
                 NODE_ENV: 'development',
                 PORT: 3001,
-                DB_NAME: 'goodsdev',
+                DB_NAME: 'goods-release-2',
             },
             script: 'bin/www',
         },
@@ -25,7 +25,7 @@ module.exports = {
             env: {
                 NODE_ENV: 'development',
                 PORT: 3001,
-                DB_NAME: 'goodsdev',
+                DB_NAME: 'goods-release-2',
             },
             script: 'bin/www',
             ignoreWatch: ['node_modules', 'public'],

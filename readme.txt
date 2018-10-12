@@ -10,6 +10,5 @@
 4. make a pm2 snapshot for resurrecting after machine restart
     pm2 save
 
-
-Create symlink
-mklink /D C:\WServ\data\htdocs\ModEl\server\public\Manuals C:\WServ\data\htdocs\assets\Manuals
+5. Create symlinks (windows)
+    run ./frontEnd/createSymLinks.bat file in cmd

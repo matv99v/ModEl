@@ -1,33 +1,21 @@
 import React from 'react';
 import './Spinner.scss';
-import { connect } from 'react-redux';
+
+// Spinner should be placed as a first element in container,
+// because its styles will hide all elements on the same level
 
 
-// TODO: make dumb component
-
-class Spinner extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
-    render() {
-        const obj = {
-            width: `${this.props.size}px`,
-            height: `${this.props.size}px`,
-            borderWidth: `${this.props.size / 5}px`,
-            display: this.props.isLoading ? 'block' : 'none'
-        };
-
-        return (
-            <div className='Spinner__cnt' style={obj}></div>
-        );
-    }
-}
+const Spinner = (props) => (
+    <div
+        className={props.show ? 'Spinner__cnt__visible' : 'Spinner__cnt__hidden'}
+        style={{
+            width: `${props.size || 25}px`,
+            height: `${props.size || 25}px`,
+            borderWidth: `${1 + props.size / 7 || 4}px`,
+        }}
+    >
+    </div>
+);
 
 
-const mapStateToProps = (state) => ({
-    isLoading: state.isLoading
-});
-
-export default connect(mapStateToProps)(Spinner);
+export default Spinner;

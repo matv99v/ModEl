@@ -4,44 +4,68 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const makeSymlinks = require('make-symlinks');
 
-function recursiveIssuer(m) {
-    if (m.issuer) {
-        return recursiveIssuer(m.issuer);
-    } else if (m.name) {
-        return m.name;
-    } else {
-        return false;
-    }
-}
+const isWin = process.platform === 'win32';
+
+
+// function recursiveIssuer(m) {
+//     if (m.issuer) {
+//         return recursiveIssuer(m.issuer);
+//     } else if (m.name) {
+//         return m.name;
+//     } else {
+//         return false;
+//     }
+// }
 
 module.exports = {
     entry: {
         modEl: ['@babel/polyfill', './modElSrc/main.js'],
-        admin: ['@babel/polyfill', './adminToolSrc/main.js']
+        admin: ['@babel/polyfill', './adminToolSrc/main.js'],
     },
 
     optimization: {
         splitChunks: {
             cacheGroups: {
-                modElStyles: {
-                    name: 'modEl',
-                    test: (m,c,entry = 'modEl') => m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
-                    chunks: 'all',
-                    enforce: true
-                },
-                adminStyles: {
-                    name: 'admin',
-                    test: (m,c,entry = 'admin') => m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
-                    chunks: 'all',
-                    enforce: true
-                }
+                // create css files for each bundle
+                // modElStyles: {
+                //     name: 'modEl',
+                //     test: (m,c,entry = 'modEl') => m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
+                //     chunks: 'all',
+                //     enforce: true,
+                //     reuseExistingChunk: true
+                // },
+                // adminStyles: {
+                //     name: 'admin',
+                //     test: (m,c,entry = 'admin') => m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
+                //     chunks: 'all',
+                //     reuseExistingChunk: true
+                // },
+                // admin: {
+                //     test: /[\\/]adminToolSrc[\\/]/,
+                //     reuseExistingChunk: true
+                //
+                // },
+                // modEl: {
+                //     test: /[\\/]modElSrc[\\/]/,
+                //     reuseExistingChunk: true
+                // },
+                // vendor: {
+                //     // sync + async chunks
+                //     chunks: 'all',
+                //     // import file path containing node_modules
+                //     test: /node_modules/
+                // }
+
+
+
             }
-        }
+        },
+
     },
 
     output: {
         path: path.resolve('../server/public/bundle'),
-        filename: '[name].bundle.js'
+        filename: '[name].bundle.js',
     },
 
     plugins: [
@@ -51,13 +75,13 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './modElSrc/model-index.html',
             inject: 'body',
-            chunks: ['modEl'],
+            chunks: ['modEl', 'vendor'],
             filename: 'model-index.html'
         }),
         new HtmlWebpackPlugin({
             template: './adminToolSrc/admin-index.html',
             inject: 'body',
-            chunks: ['admin'],
+            chunks: ['admin', 'vendor'],
             filename: 'admin-index.html'
         }),
         new MiniCssExtractPlugin({
@@ -65,22 +89,19 @@ module.exports = {
             chunkFilename: '[id].css'
         }),
         {
-            // create symlinks after build
-            // ln -s ~/Koding/Projects/assets/html ~/Koding/Projects/ModEl/server/public/
-            // mklink /D C:\WServ\data\htdocs\ModEl-test\server\public\html C:\WServ\data\htdocs\assets\html
-
             apply: (compiler) => {
-                compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
-                    const sources = ['../../assets/*'];
-                    const outputpath = '../server/public/';
-                    makeSymlinks(sources, outputpath).then(symlinks => {
-                        console.log('Symlinks created');
+                if (!isWin) {
+                    compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
+                        const sources = ['../../assets/*'];
+                        const outputpath = '../server/public/';
+                        makeSymlinks(sources, outputpath).then(symlinks => {
+                            console.log('Symlinks created');
+                        });
                     });
-                });
+                }
+
             }
         }
-
-
     ],
 
     module: {
