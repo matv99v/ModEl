@@ -9,6 +9,8 @@
     "basic-auth": "^2.0.1",
     "bluebird": "^3.5.1",
     "body-parser": "~1.18.2",
+    "chalk": "^2.4.1",
+    "compression": "^1.7.3",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
     "debug": "~2.6.9",
@@ -20,7 +22,6 @@
     "sharp": "^0.20.7"
   },
   "devDependencies": {
-    "chalk": "^2.4.1",
     "eslint": "^5.6.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0"

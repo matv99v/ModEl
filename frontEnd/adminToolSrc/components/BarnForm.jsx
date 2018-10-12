@@ -1,5 +1,5 @@
 import React from 'react';
-import { reduxForm, reset } from 'redux-form';
+import { reduxForm } from 'redux-form';
 import FormItem from './common/FormItem.jsx';
 import { Button, Grid, Row, Col } from 'react-bootstrap';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
@@ -26,10 +26,6 @@ class BarnForm extends React.Component {
         };
     }
 
-    // resetForm() {
-    //     this.props.dispatch(reset('BarnForm'));
-    // }
-
     print = (data) => {
         // TODO: get only changed fields
         const copyData = {...data}; // do not mutate data!!!!
@@ -42,7 +38,7 @@ class BarnForm extends React.Component {
                         msg: `Заказ номер ${data.zakNumber} для продукта '${data.productName}' обновлен`,
                         type: 'success'
                     }));
-                    this.props.history.push('/barn/purchase');
+                    this.props.history.push('/barn/purchase/actual');
                     return null;
                 })
                 .catch(err => {
@@ -58,7 +54,7 @@ class BarnForm extends React.Component {
                         msg: `Заказ номер ${data.zakNumber} для продукта '${data.productName}' добавлен`,
                         type: 'success'
                     }));
-                    this.props.history.push('/barn/purchase');
+                    this.props.history.push('/barn/purchase/actual');
                     return null;
                 })
                 .catch(err => {
@@ -87,7 +83,6 @@ class BarnForm extends React.Component {
     }
 
     handleGoodInputChange = (selected) => {
-        console.log(selected);
         if (selected && selected.length > 0) {
             this.props.dispatch(change('BarnForm', 'idProduct', selected[0].idProduct));
             this.props.dispatch(change('BarnForm', 'productName', selected[0].productName));
@@ -125,9 +120,7 @@ class BarnForm extends React.Component {
                                         onSearch={this.handleGoodSearch}
                                         onChange={this.handleGoodInputChange}
                                         defaultSelected={
-                                            this.props.initialValues
-                                                ? [this.props.initialValues]
-                                                : [{productName: ''}]
+                                            [this.props.initialValues]
                                         }
                                         disabled={this.props.type === 'put'}
                                     />
@@ -228,7 +221,6 @@ class BarnForm extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-    console.log('mapStateToProps');
     return {
         initialValues: ownProps.initialValues
     };
@@ -240,7 +232,7 @@ const withRouterBarnForm = withRouter(BarnForm);
 const ReduxBarnForm = reduxForm({
     // a unique name for the form
     form: 'BarnForm',
-    // enableReinitialize: true
+    enableReinitialize: true,
     validate(values) {
         return {
             idProduct: validateBarnForm.idProduct(values.idProduct),
@@ -251,7 +243,6 @@ const ReduxBarnForm = reduxForm({
             restQnty: validateBarnForm.restQnty(values.restQnty),
             zakSum: validateBarnForm.zakSum(values.zakSum),
             curRate: validateBarnForm.curRate(values.curRate),
-
             zakDate: validateBarnForm.zakDate(values.zakDate),
             zakDateShp: validateBarnForm.zakDateShp(values.zakDateShp, values.zakDate),
             zakDateRcv: validateBarnForm.zakDateRcv(values.zakDateRcv, values.zakDateShp),
