@@ -1,7 +1,6 @@
 import React from 'react';
 import Categories from './Categories.jsx';
 import GoodsList from './GoodsList.jsx';
-
 import { Grid, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Breadcrumbs from './Breadcrumbs.jsx';
@@ -51,7 +50,6 @@ class CatalogHoc extends React.Component {
 
     fetchIfNecessary() {
         if (this.fetchByCategoryPredicate()) {
-
             const options = {
                 catId: this.props.match.params.catId,
                 enabled: 1,
@@ -74,13 +72,11 @@ class CatalogHoc extends React.Component {
     }
 
     fetchByCategoryPredicate() {
-        const res =
-            this.props.match.params.catId            // catId is in ULR
+        return this.props.match.params.catId         // catId is in ULR
             && !this.props.match.params.goodId       // no goodId in ULR
             && this.props.catalog[this.props.match.params.catId]
             && this.props.catalog[this.props.match.params.catId]['goods']
-            && this.props.catalog[this.props.match.params.catId]['goods']['length'] <= 1; // get from DB on fetching catalog  amount of goods in each category
-        return res;
+            && this.props.catalog[this.props.match.params.catId]['goods']['length'] < this.props.catalog[this.props.match.params.catId]['goodsCount'];
     }
 
     fetchByGoodIdPredicate() {

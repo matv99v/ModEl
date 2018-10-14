@@ -59,7 +59,7 @@ module.exports = {
         });
     },
 
-    log(msg, bg = 'green') {
+    log(msg, bg = 'green') { // TODO: to accept multiple arguments for logging
         const avaliableColors = [
             'bgBlack',
             'bgRed',
@@ -84,7 +84,9 @@ module.exports = {
         if (!avaliableColors.includes(currColor)) {
             currColor = 'bgMagentaBright';
         }
-        console.log(chalk[currColor](msg));
+
+        const strMsg = JSON.stringify(msg);
+        console.log(chalk[currColor](strMsg));
     },
 
 };

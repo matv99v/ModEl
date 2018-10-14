@@ -1,4 +1,5 @@
 const utils = require('../utils/utils');
+const queryCategories = require('./queryCategories.js');
 
 function createQuery(arr) {
     const queryStr = arr
@@ -11,34 +12,23 @@ function createQuery(arr) {
 }
 
 
+// TODO: refactor mysql queries
+
 module.exports = {
     getCategories(obj) {
-        // TODO: append amount of each good in each category
-
-        const likeStr = obj.like
-            ? `CategoryName LIKE '%${obj.like}%'`
-            : '';
-
-        const enabledStr = obj.enabled
-            ? `idcategory IN (
-                SELECT DISTINCT idcategory FROM products
-                WHERE exist=${obj.enabled})`
-            : '';
-
-        const queryStr = createQuery([enabledStr, likeStr]);
-
-        const res = `SELECT * FROM category ${queryStr} ORDER BY CategoryName`;
-        return res;
+        return obj.enabled
+            ? queryCategories.enabledGoods()
+            : queryCategories.all();
     },
 
     getGoods(obj) {
         // enabled - is a special flag for showing the product on UI
-        // excludegoodid - exclude one good by id from query
+        // exlcudeId - exclude one good by id from query
         // catId - get all goods by category
         // goodId - get single good
 
-        const excludeStr = obj.excludegoodid
-            ? `products.idProduct !=${obj.excludegoodid}`
+        const excludeStr = obj.exlcudeId
+            ? `products.idProduct !=${obj.exlcudeId}`
             : '';
 
         const existStr = obj.enabled
@@ -55,10 +45,11 @@ module.exports = {
 
         const queryStr = createQuery([excludeStr, existStr, goodStr, catStr]);
 
-        return `SELECT idCategory, products.idProduct, productName, productParams, declarePrice, detailName, textDescrip
+        const res = `SELECT idCategory, products.idProduct, productName, productParams, declarePrice, detailName, textDescrip
                     FROM products
                     LEFT JOIN
                         descrip ON products.idProduct = descrip.idProduct ${queryStr}`;
+        return res;
     },
 
     getBarn(obj) {
