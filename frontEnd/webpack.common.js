@@ -2,65 +2,14 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const makeSymlinks = require('make-symlinks');
-
-const isWin = process.platform === 'win32';
+const { exec } = require('child_process');
 
 
-// function recursiveIssuer(m) {
-//     if (m.issuer) {
-//         return recursiveIssuer(m.issuer);
-//     } else if (m.name) {
-//         return m.name;
-//     } else {
-//         return false;
-//     }
-// }
 
 module.exports = {
     entry: {
         modEl: ['@babel/polyfill', './modElSrc/main.js'],
         admin: ['@babel/polyfill', './adminToolSrc/main.js'],
-    },
-
-    optimization: {
-        splitChunks: {
-            cacheGroups: {
-                // create css files for each bundle
-                // modElStyles: {
-                //     name: 'modEl',
-                //     test: (m,c,entry = 'modEl') => m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
-                //     chunks: 'all',
-                //     enforce: true,
-                //     reuseExistingChunk: true
-                // },
-                // adminStyles: {
-                //     name: 'admin',
-                //     test: (m,c,entry = 'admin') => m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
-                //     chunks: 'all',
-                //     reuseExistingChunk: true
-                // },
-                // admin: {
-                //     test: /[\\/]adminToolSrc[\\/]/,
-                //     reuseExistingChunk: true
-                //
-                // },
-                // modEl: {
-                //     test: /[\\/]modElSrc[\\/]/,
-                //     reuseExistingChunk: true
-                // },
-                // vendor: {
-                //     // sync + async chunks
-                //     chunks: 'all',
-                //     // import file path containing node_modules
-                //     test: /node_modules/
-                // }
-
-
-
-            }
-        },
-
     },
 
     output: {
@@ -90,15 +39,28 @@ module.exports = {
         }),
         {
             apply: (compiler) => {
-                if (!isWin) {
-                    compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
-                        const sources = ['../../assets/*'];
-                        const outputpath = '../server/public/';
-                        makeSymlinks(sources, outputpath).then(symlinks => {
-                            console.log('Symlinks created');
-                        });
+                compiler.hooks.afterEmit.tap('CreateSymlinksAfterBuild', (compilation) => {
+
+                    const script = process.platform === 'win32' ?
+                        'createSymLinks.bat' :
+                        'node createSymLinks.js';
+
+                    exec(script, (error, stdout, stderr) => {
+                        if (error) {
+                            console.error(`exec error: ${error}`);
+                            return;
+                        }
+
+                        if (stdout) {
+                            console.log(stdout);
+                        }
+
+                        if (stderr) {
+                            console.log(stderr);
+                        }
+
                     });
-                }
+                });
 
             }
         }
