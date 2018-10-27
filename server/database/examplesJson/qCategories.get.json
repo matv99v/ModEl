@@ -1,0 +1,59 @@
+# Thu Oct 25 2018 13:23:16 GMT+0300 (EEST)
+# Parameters: {"enabled":"true","excludeProductsCount":"0"}
+[
+    {
+        "idCategory": 7,
+        "CategoryName": "Блоки питания, преобразователи напряжения, аккумуляторы",
+        "goodsCount": 6
+    },
+    {
+        "idCategory": 9,
+        "CategoryName": "Дистанционно управляемые устройства",
+        "goodsCount": 11
+    },
+    {
+        "idCategory": 1,
+        "CategoryName": "Драйверы светодиодные",
+        "goodsCount": 2
+    },
+    {
+        "idCategory": 8,
+        "CategoryName": "Климатическое оборудование (устройства)",
+        "goodsCount": 2
+    },
+    {
+        "idCategory": 11,
+        "CategoryName": "Компоненты радиоэлектроники",
+        "goodsCount": 1
+    },
+    {
+        "idCategory": 6,
+        "CategoryName": "Контроллеры заряда/разряда аккумуляторов",
+        "goodsCount": 5
+    },
+    {
+        "idCategory": 3,
+        "CategoryName": "Микроконтроллеры, датчики, таймеры",
+        "goodsCount": 3
+    },
+    {
+        "idCategory": 2,
+        "CategoryName": "Приборы электроизмерительные",
+        "goodsCount": 2
+    },
+    {
+        "idCategory": 10,
+        "CategoryName": "Регуляторы мощности, ШИМ-регуляторы",
+        "goodsCount": 3
+    },
+    {
+        "idCategory": 5,
+        "CategoryName": "Светодиодные изделия и акскссуары",
+        "goodsCount": 2
+    },
+    {
+        "idCategory": 4,
+        "CategoryName": "Светодиоды",
+        "goodsCount": 2
+    }
+]

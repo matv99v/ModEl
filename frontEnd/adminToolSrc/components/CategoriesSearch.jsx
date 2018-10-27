@@ -17,7 +17,7 @@ export default class CategoriesSearch extends React.Component {
     }
 
     componentDidMount() {
-        api.getCategories(/*{enabled: true}*/)
+        api.getCategories()
             .then(data => {
                 this.setState({catregories: data});
             })

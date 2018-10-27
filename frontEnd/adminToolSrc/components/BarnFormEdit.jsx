@@ -20,7 +20,7 @@ class BarnFormEdit extends React.Component {
 
         api.getBarn({
             hash: this.props.match.params.hash,
-            exclideFields: ['CategoryName', 'products.idCategory']
+            excludeFields: ['CategoryName', 'products.idCategory']
         })
             .then(json => data = json[0])
             .catch(err => console.log(err))

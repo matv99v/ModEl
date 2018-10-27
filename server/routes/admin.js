@@ -1,12 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const adminRouter = express.Router();
-const db = require('../database/db');
-const mysqlQueries = require('../database/mysqlQueries.js');
 const path = require('path');
-adminRouter.use(bodyParser.json());
 const auth = require('../auth/auth.js');
 
+const adminRouter = express.Router();
+adminRouter.use(bodyParser.json());
+// const db = require('../database/db');
+// const mysqlQueries = require('../database/mysqlQueries.js');
 
 
 adminRouter.route('/')

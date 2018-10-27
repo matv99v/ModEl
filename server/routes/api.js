@@ -17,6 +17,7 @@ apiRouter.route('/categories')
     .get((req, res, next) => {
         db.getCategories(req.query)
             .then((rows) => {
+                utils.writeQueryResultsToFile('qCategories.get', req.query, rows);
                 res.end(JSON.stringify(rows));
             })
             .catch((err) => {
@@ -86,22 +87,24 @@ apiRouter.route('/barn/:id')
         res.setHeader('Content-Type', 'application/json');
         next();
     })
-    .get((req, res, next) => {
-        const ids = req.params.id.split('-');
-
-        const queryObj = {
-            zakNumber: +ids[0],
-            idProduct: +ids[1],
-        };
-
-        db.getBarnTransactionById(queryObj)
-            .then((rows) => {
-                res.end(JSON.stringify(rows));
-            })
-            .catch((err) => {
-                next(err);
-            });
-    })
+    // .get((req, res, next) => {
+    //     const ids = req.params.id.split('-');
+    //
+    //     const queryObj = {
+    //         zakNumber: +ids[0],
+    //         idProduct: +ids[1],
+    //     };
+    //
+    //     // TODO: match goodId and idCategory
+    //
+    //     db.getBarnTransactionById(queryObj)
+    //         .then((rows) => {
+    //             res.end(JSON.stringify(rows));
+    //         })
+    //         .catch((err) => {
+    //             next(err);
+    //         });
+    // })
     .put((req, res, next) => {
         res.statusCode = 200;
 

@@ -24,9 +24,14 @@ class Barn extends React.Component {
         let isData = true;
 
         this.setState({isLoading: true});
+
+        const queryObj = this.props.match.params.type == 'all'
+            ? {}
+            : {excludeProductsCount: 0};
+
         Bluebird.all([
-            api.getCategories(),
-            api.getBarn({queryAddition: this.queryAddition[this.props.match.params.type]})
+            api.getCategories(queryObj),
+            api.getBarn({queryAddition: this.props.match.params.type})
         ])
             .then(resp => {
                 const cats = resp[0];
@@ -70,13 +75,6 @@ class Barn extends React.Component {
 
     handleTypeChange(val) {
         this.props.history.push(`/barn/purchase/${val}`);
-    }
-
-    queryAddition = {
-        all:        '',
-        actual:     'restQnty <> frozQnty',
-        pendingshp: 'zakDateShp IS NULL',
-        intransit:  'zakDateShp IS NOT NULL AND zakDateRcv IS NULL'
     }
 
     render() {

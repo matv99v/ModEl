@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "pm2 see ecosystem.config.js"
+    "start": "pm2 see ecosystem.config.js",
+    "test": "jest",
+    "test-watch": "jest --watch"
   },
   "dependencies": {
     "basic-auth": "^2.0.1",
@@ -14,12 +16,16 @@
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
     "debug": "~2.6.9",
+    "deep-diff": "^1.0.2",
     "express": "~4.15.5",
+    "jest": "^23.6.0",
     "morgan": "~1.9.0",
     "mysql": "^2.16.0",
     "pug": "2.0.0-beta11",
     "serve-favicon": "~2.4.5",
-    "sharp": "^0.20.7"
+    "sharp": "^0.20.7",
+    "sqlstring": "^2.3.1",
+    "string-similarity": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^5.6.1",
