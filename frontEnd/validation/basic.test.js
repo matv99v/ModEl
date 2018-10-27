@@ -4,8 +4,6 @@ import moment from 'moment';
 import {
     // exist,
     // isNumericInt,
-    // isAliexpressUrl,
-    // getUrlOrderId,
     // isEqualStrings,
     // isReal6d4,
     // isReal8d2,
@@ -16,7 +14,8 @@ import {
     isPresentDay,
     isPastDay,
     isSameDay,
-    isIncOrderDays
+    isIncOrderDays,
+    containNumber
 } from './basic.js';
 
 describe('Basic validation rules', () => {
@@ -93,6 +92,30 @@ describe('Basic validation rules', () => {
         });
         it('should return false for the different dates', async () => {
             expect(isSameDay(tomorrowDate, todayDate)).toBeFalsy();
+        });
+    });
+
+    describe('containNumber', () => {
+        it('should return true', async () => {
+            expect(containNumber('www.google.com/getsome?=76', '76')).toBeTruthy();
+        });
+        it('should return true', async () => {
+            expect(containNumber('www.google.com/getsome?=76', 76)).toBeTruthy();
+        });
+        it('should return true', async () => {
+            expect(containNumber('www.google.com/getsome?=76&another=10', '76')).toBeTruthy();
+        });
+        it('should return true', async () => {
+            expect(containNumber('www.google.com/getsome?=76&another=10', 76)).toBeTruthy();
+        });
+        it('should return true', async () => {
+            expect(containNumber('www.google.com/getsome?=76&another=10', 6)).toBeFalsy();
+        });
+        it('should return false', async () => {
+            expect(containNumber('www.google.com/getsome?=76', '6')).toBeFalsy();
+        });
+        it('should return false', async () => {
+            expect(containNumber('www.google.com/getsome?=76', 7)).toBeFalsy();
         });
     });
 });
