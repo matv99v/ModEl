@@ -1,7 +1,6 @@
 import React from 'react';
 import Categories from './Categories.jsx';
 import GoodsList from './GoodsList.jsx';
-
 import { Grid, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Breadcrumbs from './Breadcrumbs.jsx';
@@ -31,7 +30,7 @@ class CatalogHoc extends React.Component {
         return (
             categoryLength
                 ? <GoodsList goods={this.props.catalog[this.props.match.params.catId]['goods']} />
-                : <div>Loading...</div>
+                : <div className = 'CatalogHoc__loading'>Loading...</div>
         );
     }
 
@@ -44,21 +43,21 @@ class CatalogHoc extends React.Component {
         return (
             fetchedGood
                 ? <GoodExpandedView good={fetchedGood} />
-                : <div>Loading...</div>
+                : <div className = 'CatalogHoc__loading' >Loading...</div>
         );
 
     }
 
     fetchIfNecessary() {
         if (this.fetchByCategoryPredicate()) {
-
             const options = {
                 catId: this.props.match.params.catId,
-                enabled: 1,
-                exlcudeId: this.props.catalog[this.props.match.params.catId]['goods']['length'] === 1
-                    ? this.props.catalog[this.props.match.params.catId]['goods'][0]['idProduct']
-                    : null
+                enabled: true,
             };
+
+            if (this.props.catalog[this.props.match.params.catId]['goods']['length'] === 1) {
+                options.excludeId = this.props.catalog[this.props.match.params.catId]['goods'][0]['idProduct'];
+            }
 
             this.props.dispatch(fetchGoodsByCategoryActionAsync(options));
         }
@@ -66,7 +65,7 @@ class CatalogHoc extends React.Component {
         if (this.fetchByGoodIdPredicate()) {
             const options = {
                 goodId: this.props.match.params.goodId,
-                enabled: 1
+                enabled: true
             };
             this.props.dispatch(fetchGoodByIdActionAsync(options));
         }
@@ -74,23 +73,18 @@ class CatalogHoc extends React.Component {
     }
 
     fetchByCategoryPredicate() {
-        const res =
-            this.props.match.params.catId            // catId is in ULR
+        return this.props.match.params.catId         // catId is in ULR
             && !this.props.match.params.goodId       // no goodId in ULR
             && this.props.catalog[this.props.match.params.catId]
             && this.props.catalog[this.props.match.params.catId]['goods']
-            && this.props.catalog[this.props.match.params.catId]['goods']['length'] <= 1; // get from DB on fetching catalog  amount of goods in each category
-        return res;
+            && this.props.catalog[this.props.match.params.catId]['goods']['length'] < this.props.catalog[this.props.match.params.catId]['goodsCount'];
     }
 
     fetchByGoodIdPredicate() {
-        const res =
-            this.props.match.params.goodId // goodId is in ULR
+        return this.props.match.params.goodId // goodId is in ULR
             && this.props.catalog[this.props.match.params.catId]
             && this.props.catalog[this.props.match.params.catId]['goods']
             && !this.props.catalog[this.props.match.params.catId]['goods']['length']; // no goods in particular category
-
-        return res;
     }
 
     componentDidMount() {

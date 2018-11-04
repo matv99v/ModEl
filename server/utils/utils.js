@@ -2,10 +2,10 @@ const Bluebird = require('bluebird');
 const fs = Bluebird.promisifyAll(require('fs'));
 const http = require('http');
 const chalk = require('chalk');
+require('colors');
 
 
 module.exports = {
-
     getFilesByGoodId(goodId) {
         const pattern = new RegExp(`pht_${goodId}_`);
 
@@ -59,32 +59,52 @@ module.exports = {
         });
     },
 
-    log(msg, bg = 'green') {
+    log(msg, col = 'yellowBright') { // TODO: to accept multiple arguments for logging
         const avaliableColors = [
-            'bgBlack',
-            'bgRed',
-            'bgGreen',
-            'bgYellow',
-            'bgBlue',
-            'bgMagenta',
-            'bgCyan',
-            'bgWhite',
-            'bgBlackBright',
-            'bgRedBright',
-            'bgGreenBright',
-            'bgYellowBright',
-            'bgBlueBright',
-            'bgMagentaBright',
-            'bgCyanBright',
-            'bgWhiteBright',
+            'black',
+            'red',
+            'green',
+            'yellow',
+            'blue',
+            'magenta',
+            'cyan',
+            'white',
+            'gray',
+            'redBright',
+            'greenBright',
+            'yellowBright',
+            'blueBright',
+            'magentaBright',
+            'cyanBright',
+            'whiteBright',
         ];
 
-        let currColor = 'bg' + bg.charAt(0).toUpperCase() + bg.substr(1);
+        let currColor = col;
 
         if (!avaliableColors.includes(currColor)) {
-            currColor = 'bgMagentaBright';
+            currColor = 'yellowBright';
         }
-        console.log(chalk[currColor](msg));
+
+        const strMsg = JSON.stringify(msg, null, 4);
+        console.log(chalk[currColor](strMsg));
     },
+
+    wrtieQueryExample(name, options, mysqlQuery) {
+        const msg = `# ${(new Date()).toString()}
+# Parameters: ${JSON.stringify(options)}
+${mysqlQuery}
+    `;
+        fs.writeFileSync(`./database/examplesSql/${name}.sql`, msg, 'utf8');
+    },
+
+
+    writeQueryResultsToFile(name, options, rawQueryResult) {
+        const msg = `# ${(new Date()).toString()}
+# Parameters: ${JSON.stringify(options)}
+${JSON.stringify(rawQueryResult, null, 4)}
+    `;
+        fs.writeFileSync(`./database/examplesJson/${name}.json`, msg, 'utf8');
+    },
+
 
 };

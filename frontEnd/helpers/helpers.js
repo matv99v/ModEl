@@ -4,14 +4,20 @@ function obj2query(obj={}) {
     }
 
     const str = [];
+
     for (var p in obj) {
-        if (obj.hasOwnProperty(p) && obj[p]) {
+        if ( obj.hasOwnProperty(p) && isValue(obj[p]) ) {
             str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
         }
     }
 
     return '?' + str.join('&');
 }
+
+function isValue(val) {
+    return typeof val != null;
+}
+
 
 const base = process.env.HOST + ':' + process.env.PORT;
 

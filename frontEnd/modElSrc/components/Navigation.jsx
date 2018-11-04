@@ -20,7 +20,7 @@ class Navigation extends React.Component {
 
     componentWillMount() {
         console.warn('fetching initial data, should be printed only one time');
-        this.props.dispatch(fetchEnabledCategoriesAsync({enabled: true}));
+        this.props.dispatch(fetchEnabledCategoriesAsync({enabled: true, excludeProductsCount: 0}));
     }
 
 
