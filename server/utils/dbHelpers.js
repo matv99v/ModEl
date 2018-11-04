@@ -1,21 +1,18 @@
-const SqlString = require('sqlstring');
-
-
 module.exports = {
-    prepearePredicate(str, arg) {
-        const res = typeof arg === 'undefined' || arg === null || arg.length === 0
-            ? 'TRUE' // if no such argument then resolve predicate as TRUE so it does not affect overall db query
-            : `${str} ${arg}`;
-        return res;
+    prepareConditions(arr) {
+        return arr
+            .filter(el => el.length)
+            .reduce((acc, el, i) => {
+                return i ? `${acc} AND ${el}` : `${acc} WHERE ${el}`;
+            }, '');
     },
 
-    includeIfPassed(qPortion, options) {
-        const arr = qPortion.split(/\w/);
-        const prop = arr[arr.length - 1];
+    validateOptions(options, allowedProps) {
+        const predicate = !Object.keys(options).some(key => !allowedProps.includes(key));
 
-        return Object.prototype.hasOwnProperty.call(options, prop)
-            ? `${qPortion} ${SqlString.escape(JSON.parse(options[prop]))}`
-            : '';
+        if (!predicate) {
+            throw new Error(`Some of the passed props are not allowed: ${JSON.stringify(options)}`);
+        }
     },
 
     clean() {

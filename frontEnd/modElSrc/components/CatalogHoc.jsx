@@ -30,7 +30,7 @@ class CatalogHoc extends React.Component {
         return (
             categoryLength
                 ? <GoodsList goods={this.props.catalog[this.props.match.params.catId]['goods']} />
-                : <div>Loading...</div>
+                : <div className = 'CatalogHoc__loading'>Loading...</div>
         );
     }
 
@@ -43,7 +43,7 @@ class CatalogHoc extends React.Component {
         return (
             fetchedGood
                 ? <GoodExpandedView good={fetchedGood} />
-                : <div>Loading...</div>
+                : <div className = 'CatalogHoc__loading' >Loading...</div>
         );
 
     }
@@ -52,11 +52,12 @@ class CatalogHoc extends React.Component {
         if (this.fetchByCategoryPredicate()) {
             const options = {
                 catId: this.props.match.params.catId,
-                enabled: 1,
-                exlcudeId: this.props.catalog[this.props.match.params.catId]['goods']['length'] === 1
-                    ? this.props.catalog[this.props.match.params.catId]['goods'][0]['idProduct']
-                    : null
+                enabled: true,
             };
+
+            if (this.props.catalog[this.props.match.params.catId]['goods']['length'] === 1) {
+                options.excludeId = this.props.catalog[this.props.match.params.catId]['goods'][0]['idProduct'];
+            }
 
             this.props.dispatch(fetchGoodsByCategoryActionAsync(options));
         }
@@ -64,7 +65,7 @@ class CatalogHoc extends React.Component {
         if (this.fetchByGoodIdPredicate()) {
             const options = {
                 goodId: this.props.match.params.goodId,
-                enabled: 1
+                enabled: true
             };
             this.props.dispatch(fetchGoodByIdActionAsync(options));
         }
@@ -80,11 +81,22 @@ class CatalogHoc extends React.Component {
     }
 
     fetchByGoodIdPredicate() {
+        // console.log(
+        //     '-----------------',
+        //     this.props.match.params.goodId,
+        //     this.props.catalog[this.props.match.params.catId],
+        //     this.props.catalog[this.props.match.params.catId] && this.props.catalog[this.props.match.params.catId]['goods'],
+        //     this.props.catalog[this.props.match.params.catId] && this.props.catalog[this.props.match.params.catId]['goods'] && this.props.catalog[this.props.match.params.catId]['goods']['length']
+        // );
+
+
         const res =
             this.props.match.params.goodId // goodId is in ULR
             && this.props.catalog[this.props.match.params.catId]
             && this.props.catalog[this.props.match.params.catId]['goods']
             && !this.props.catalog[this.props.match.params.catId]['goods']['length']; // no goods in particular category
+
+        console.log('fetchByGoodIdPredicate', res);
 
         return res;
     }

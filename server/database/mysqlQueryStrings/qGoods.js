@@ -1,39 +1,24 @@
-const utils = require('../../utils/utils');
-
-
-function prepearePredicate(str, arg) {
-    return typeof arg === 'undefined'
-        ? 'TRUE' // if no such argument then resolve predicate as TRUE so it does not affect overall db query
-        : `${str}${arg}`;
-}
-
-function isObjPropsAllowed(obj, allowedProps) {
-    return !Object.keys(obj).some(key => !allowedProps.includes(key));
-}
-
-const allowedFields = ['catId', 'enabled', 'exlcudeId', 'goodId'];
+const utils = require('../../utils/utils.js');
+const dbHelpers = require('../../utils/dbHelpers');
 
 module.exports = {
-    get(obj = {}) {
-        if (!isObjPropsAllowed(obj, allowedFields)) {
-            throw new Error(`Passed props are not allowed: ${JSON.stringify(obj)}`);
-        }
+    get(options = {}) {
         const resString = `
             SELECT idCategory, products.idProduct, productName, productParams, declarePrice, detailName, textDescrip
                 FROM products
                 LEFT JOIN
                     descrip ON products.idProduct = descrip.idProduct
-                    WHERE
-                        ${prepearePredicate('products.idProduct !=', obj.exlcudeId)}
-                    AND
-                        ${prepearePredicate('products.exist =', obj.enabled)}
-                    AND
-                        ${prepearePredicate('products.idProduct =', obj.goodId)}
-                    AND
-                        ${prepearePredicate('products.idCategory =', obj.catId)}
+                    ${
+                        dbHelpers.prepareConditions([
+                            dbHelpers.include('products.idProduct != ?excludeId?').ifObj(options).hasProp('excludeId').exec(),
+                            dbHelpers.include('products.exist = ?enabled?').ifObj(options).hasProp('enabled').exec(),
+                            dbHelpers.include('products.idProduct = ?goodId?').ifObj(options).hasProp('goodId').exec(),
+                            dbHelpers.include('products.idCategory = ?catId?').ifObj(options).hasProp('catId').exec(),
+                        ])
+                    }
         `;
 
-        utils.wrtieQueryExample('qGoods.get', obj, resString);
+        utils.wrtieQueryExample('qGoods.get', options, resString);
         return resString;
     },
 

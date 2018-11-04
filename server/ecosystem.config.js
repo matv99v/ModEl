@@ -29,7 +29,7 @@ module.exports = {
             },
             script: 'bin/www',
             watch: '../',
-            ignoreWatch: ['node_modules', 'public', './database/examplesSql', './database/examplesJson'],
+            ignoreWatch: ['node_modules', 'public', './database/examplesSql', './database/examplesJson', '.git'],
             args: ['--color'],
         },
     ],
