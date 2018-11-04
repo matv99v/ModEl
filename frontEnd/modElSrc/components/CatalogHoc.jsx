@@ -81,24 +81,10 @@ class CatalogHoc extends React.Component {
     }
 
     fetchByGoodIdPredicate() {
-        // console.log(
-        //     '-----------------',
-        //     this.props.match.params.goodId,
-        //     this.props.catalog[this.props.match.params.catId],
-        //     this.props.catalog[this.props.match.params.catId] && this.props.catalog[this.props.match.params.catId]['goods'],
-        //     this.props.catalog[this.props.match.params.catId] && this.props.catalog[this.props.match.params.catId]['goods'] && this.props.catalog[this.props.match.params.catId]['goods']['length']
-        // );
-
-
-        const res =
-            this.props.match.params.goodId // goodId is in ULR
+        return this.props.match.params.goodId // goodId is in ULR
             && this.props.catalog[this.props.match.params.catId]
             && this.props.catalog[this.props.match.params.catId]['goods']
             && !this.props.catalog[this.props.match.params.catId]['goods']['length']; // no goods in particular category
-
-        console.log('fetchByGoodIdPredicate', res);
-
-        return res;
     }
 
     componentDidMount() {

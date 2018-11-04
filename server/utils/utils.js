@@ -22,7 +22,7 @@ module.exports = {
     },
 
     // consumes array of existingGoodsIds and returns
-    // optionsect of goodsId and amount of photos on server
+    // object of goodsId and amount of photos on server
 
     getAmountOfPhotos(existingGoodsIds) {
         return Bluebird

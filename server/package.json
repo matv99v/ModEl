@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "pm2 see ecosystem.config.js",
+    "start": "see pm2 ecosystem.config.js",
     "test": "jest",
     "test-watch": "jest --watch --verbose false"
   },

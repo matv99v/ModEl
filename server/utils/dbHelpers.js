@@ -1,7 +1,7 @@
 module.exports = {
     prepareConditions(arr) {
         return arr
-            .filter(el => el.length)
+            .filter(el => el.trim().length)
             .reduce((acc, el, i) => {
                 return i ? `${acc} AND ${el}` : `${acc} WHERE ${el}`;
             }, '');
