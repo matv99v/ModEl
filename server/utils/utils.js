@@ -2,7 +2,6 @@ const Bluebird = require('bluebird');
 const fs = Bluebird.promisifyAll(require('fs'));
 const http = require('http');
 const chalk = require('chalk');
-require('colors');
 
 
 module.exports = {
