@@ -2,8 +2,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { exec } = require('child_process');
-
 
 
 module.exports = {
@@ -36,34 +34,7 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: '[id].css'
-        }),
-        {
-            apply: (compiler) => {
-                compiler.hooks.afterEmit.tap('CreateSymlinksAfterBuild', (compilation) => {
-
-                    const script = process.platform === 'win32' ?
-                        'createSymLinks.bat' :
-                        'node createSymLinks.js';
-
-                    exec(script, (error, stdout, stderr) => {
-                        if (error) {
-                            console.error(`exec error: ${error}`);
-                            return;
-                        }
-
-                        if (stdout) {
-                            console.log(stdout);
-                        }
-
-                        if (stderr) {
-                            console.log(stderr);
-                        }
-
-                    });
-                });
-
-            }
-        }
+        })
     ],
 
     module: {
@@ -71,7 +42,6 @@ module.exports = {
             {
                 test: /\.(scss|css)$/,
                 use: [
-                    // 'style-loader',
                     MiniCssExtractPlugin.loader,
                     'css-loader',
                     'sass-loader'
