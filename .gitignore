@@ -1,4 +1,4 @@
 node_modules
 server/public
 frontEnd/createSymlinks.bat
-frontEnd/createSymlinks.js
+frontEnd/createSymlinks.sh
