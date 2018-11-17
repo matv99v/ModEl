@@ -1,5 +1,7 @@
+// generates symlinks from assets folder to a public folder
+
 const fs = require('fs');
-const path = require("path");
+const path = require('path');
 const config = require('./config.json');
 
 const assetsPath = path.resolve(config.assetsPath);
@@ -10,17 +12,17 @@ const isWin = process.platform === 'win32';
 function symlinkForFile(fileName) {
     return isWin
         ? `mklink ${outputPath}${path.sep}${fileName} ${assetsPath}${path.sep}${fileName}`
-        : `ln -s ${outputPath}${path.sep}${fileName} ${assetsPath}${path.sep}${fileName}`
+        : `ln -s ${assetsPath}${path.sep}${fileName} ${outputPath}${path.sep}${fileName}`;
 }
 function symlinkForDirectory(fileName) {
     return isWin
         ? `mklink /D ${outputPath}${path.sep}${fileName} ${assetsPath}${path.sep}${fileName}`
-        : `ln -s ${outputPath}${path.sep}${fileName} ${assetsPath}${path.sep}${fileName}`;
+        : `ln -s ${assetsPath}${path.sep}${fileName} ${outputPath}${path.sep}${fileName}`;
 }
 function removeFile(file) {
     return isWin
-    ? `del ${outputPath}${path.sep}${file}`
-    : `rm ${outputPath}${path.sep}${file}`;
+        ? `del ${outputPath}${path.sep}${file}`
+        : `rm -f ${outputPath}${path.sep}${file}`;
 }
 function removeDir(dir) {
     return isWin
@@ -29,7 +31,7 @@ function removeDir(dir) {
 }
 
 function reduceAction(arr, fn) {
-    return arr.reduce((acc, file, i) => {
+    return arr.reduce((acc, file) => {
         return `${acc} ${fn(file)}\n`;
     }, '');
 }
@@ -37,7 +39,7 @@ function reduceAction(arr, fn) {
 function createOutputFolderIfNotExist(folder) {
     return isWin
         ? `if not exist "${folder}" mkdir "${folder}"`
-        : `if (!fs.existsSync("${folder}")) fs.mkdirSync("${folder}");`;
+        : `mkdir -p ${folder}`;
 }
 
 const assets = fs.readdirSync(config.assetsPath);
@@ -54,7 +56,7 @@ const directories = assets.filter(file => {
 
 function generateScript() {
     return isWin
-    ? `echo off
+        ? `echo off
 title utilizewindows.com Batch file
 echo Creating symlinks to assets
 
@@ -62,20 +64,28 @@ ${reduceAction(files, removeFile)}${reduceAction(directories, removeDir)}
 ${createOutputFolderIfNotExist(outputPath)}
 ${reduceAction(files, symlinkForFile)}${reduceAction(directories, symlinkForDirectory)}
 echo Symlinks successfully craeted`
-    : `${reduceAction(files, removeFile)}${reduceAction(directories, removeDir)}
+        : `#!/bin/bash
+${reduceAction(files, removeFile)}${reduceAction(directories, removeDir)}
 ${createOutputFolderIfNotExist(outputPath)}
 ${reduceAction(files, symlinkForFile)}${reduceAction(directories, symlinkForDirectory)}
-console.log('Symlinks successfully craeted');`;
+RESULT=$?
+if [ $RESULT -eq 0 ]; then
+  echo Symlinks successfully craeted
+else
+  echo Symlinks creation failed
+fi`;
 }
 
 
 // delete previously generated script
-if (fs.existsSync('./createSymlinks.js')) {
-    fs.unlinkSync('./createSymlinks.js');
-}
 if (fs.existsSync('./createSymlinks.bat')) {
     fs.unlinkSync('./createSymlinks.bat');
 }
+if (fs.existsSync('./createSymlinks.sh')) {
+    fs.unlinkSync('./createSymlinks.sh');
+}
 
 // generate a new one
-fs.writeFileSync(`./createSymlinks.${isWin ? 'bat' : 'js'}`, generateScript(), 'utf8');
+fs.writeFileSync(`./createSymlinks.${isWin ? 'bat' : 'sh'}`, generateScript(), 'utf8');
+
+console.log('createSymlinks script has been created');
