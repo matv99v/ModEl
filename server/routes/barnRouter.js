@@ -4,6 +4,7 @@ const auth = require('../middlewares/auth.js');
 const barnRouter = express.Router();
 const db = require('../database/db.js');
 const utils = require('../utils/utils');
+const { replaceStringToNullInBodyObj } = require('../middlewares/reqBodyMod');
 const validateBarnParams = require('../middlewares/validateParams/validateBarnParams');
 
 barnRouter.use(validateBarnParams);
@@ -43,7 +44,7 @@ barnRouter.route('/:id')
         res.setHeader('Content-Type', 'application/json');
         next();
     })
-    .put(auth, (req, res, next) => {
+    .put(auth, replaceStringToNullInBodyObj, (req, res, next) => {
         res.statusCode = 200;
 
         db.updateItemInBarn(req.body)
