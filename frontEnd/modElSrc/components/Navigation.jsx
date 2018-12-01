@@ -4,8 +4,8 @@ import { Navbar, Nav, NavItem, Badge, NavDropdown, MenuItem } from 'react-bootst
 import { connect } from 'react-redux';
 import { fetchEnabledCategoriesAsync } from 'AliasModelSrc/redux/actions/catalog-actions';
 import './Navigation.scss';
-import BrandLogo from './common/BrandLogo.jsx';
-import helpers from '../../helpers/helpers.js';
+import BrandLogo from './common/BrandLogo';
+import helpers from '../../helpers/helpers';
 
 
 

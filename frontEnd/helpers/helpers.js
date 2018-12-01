@@ -15,7 +15,7 @@ function obj2query(obj={}) {
 }
 
 function isValue(val) {
-    return typeof val != null;
+    return !(val === null || val === undefined || typeof val === 'string' && val.trim() === '');
 }
 
 

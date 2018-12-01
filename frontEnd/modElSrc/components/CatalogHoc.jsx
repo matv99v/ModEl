@@ -1,14 +1,14 @@
 import React from 'react';
-import Categories from './Categories.jsx';
-import GoodsList from './GoodsList.jsx';
+import Categories from './Categories';
+import GoodsList from './GoodsList';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import Breadcrumbs from './Breadcrumbs.jsx';
+import Breadcrumbs from './Breadcrumbs';
 import { Route, Switch } from 'react-router-dom';
-import GoodExpandedView from './GoodExpandedView.jsx';
+import GoodExpandedView from './GoodExpandedView';
 import './CatalogHoc.scss';
 import { fetchGoodsByCategoryActionAsync, fetchGoodByIdActionAsync  } from 'AliasModelSrc/redux/actions/catalog-actions';
-import helpers from '../../helpers/helpers.js';
+import helpers from '../../helpers/helpers';
 
 class CatalogHoc extends React.Component {
     constructor(props) {

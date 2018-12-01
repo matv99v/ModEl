@@ -1,12 +1,12 @@
 import React from 'react';
 import './GoodExpandedView.scss';
 
-import GoodName from './common/GoodName.jsx';
-import GoodPrice from './common/GoodPrice.jsx';
-import FoldableText from './common/FoldableText.jsx';
-import ControlledCarousel from './common/ControlledCarousel.jsx';
+import GoodName from './common/GoodName';
+import GoodPrice from './common/GoodPrice';
+import FoldableText from './common/FoldableText';
+import ControlledCarousel from './common/ControlledCarousel';
 
-import DevInfo from './DevInfo.jsx';
+import DevInfo from './DevInfo';
 
 
 export default class GoodExpandedView extends React.Component {

@@ -2,16 +2,6 @@ import moment from 'moment';
 
 
 import {
-    // exist,
-    // isNumericInt,
-    // isAliexpressUrl,
-    // getUrlOrderId,
-    // isEqualStrings,
-    // isReal6d4,
-    // isReal8d2,
-    // isBetween0And100,
-    // isZero,
-
     isFutureDay,
     isPresentDay,
     isPastDay,

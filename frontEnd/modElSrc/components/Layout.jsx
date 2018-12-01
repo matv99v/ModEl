@@ -1,15 +1,15 @@
 import React from 'react';
-import CatalogHoc from './CatalogHoc.jsx';
-import HomePage from './HomePage.jsx';
-import ContactPage from './ContactPage.jsx';
-import Navigation from './Navigation.jsx';
-import Cart from './Cart.jsx';
+import CatalogHoc from './CatalogHoc';
+import HomePage from './HomePage';
+import ContactPage from './ContactPage';
+import Navigation from './Navigation';
+import Cart from './Cart';
 import { hot } from 'react-hot-loader';
-import ErrorWindow from './ErrorWindow.jsx';
-import Spinner from './common/Spinner.jsx';
+import ErrorWindow from './ErrorWindow';
+import Spinner from './common/Spinner';
 import './Layout.scss';
 import ReactGA from 'react-ga';
-import WithTracker from './WithTracker.jsx';
+import WithTracker from './WithTracker';
 
 import { Grid, Row } from 'react-bootstrap';
 import { Route, BrowserRouter } from 'react-router-dom';

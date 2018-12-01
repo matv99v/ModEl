@@ -4,12 +4,9 @@ import { Button } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 import { removeFromCartAction, updateGoodQuantityAction } from '../redux/actions/cart-actions';
-import PlaceOrderModalForm from './PlaceOrderModalForm.jsx';
+import PlaceOrderModalForm from './PlaceOrderModalForm';
 
-import GoodsList from './GoodsList.jsx';
-
-
-
+import GoodsList from './GoodsList';
 
 
 class Cart extends React.Component {

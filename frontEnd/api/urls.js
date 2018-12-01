@@ -1,4 +1,4 @@
-import helpers from '../helpers/helpers.js';
+import helpers from '../helpers/helpers';
 
 
 export default {

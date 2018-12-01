@@ -3,10 +3,10 @@ import { Grid, Row, Col, Table, ButtonToolbar, ToggleButtonGroup, ToggleButton }
 import { withRouter } from 'react-router-dom';
 import api from 'AliasApi/api';
 import Bluebird from 'bluebird';
-import BarnPurchaseTableCat from './BarnPurchaseTableCat.jsx';
+import BarnPurchaseTableCat from './BarnPurchaseTableCat';
 import './BarnPurchase.scss';
-import helpers from '../../helpers/helpers.js';
-import Spinner from './common/Spinner.jsx';
+import helpers from 'AliasRoot/helpers/helpers';
+import Spinner from 'AliasAdminToolSrc/components/common/Spinner';
 
 
 

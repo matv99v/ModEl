@@ -1,8 +1,8 @@
 import React from 'react';
-import BarnForm from './BarnForm.jsx';
+import BarnForm from './BarnForm';
 import api from 'AliasApi/api';
 import { connect } from 'react-redux';
-import Spinner from './common/Spinner.jsx';
+import Spinner from 'AliasAdminToolSrc/components/common/Spinner';
 
 
 
