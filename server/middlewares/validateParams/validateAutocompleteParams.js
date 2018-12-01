@@ -7,7 +7,9 @@ const autocompleteValidator = new Validator({
 });
 
 function validateParams(req, res, next) {
-    autocompleteValidator.validate(req.query);
+    if (!autocompleteValidator.validate(req.query)) {
+        throw new Error(JSON.stringify(autocompleteValidator.getErrors()));
+    }
     next();
 }
 

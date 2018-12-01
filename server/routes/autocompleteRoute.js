@@ -1,7 +1,6 @@
 const express = require('express');
 const validateAutocompleteParams = require('../middlewares/validateParams/validateAutocompleteParams');
 
-
 const autocompleteRoute = express.Router();
 autocompleteRoute.use(validateAutocompleteParams);
 

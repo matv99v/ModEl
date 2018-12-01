@@ -1,9 +1,7 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+
 const imagesRouter = express.Router();
 const sharp = require('sharp');
-
-imagesRouter.use(bodyParser.json());
 
 
 imagesRouter.route('/goods/thumbnail/:id')
