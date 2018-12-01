@@ -1,8 +1,8 @@
 import React from 'react';
 import './SysDialog.scss';
 import { connect } from 'react-redux';
-import SysDialogItem from './SysDialogItem.jsx';
-import { killMessage } from '../../redux/actions/sysdialogs-actions.js';
+import SysDialogItem from './SysDialogItem';
+import { killMessage } from '../../redux/actions/sysdialogs-actions';
 
 
 class SysDialog extends React.Component {

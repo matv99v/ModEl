@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { UnusedFilesWebpackPlugin } = require('unused-files-webpack-plugin');
 
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
     },
 
     plugins: [
-        new CleanWebpackPlugin('../server/public',{
+        new CleanWebpackPlugin('../server/public/bundle',{
             allowExternal: true
         }),
         new HtmlWebpackPlugin({
@@ -34,7 +35,19 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: '[id].css'
-        })
+        }),
+        new UnusedFilesWebpackPlugin({
+            globOptions: {
+                ignore: [
+                    'node_modules/**/*',
+                    'templates/**/*',
+                    '*.*', // all files in root folder
+                    '**/OFL.txt',
+                    '**/*.test.js',
+                ]
+            }
+
+        }),
     ],
 
     module: {
@@ -88,7 +101,9 @@ module.exports = {
             AliasAdminToolSrc: path.resolve(__dirname, 'adminToolSrc'),
             AliasApi: path.resolve(__dirname, 'api'),
             AliasRoot: path.resolve(__dirname, './'),
-        }
+        },
+
+        extensions: ['.js', '.jsx']
     },
 
 };

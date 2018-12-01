@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { ListGroup } from 'react-bootstrap';
 import './GoodsList.scss';
-import GoodFoldedView from './GoodFoldedView.jsx';
+import GoodFoldedView from './GoodFoldedView';
 
 
 

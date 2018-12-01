@@ -9,7 +9,7 @@ Host: ${process.env.HOST}
 Port: ${process.env.PORT}`
 );
 
-import Layout from './components/Layout.jsx';
+import Layout from './components/Layout';
 import './styles.scss';
 
 

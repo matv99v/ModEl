@@ -1,11 +1,11 @@
 import React from 'react';
 import './GoodFoldedView.scss';
 import { Image } from 'react-bootstrap';
-import DevInfo from './DevInfo.jsx';
-import GoodName from './common/GoodName.jsx';
-import GoodPrice from './common/GoodPrice.jsx';
+import DevInfo from './DevInfo';
+import GoodName from './common/GoodName';
+import GoodPrice from './common/GoodPrice';
 import urls from '../../api/urls';
-import DefaultGoodImg from './common/DefaultGoodImg.jsx';
+import DefaultGoodImg from './common/DefaultGoodImg';
 
 
 

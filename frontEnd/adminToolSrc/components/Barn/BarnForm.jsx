@@ -1,6 +1,6 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import FormItem from './common/FormItem.jsx';
+import FormItem from 'AliasAdminToolSrc/components/common/FormItem';
 import { Button, Grid, Row, Col } from 'react-bootstrap';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -10,7 +10,7 @@ import { change } from 'redux-form';
 
 import api from 'AliasApi/api';
 
-import { alertMessage } from '../redux/actions/sysdialogs-actions.js';
+import { alertMessage } from 'AliasAdminToolSrc/redux/actions/sysdialogs-actions';
 import { withRouter } from 'react-router-dom';
 import validateBarnForm from 'AliasRoot/validation/validateBarnForm';
 
