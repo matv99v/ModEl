@@ -75,30 +75,35 @@ function put(url, data) {
 //     xhr.send(null);
 // }
 
-
+// categories
 function getCategories(obj) {
     return get(urls.categories(obj));
 }
 
+// goods
 function getGoods(obj) {
     return get(urls.goods(obj));
 }
+function postToGoods(obj) {
+    return post(urls.goods(), obj);
+}
 
+// barn
 function getBarn(obj) {
     return get(urls.barn(obj));
 }
-
 function postToBarn(obj) {
     return post(urls.barn(), obj);
 }
+function updateBarn(hash, obj) {
+    return put(urls.putBarn(hash), obj);
+}
 
+// misc
 function autocomplete(obj) {
     return get(urls.autocomplete(obj));
 }
 
-function updateBarn(hash, obj) {
-    return put(urls.putBarn(hash), obj);
-}
 
 export default {
     getCategories,
@@ -106,5 +111,6 @@ export default {
     getBarn,
     postToBarn,
     autocomplete,
-    updateBarn
+    updateBarn,
+    postToGoods
 };

@@ -22,10 +22,8 @@ export default class RichEditorExample extends React.Component {
         super(props);
         this.state = {};
 
-        const content = window.localStorage.getItem('content');
-
-        if (content) {
-            this.state.editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(content)));
+        if (this.props.initVal) {
+            this.state.editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(this.props.initVal)));
         } else {
             this.state.editorState = EditorState.createEmpty();
         }
@@ -42,14 +40,10 @@ export default class RichEditorExample extends React.Component {
 
     onChange = (editorState) => {
         const contentState = editorState.getCurrentContent();
-        this.saveContent(contentState);
+        this.props.change(this.props.forField, JSON.stringify(convertToRaw(contentState)));
         this.setState({
             editorState,
         });
-    }
-
-    saveContent = (content) => {
-        window.localStorage.setItem('content', JSON.stringify(convertToRaw(content)));
     }
 
     _handleKeyCommand(command, editorState) {
@@ -170,10 +164,10 @@ const BLOCK_TYPES = [
     {label: 'H4', style: 'header-four'},
     {label: 'H5', style: 'header-five'},
     {label: 'H6', style: 'header-six'},
-    {label: 'Blockquote', style: 'blockquote'},
+    // {label: 'Blockquote', style: 'blockquote'},
     {label: 'UL', style: 'unordered-list-item'},
     {label: 'OL', style: 'ordered-list-item'},
-    {label: 'Code Block', style: 'code-block'},
+    // {label: 'Code Block', style: 'code-block'},
 ];
 const BlockStyleControls = (props) => {
     const {editorState} = props;
@@ -200,7 +194,7 @@ var INLINE_STYLES = [
     {label: 'Bold', style: 'BOLD'},
     {label: 'Italic', style: 'ITALIC'},
     {label: 'Underline', style: 'UNDERLINE'},
-    {label: 'Monospace', style: 'CODE'},
+    // {label: 'Monospace', style: 'CODE'},
 ];
 const InlineStyleControls = (props) => {
     const currentStyle = props.editorState.getCurrentInlineStyle();

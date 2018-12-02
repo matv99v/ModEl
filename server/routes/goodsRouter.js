@@ -1,4 +1,5 @@
 const express = require('express');
+const auth = require('../middlewares/auth.js');
 
 const validateGoodsParams = require('../middlewares/validateParams/validateGoodsParams');
 const db = require('../database/db.js');
@@ -34,6 +35,24 @@ goodsRouter.route('/')
             .catch((err) => {
                 next(err);
             });
+    })
+    .post(auth, (req, res, next) => {
+        res.statusCode = 201;
+
+        db.postItemToGoods(req.body)
+            // description is in another table,
+            // need to get product id before posting description
+            .then(resp => db.postItemToGoodsDescription({
+                textDescrip: req.body.textDescrip,
+                idProduct: resp.insertId,
+            }))
+            .then((resp) => {
+                res.end(JSON.stringify(resp));
+            })
+            .catch((err) => {
+                next(err);
+            });
     });
+
 
 module.exports = goodsRouter;

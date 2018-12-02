@@ -4,9 +4,8 @@ import { Button, Grid, Row, Col } from 'react-bootstrap';
 import RichTextEditor from 'AliasAdminToolSrc/components/common/RichTextEditor';
 import FormItem from 'AliasAdminToolSrc/components/common/FormItem';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
+import { alertMessage } from 'AliasAdminToolSrc/redux/actions/sysdialogs-actions';
 import api from 'AliasApi/api';
-
-
 
 
 class GoodForm extends React.Component {
@@ -20,6 +19,22 @@ class GoodForm extends React.Component {
 
     print = (data) => {
         console.log(data);
+
+        return api.postToGoods(data)
+            .then(resp => {
+                this.props.dispatch(alertMessage({
+                    msg: `Товар '${data.productName}' номер ${data.idProduct} добавлен`,
+                    type: 'success'
+                }));
+                // this.props.history.push('/barn/purchase/actual');
+                return null;
+            })
+            .catch(err => {
+                this.props.dispatch(alertMessage({
+                    msg: `Вознкла ошибка при добавлении нового товара '${data.productName}'`,
+                    type: 'danger'
+                }));
+            });
     }
 
     handleCategorySearch = (query) => {
@@ -46,10 +61,22 @@ class GoodForm extends React.Component {
         }
     }
 
+    changeEditorState = (fieldName, state) => {
+        this.props.dispatch(change('GoodForm', fieldName, state));
+    }
+
     render() {
         return (
 
             <Grid>
+
+                <Row>
+                    <Col smOffset={3}>
+                        {/*TODO: */}
+                        <h3>{this.props.type === 'put' ? 'Правка товара' : 'Новый товар'}</h3>
+                    </Col>
+                </Row>
+
                 <Row>
                     <Col>
                         <form
@@ -71,124 +98,114 @@ class GoodForm extends React.Component {
 
                             </div>
 
-                            <Row>
-                                <FormItem
-                                    id="idCategory"
-                                    component="input"
-                                    type="number"
-                                    label="idCategory"
-                                    disabled
-                                />
-                            </Row>
+                            <FormItem
+                                id="idCategory"
+                                component="input"
+                                type="number"
+                                label="idCategory"
+                                disabled
+                            />
 
-                            <Row>
-                                <FormItem
-                                    id="idProduct"
-                                    component="input"
-                                    type="number"
-                                    label="idProduct"
-                                    disabled
-                                />
-                            </Row>
+                            <FormItem
+                                id="idProduct"
+                                component="input"
+                                type="number"
+                                label="idProduct"
+                                disabled
+                            />
 
-                            <Row>
-                                <FormItem
-                                    id="productName"
-                                    component="input"
-                                    type="text"
-                                    label="productName"
-                                />
-                            </Row>
+                            <FormItem
+                                id="productName"
+                                component="input"
+                                type="text"
+                                label="productName"
+                            />
 
-                            <Row>
-                                <FormItem
-                                    id="declarePrice"
-                                    component="input"
-                                    type="number"
-                                    label="declarePrice"
-                                />
-                            </Row>
+                            <FormItem
+                                id="declarePrice"
+                                component="input"
+                                type="number"
+                                label="declarePrice"
+                            />
 
-                            <Row>
-                                <FormItem
-                                    id="exist"
-                                    component="input"
-                                    type="checkbox"
-                                    label="exist"
-                                />
-                            </Row>
+                            <FormItem
+                                id="exist"
+                                component="input"
+                                type="checkbox"
+                                label="exist"
+                            />
 
-                            <Row>
-                                <FormItem
-                                    id="detailName"
-                                    component="input"
-                                    type="text"
-                                    label="detailName"
-                                />
-                            </Row>
+                            <FormItem
+                                id="detailName"
+                                component="input"
+                                type="text"
+                                label="detailName"
+                            />
 
-                            <Row>
-                                <FormItem
-                                    id="idDescrip"
-                                    component="input"
-                                    type="text"
-                                    label="idDescrip"
-                                    disabled
-                                />
-                            </Row>
+                            <FormItem
+                                id="idDescrip"
+                                component="input"
+                                type="text"
+                                label="idDescrip"
+                                disabled
+                            />
 
-                            <Row>
-                                <FormItem
-                                    id="photosAmount"
-                                    component="input"
-                                    type="number"
-                                    label="photosAmount"
-                                    disabled
-                                />
-                            </Row>
+                            <FormItem
+                                id="photosAmount"
+                                component="input"
+                                type="number"
+                                label="photosAmount"
+                                disabled
+                            />
 
-                            <Row className="form-group">
+                            <div className="form-group">
                                 <Col md={3} style={{textAlign: 'right', fontWeight: 'bold'}}>
                                     textDescripSource
                                 </Col>
                                 <Col md={9}>
-                                    <RichTextEditor />
+                                    <RichTextEditor
+                                        forField='textDescrip'
+                                        change={this.changeEditorState}
+                                        initVal={null}
+                                    />
                                 </Col>
-                            </Row>
+                            </div>
 
 
-                            <Row>
-                                <FormItem
-                                    id="textDescrip"
-                                    component="input"
-                                    type="text"
-                                    label="textDescrip"
-                                    disabled
-                                />
-                            </Row>
+                            <FormItem
+                                id="textDescrip"
+                                component="input"
+                                type="text"
+                                label="textDescrip"
+                                disabled
+                            />
 
-                            <Row className="form-group">
+                            <div className="form-group">
                                 <Col md={3} style={{textAlign: 'right', fontWeight: 'bold'}}>
                                     productParamsSource
                                 </Col>
                                 <Col md={9}>
-                                    <RichTextEditor />
+                                    <RichTextEditor
+                                        forField='productParams'
+                                        change={this.changeEditorState}
+                                        initVal={null}
+                                    />
                                 </Col>
-                            </Row>
+                            </div>
+
+                            <FormItem
+                                id="productParams"
+                                component="input"
+                                type="text"
+                                label="productParams"
+                                disabled
+                            />
 
                             <Row>
-                                <FormItem
-                                    id="productParams"
-                                    component="input"
-                                    type="text"
-                                    label="productParams"
-                                    disabled
-                                />
+                                <Col smOffset={3}>
+                                    <Button bsStyle='primary' type='submit' bsSize='large' disabled={this.props.submitting || this.props.pristine}>Submit</Button>
+                                </Col>
                             </Row>
-
-                            <Button bsStyle="primary" type="submit">Submit</Button>
-
-
 
                         </form>
                     </Col>

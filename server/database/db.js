@@ -1,6 +1,7 @@
 const { performQuery } = require('./dbConnection');
 const qCategories = require('./mysqlQueryStrings/qCategories.js');
 const qGoods = require('./mysqlQueryStrings/qGoods.js');
+const qGoodsDescription = require('./mysqlQueryStrings/qGoodsDescription.js');
 const qBarn = require('./mysqlQueryStrings/qBarn.js');
 const qAutocomplete = require('./mysqlQueryStrings/qAutocomplete.js');
 const qUserhash = require('./mysqlQueryStrings/qUserhash.js');
@@ -33,5 +34,13 @@ module.exports = {
 
     getGoods(options) {
         return performQuery(qGoods.get(options));
+    },
+
+    postItemToGoods(options) {
+        return performQuery(qGoods.insert(options));
+    },
+
+    postItemToGoodsDescription(options) {
+        return performQuery(qGoodsDescription.insert(options));
     },
 };
