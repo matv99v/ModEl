@@ -18,7 +18,6 @@ class GoodForm extends React.Component {
     }
 
     print = (data) => {
-
         const copyData = {...data}; // do not mutate data!!!!
         delete copyData.CategoryName; // this field for view only and belongs to another table
         delete copyData.photosAmount;
@@ -56,8 +55,6 @@ class GoodForm extends React.Component {
                 });
 
         }
-
-
     }
 
     handleCategorySearch = (query) => {
