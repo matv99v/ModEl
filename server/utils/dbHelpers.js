@@ -3,7 +3,7 @@ module.exports = {
         return arr
             .filter(el => el.trim().length)
             .reduce((acc, el, i) => {
-                return i ? `${acc} AND ${el}` : `${acc} WHERE ${el}`;
+                return i ? `${acc} AND ${el}` : `WHERE ${el}`;
             }, '');
     },
 
@@ -41,6 +41,12 @@ module.exports = {
     equalTo(val) {
         this.val = val;
         return this;
+    },
+
+    always() {
+        const resultString = this.query;
+        this.clean();
+        return resultString;
     },
 
     exec() {
