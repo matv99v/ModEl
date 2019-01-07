@@ -220,14 +220,7 @@ class BarnForm extends React.Component {
     }
 }
 
-function mapStateToProps(state, ownProps) {
-    return {
-        initialValues: ownProps.initialValues
-    };
-}
-
 const withRouterBarnForm = withRouter(BarnForm);
-
 
 const ReduxBarnForm = reduxForm({
     // a unique name for the form
@@ -250,8 +243,7 @@ const ReduxBarnForm = reduxForm({
         };
     },
 
-}, mapStateToProps
-)(withRouterBarnForm);
+})(withRouterBarnForm);
 
 
 

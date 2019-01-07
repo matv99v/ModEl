@@ -1,8 +1,6 @@
 /* eslint react/no-string-refs: 0 */
-
-
 import React from 'react';
-
+import { Glyphicon } from 'react-bootstrap';
 import Draft from 'draft-js';
 const {
     Editor,
@@ -10,22 +8,30 @@ const {
     RichUtils,
     getDefaultKeyBinding,
     convertToRaw,
-    convertFromRaw } = Draft;
-
+    convertFromRaw,
+    convertFromHTML,
+    ContentState
+} = Draft;
+import {stateToHTML} from 'draft-js-export-html';
 import './RichTextEditor.scss';
-
-
 
 
 export default class RichEditorExample extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            showControls: false,
+            hasFocus: false
+        };
 
-        const content = window.localStorage.getItem('content');
-
-        if (content) {
-            this.state.editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(content)));
+        if (this.props.initVal) {
+            // this.state.editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(this.props.initVal)));
+            const blocksFromHTML = convertFromHTML(this.props.initVal);
+            const state = ContentState.createFromBlockArray(
+                blocksFromHTML.contentBlocks,
+                blocksFromHTML.entityMap
+            );
+            this.state.editorState = EditorState.createWithContent(state);
         } else {
             this.state.editorState = EditorState.createEmpty();
         }
@@ -38,18 +44,22 @@ export default class RichEditorExample extends React.Component {
         this.mapKeyToEditorCommand = this._mapKeyToEditorCommand.bind(this);
         this.toggleBlockType = this._toggleBlockType.bind(this);
         this.toggleInlineStyle = this._toggleInlineStyle.bind(this);
+        this.handleOptionsVisibility = this.handleOptionsVisibility.bind(this);
+        this.handleFocusing = this.handleFocusing.bind(this);
+        this.handleBluring = this.handleBluring.bind(this);
     }
 
     onChange = (editorState) => {
         const contentState = editorState.getCurrentContent();
-        this.saveContent(contentState);
+        const html = stateToHTML(contentState);
+        this.props.change(
+            this.props.forField,
+            JSON.stringify(convertToRaw(contentState)),
+            html
+        );
         this.setState({
             editorState,
         });
-    }
-
-    saveContent = (content) => {
-        window.localStorage.setItem('content', JSON.stringify(convertToRaw(content)));
     }
 
     _handleKeyCommand(command, editorState) {
@@ -90,6 +100,15 @@ export default class RichEditorExample extends React.Component {
             )
         );
     }
+    handleOptionsVisibility() {
+        this.setState({ showControls: !this.state.showControls });
+    }
+    handleFocusing() {
+        this.setState({ hasFocus: true });
+    }
+    handleBluring() {
+        this.setState({ hasFocus: false });
+    }
     render() {
         const {editorState} = this.state;
         // If the user changes block type before entering any text, we can
@@ -101,16 +120,29 @@ export default class RichEditorExample extends React.Component {
                 className += ' RichEditor-hidePlaceholder';
             }
         }
+
+        let computedClassName = this.state.showControls ? 'RichEditor-root' : 'RichEditor-root hide-flex-mod';
+        computedClassName = this.state.hasFocus ? `${computedClassName} re-focused` : computedClassName;
+
         return (
-            <div className="RichEditor-root">
-                <BlockStyleControls
-                    editorState={editorState}
-                    onToggle={this.toggleBlockType}
-                />
-                <InlineStyleControls
-                    editorState={editorState}
-                    onToggle={this.toggleInlineStyle}
-                />
+            <div className={computedClassName} >
+                <div className='RichEditor__head' >
+                    <section className={this.state.showControls ? 'RichEditor__head__show' : 'RichEditor__head__hide'}>
+                        <BlockStyleControls
+                            editorState={editorState}
+                            onToggle={this.toggleBlockType}
+                        />
+                        <InlineStyleControls
+                            editorState={editorState}
+                            onToggle={this.toggleInlineStyle}
+                        />
+                    </section>
+                    <Glyphicon
+                        glyph="menu-hamburger"
+                        onClick={this.handleOptionsVisibility}
+                    />
+                </div>
+
                 <div className={className} onClick={this.focus}>
                     <Editor
                         blockStyleFn={getBlockStyle}
@@ -119,11 +151,15 @@ export default class RichEditorExample extends React.Component {
                         handleKeyCommand={this.handleKeyCommand}
                         keyBindingFn={this.mapKeyToEditorCommand}
                         onChange={this.onChange}
-                        placeholder="Tell a story..."
+                        placeholder={this.props.placeholder}
                         ref="editor"
                         spellCheck={true}
+                        onFocus={this.handleFocusing}
+                        onBlur={this.handleBluring}
+
                     />
                 </div>
+
             </div>
         );
     }
@@ -170,10 +206,10 @@ const BLOCK_TYPES = [
     {label: 'H4', style: 'header-four'},
     {label: 'H5', style: 'header-five'},
     {label: 'H6', style: 'header-six'},
-    {label: 'Blockquote', style: 'blockquote'},
+    // {label: 'Blockquote', style: 'blockquote'},
     {label: 'UL', style: 'unordered-list-item'},
     {label: 'OL', style: 'ordered-list-item'},
-    {label: 'Code Block', style: 'code-block'},
+    // {label: 'Code Block', style: 'code-block'},
 ];
 const BlockStyleControls = (props) => {
     const {editorState} = props;
@@ -200,7 +236,7 @@ var INLINE_STYLES = [
     {label: 'Bold', style: 'BOLD'},
     {label: 'Italic', style: 'ITALIC'},
     {label: 'Underline', style: 'UNDERLINE'},
-    {label: 'Monospace', style: 'CODE'},
+    // {label: 'Monospace', style: 'CODE'},
 ];
 const InlineStyleControls = (props) => {
     const currentStyle = props.editorState.getCurrentInlineStyle();
