@@ -1,1 +1,5 @@
-implement adding goods
+continue edit good form implementing
+set initial values
+http://localhost:3001/admin/goods/61
+
+set validation of params on UPDATE good

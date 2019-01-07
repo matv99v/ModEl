@@ -11,6 +11,10 @@ export default {
         return `http://${helpers.base}/api/goods` + helpers.obj2query(obj);
     },
 
+    putGood(id, obj) {
+        return `http://${helpers.base}/api/goods/${id}` + helpers.obj2query(obj);
+    },
+
     barn(obj) {
         return `http://${helpers.base}/api/barn` + helpers.obj2query(obj);
     },
