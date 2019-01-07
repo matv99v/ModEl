@@ -1,12 +1,12 @@
 const express = require('express');
-const auth = require('../middlewares/auth.js');
+// const auth = require('../middlewares/auth.js');
 
 const validateGoodsParams = require('../middlewares/validateParams/validateGoodsParams');
 const db = require('../database/db.js');
 const utils = require('../utils/utils');
 
 const goodsRouter = express.Router();
-goodsRouter.use(auth);
+// goodsRouter.use(auth);
 goodsRouter.use(validateGoodsParams);
 
 
