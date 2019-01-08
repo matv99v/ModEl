@@ -17,7 +17,7 @@ module.exports = {
     },
 
     plugins: [
-        new CleanWebpackPlugin('../server/public/bundle',{
+        new CleanWebpackPlugin('../server/public', {
             allowExternal: true
         }),
         new HtmlWebpackPlugin({
