@@ -1,8 +1,7 @@
 const mysql = require('mysql');
 const Bluebird = require('bluebird');
 
-// const dbName = process.env.DB_NAME || 'goodsdev';
-const dbName = 'goodsdev';
+const dbName = process.env.DB_NAME;
 
 const connectionOptions = {
     host: '109.95.32.134',
