@@ -39,15 +39,19 @@ goodsRouter.route('/')
     })
     .post((req, res, next) => {
         res.statusCode = 201;
+        let id;
         db.postItemToGoods(req.body)
             // description is in another table,
             // need to get product id before posting description
-            .then(resp => db.postItemToGoodsDescription({
-                textDescrip: req.body.textDescrip,
-                idProduct: resp.insertId,
-            }))
             .then((resp) => {
-                res.end(JSON.stringify(resp));
+                id = resp.insertId;
+                return db.postItemToGoodsDescription({
+                    textDescrip: req.body.textDescrip,
+                    idProduct: resp.insertId,
+                });
+            })
+            .then((resp) => {
+                res.end(JSON.stringify({ id }));
             })
             .catch((err) => {
                 next(err);

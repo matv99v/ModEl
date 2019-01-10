@@ -35,41 +35,33 @@ module.exports = {
         return resString;
     },
 
-    insert(obj) {
-        // textDescrip is for another table
+    insert(data) {
+        const obj = { ...data };
+        delete obj.textDescrip; // textDescrip is for another table
+        const { fields, values } = dbHelpers.pickExistingQuoted(obj, [
+          'productName', 'productParams', 'detailName',
+        ]);
+
         const resString = `
-            INSERT INTO products (
-                productName,
-                idCategory,
-                productParams,
-                declarePrice,
-                exist,
-                detailName
-            )
-                VALUES (
-                    '${obj.productName}',
-                    ${obj.idCategory},
-                    '${obj.productParams}',
-                    ${obj.declarePrice},
-                    ${obj.exist},
-                    '${obj.detailName}'
-                )
+            INSERT INTO products (${fields})
+                VALUES (${values})
+            `;
 
-        `;
-        utils.wrtieQueryExample('qGoods.insertItemInGoods', obj, resString);
-
+        utils.wrtieQueryExample('qGoods.insert', obj, resString);
         return resString;
     },
 
-    update(obj) {
+    update(data) {
+        const obj = { ...data };
+        delete obj.textDescrip; // textDescrip is for another table
+        const { fields, values } = dbHelpers.pickExistingQuoted(obj, [
+            'productName', 'productParams', 'detailName',
+        ]);
+
         const resString = `
             UPDATE products
                 SET
-                    productName = '${obj.productName}',
-                    productParams = '${obj.productParams}',
-                    declarePrice = ${obj.declarePrice},
-                    exist = ${obj.exist},
-                    detailName = '${obj.detailName}'
+                    ${fields.map((field, i) => `${field} = ${values[i]}`)}
                 WHERE
                     idProduct = ${obj.idProduct}
         `;

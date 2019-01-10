@@ -1,5 +1,6 @@
 import React from 'react';
 import { reduxForm, change } from 'redux-form';
+import { withRouter } from 'react-router-dom';
 import { Button, Grid, Row, Col } from 'react-bootstrap';
 import RichTextEditor from 'AliasAdminToolSrc/components/common/RichTextEditor';
 import FormItem from 'AliasAdminToolSrc/components/common/FormItem';
@@ -27,14 +28,15 @@ class GoodForm extends React.Component {
             return api.updateGood(copyData.idProduct, copyData)
                 .then(resp => {
                     this.props.dispatch(alertMessage({
-                        msg: `Товар '${copyData.productName}' номер ${copyData.idProduct} добавлен`,
+                        msg: `Товар '${copyData.productName}' номер ${copyData.idProduct} обновлен`,
                         type: 'success'
                     }));
+                    this.props.history.push('/goods/search');
                     return null;
                 })
                 .catch(err => {
                     this.props.dispatch(alertMessage({
-                        msg: `Вознкла ошибка при добавлении нового товара '${copyData.productName}'`,
+                        msg: `Вознкла ошибка при обновлении товара '${copyData.productName}'`,
                         type: 'danger'
                     }));
                 });
@@ -42,9 +44,10 @@ class GoodForm extends React.Component {
             return api.postToGoods(copyData)
                 .then(resp => {
                     this.props.dispatch(alertMessage({
-                        msg: `Товар '${copyData.productName}' номер ${copyData.idProduct} добавлен`,
+                        msg: `Товар '${copyData.productName}' добавлен`,
                         type: 'success'
                     }));
+                    this.props.history.push('/goods/search');
                     return null;
                 })
                 .catch(err => {
@@ -138,20 +141,6 @@ class GoodForm extends React.Component {
                             />
 
                             <FormItem
-                                id="productName"
-                                component="input"
-                                type="text"
-                                label="productName"
-                            />
-
-                            <FormItem
-                                id="detailName"
-                                component="input"
-                                type="text"
-                                label="detailName"
-                            />
-
-                            <FormItem
                                 id="declarePrice"
                                 component="input"
                                 type="number"
@@ -182,7 +171,19 @@ class GoodForm extends React.Component {
                             />}
 
                             <div className="form-group">
-                                <label className="col-sm-3 control-label">textDescripSource</label>
+                                <label className="col-sm-3 control-label">detailName</label>
+                                <div className="col-sm-9">
+                                    <RichTextEditor
+                                        forField='detailName'
+                                        change={this.changeEditorState}
+                                        initVal={this.props.initialValues && this.props.initialValues.detailName}
+                                        placeholder='Краткое описание...'
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="form-group">
+                                <label className="col-sm-3 control-label">textDescrip</label>
                                 <div className="col-sm-9">
                                     <RichTextEditor
                                         forField='textDescrip'
@@ -194,7 +195,7 @@ class GoodForm extends React.Component {
                             </div>
 
                             <div className="form-group">
-                                <label className="col-sm-3 control-label">productParamsSource</label>
+                                <label className="col-sm-3 control-label">productParams</label>
                                 <div className="col-sm-9">
                                     <RichTextEditor
                                         forField='productParams'
@@ -244,12 +245,11 @@ class GoodForm extends React.Component {
     }
 }
 
+const withRouterGoodForm = withRouter(GoodForm);
 
 const ReduxGoodForm = reduxForm({
     // a unique name for the form
     form: 'GoodForm'
-})(GoodForm);
-
-
+})(withRouterGoodForm);
 
 export default ReduxGoodForm;

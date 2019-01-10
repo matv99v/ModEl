@@ -1,4 +1,5 @@
 const path = require('path');
+const exec = require('child_process').exec;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -46,8 +47,17 @@ module.exports = {
                     '**/*.test.js',
                 ]
             }
-
         }),
+        {
+            apply: (compiler) => {
+                compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
+                    exec('node ./generateSymlinkScript.js', (err, stdout, stderr) => {
+                        if (stdout) process.stdout.write(stdout);
+                        if (stderr) process.stderr.write(stderr);
+                    });
+                });
+            }
+        },
     ],
 
     module: {

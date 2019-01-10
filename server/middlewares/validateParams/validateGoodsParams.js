@@ -11,7 +11,7 @@ const goodsBodyValidator = new Validator({
     textDescrip: ['not_empty', 'string'],
     idCategory: ['not_empty', 'positive_integer'],
     declarePrice: ['not_empty', 'decimal'],
-    detailName: ['not_empty', 'string'],
+    detailName: ['string'],
     exist: ['not_empty', 'integer', { number_between: [0, 1] }],
     idProduct: ['not_empty', 'positive_integer'],
     productName: ['not_empty', 'string'],
