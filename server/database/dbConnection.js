@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const Bluebird = require('bluebird');
 
-const connectionOptions = false
+const connectionOptions = true
     ? {
         host: '109.95.32.134',
         user: 'seller',
