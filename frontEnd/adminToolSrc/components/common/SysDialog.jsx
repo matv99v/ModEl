@@ -18,9 +18,9 @@ class SysDialog extends React.Component {
         return (
             <div className='SysDialog__cnt' >
                 {
-                    this.props.sysDialogs.map((dialog, i) => (
+                    this.props.sysDialogs.map((dialog) => (
                         <SysDialogItem
-                            key={i}
+                            key={dialog.id}
                             dialog={dialog}
                             kill={this.killHandler}
                         />

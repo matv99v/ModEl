@@ -1,4 +1,18 @@
 module.exports = {
+    pickExistingQuoted(obj, quotes) {
+        const fields = Object.keys(obj)
+            .filter(field => !(obj[field] === undefined || obj[field] === null || obj[field] === ''));
+
+        const values = fields.map(key => (quotes.includes(key)
+            ? `'${obj[key]}'`
+            : obj[key]));
+
+        return {
+            fields,
+            values,
+        };
+    },
+
     prepareConditions(arr) {
         return arr
             .filter(el => el.trim().length)

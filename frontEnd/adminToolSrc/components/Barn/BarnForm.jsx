@@ -35,7 +35,7 @@ class BarnForm extends React.Component {
             return api.updateBarn(this.props.hash, copyData)
                 .then(resp => {
                     this.props.dispatch(alertMessage({
-                        msg: `Заказ номер ${data.zakNumber} для продукта '${data.productName}' обновлен`,
+                        msg: `Заказ номер ${copyData.zakNumber} для продукта '${copyData.productName}' обновлен`,
                         type: 'success'
                     }));
                     this.props.history.push('/barn/purchase/actual');
@@ -43,7 +43,7 @@ class BarnForm extends React.Component {
                 })
                 .catch(err => {
                     this.props.dispatch(alertMessage({
-                        msg: `Вознкла ошибка при обновлении заказа номер ${data.zakNumber} для продукта '${data.productName}'`,
+                        msg: `Вознкла ошибка при обновлении заказа номер ${copyData.zakNumber} для продукта '${copyData.productName}'`,
                         type: 'danger'
                     }));
                 });
@@ -51,7 +51,7 @@ class BarnForm extends React.Component {
             return api.postToBarn(copyData)
                 .then(resp => {
                     this.props.dispatch(alertMessage({
-                        msg: `Заказ номер ${data.zakNumber} для продукта '${data.productName}' добавлен`,
+                        msg: `Заказ номер ${copyData.zakNumber} для продукта '${copyData.productName}' добавлен`,
                         type: 'success'
                     }));
                     this.props.history.push('/barn/purchase/actual');
@@ -59,7 +59,7 @@ class BarnForm extends React.Component {
                 })
                 .catch(err => {
                     this.props.dispatch(alertMessage({
-                        msg: `Вознкла ошибка при добавлении заказа номер ${data.zakNumber} для продукта '${data.productName}'`,
+                        msg: `Вознкла ошибка при добавлении заказа номер ${copyData.zakNumber} для продукта '${copyData.productName}'`,
                         type: 'danger'
                     }));
                 });

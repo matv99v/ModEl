@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const child_process = require('child_process');
 const config = require('./config.json');
 
 const assetsPath = path.resolve(config.assetsPath);
@@ -77,15 +78,18 @@ fi`;
 }
 
 
-// delete previously generated script
-if (fs.existsSync('./createSymlinks.bat')) {
-    fs.unlinkSync('./createSymlinks.bat');
-}
-if (fs.existsSync('./createSymlinks.sh')) {
-    fs.unlinkSync('./createSymlinks.sh');
-}
+// // delete previously generated script
+// if (fs.existsSync('./createSymlinks.bat')) {
+//     fs.unlinkSync('./createSymlinks.bat');
+// }
+// if (fs.existsSync('./createSymlinks.sh')) {
+//     fs.unlinkSync('./createSymlinks.sh');
+// }
 
-// generate a new one
-fs.writeFileSync(`./createSymlinks.${isWin ? 'bat' : 'sh'}`, generateScript(), 'utf8');
+// // generate a new one
+// fs.writeFileSync(`./createSymlinks.${isWin ? 'bat' : 'sh'}`, generateScript(), 'utf8');
 
-console.log('createSymlinks script has been created');
+child_process.exec(generateScript(), (err, stdout, stderr) => {
+    if (stdout) process.stdout.write(stdout);
+    if (stderr) process.stderr.write(stderr);
+});

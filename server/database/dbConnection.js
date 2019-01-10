@@ -1,17 +1,19 @@
 const mysql = require('mysql');
 const Bluebird = require('bluebird');
 
-const dbName = process.env.DB_NAME;
-
-const connectionOptions = {
-    host: '109.95.32.134',
-    // host: '127.0.0.1',
-    user: 'seller',
-    // user: 'root',
-    password: '_SeLlEr_',
-    // password: '31vv12vv84vv++M',
-    database: dbName,
-};
+const connectionOptions = true
+    ? {
+        host: '109.95.32.134',
+        user: 'seller',
+        password: '_SeLlEr_',
+        database: process.env.DB_NAME,
+    }
+    : {
+        host: '127.0.0.1',
+        user: 'root',
+        password: '31vv12vv84vv++M',
+        database: 'goodsdev',
+    };
 
 function getConnection() {
     const connection = mysql.createConnection(connectionOptions);
@@ -19,7 +21,7 @@ function getConnection() {
         if (err) {
             return;
         }
-        console.log(`Connected to ${dbName} as ${connection.threadId}`);
+        console.log(`Connected to ${connectionOptions.database} as ${connection.threadId}`);
     });
     return connection;
 }
