@@ -141,6 +141,13 @@ class GoodForm extends React.Component {
                             />
 
                             <FormItem
+                                id="productName"
+                                component="input"
+                                type="text"
+                                label="productName"
+                            />
+
+                            <FormItem
                                 id="declarePrice"
                                 component="input"
                                 type="number"
