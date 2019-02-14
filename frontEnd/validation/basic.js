@@ -13,17 +13,21 @@ export function isNumericInt(val) {
     return exist(val) && !!val.toString().match(/^\d+$/);
 }
 
-export function isAliexpressUrl(val) {
-    return !!val.match(/^https:\/\/.*aliexpress.*\?(order_id=|orderId=)\d+$/);
+export function isValidUrl(val) {
+    return !!val.match(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/);
 }
 
-export function getUrlOrderId(val) {
-    const result = val.match(/\d+(?=$)/);
-    return result && result[0];
+export function isNumber(val) {
+    return typeof val === 'number';
+}
+
+export function containNumber(str, num) {
+    const re = new RegExp(`\\D${num}(\\D|$)`);
+    return exist(str) && exist(num) && isNumber(+num) && re.test(str);
 }
 
 export function isEqualStrings(valA, valB) {
-    return valA.toString() === valB.toString();
+    return exist(valA) && exist(valB) && valA.toString() === valB.toString();
 }
 
 export function isReal6d4(val) {

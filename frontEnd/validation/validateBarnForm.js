@@ -1,8 +1,6 @@
 import {
     exist,
     isNumericInt,
-    isAliexpressUrl,
-    getUrlOrderId,
     isEqualStrings,
     isReal6d4,
     isReal8d2,
@@ -11,7 +9,9 @@ import {
     isIncOrderDays,
     isFutureDay,
     isPastDay,
-} from './basic';
+    isValidUrl,
+    containNumber
+} from './basic.js';
 
 export default {
     idProduct(val) {
@@ -30,14 +30,18 @@ export default {
     },
 
     zakLink(val, zakNumber) {
+        if (!exist(zakNumber) && exist(val)) {
+            return 'zakLink не может быть без zakNumber';
+        }
+
         if (exist(zakNumber) && !exist(val)) {
             return 'ожидается zakLink';
         }
-        if (exist(val) && !isAliexpressUrl(val)) {
+        if (exist(val) && !isValidUrl(val)) {
             return 'проверьте формат ссылки';
         }
-        if (exist(val) && !isEqualStrings(getUrlOrderId(val), zakNumber)) {
-            return 'zakNumber и zakLink не соответсвовуют';
+        if (exist(val) && exist(zakNumber) && !containNumber(val, zakNumber)) {
+            return 'zakNumber должен быть частью zakLink';
         }
     },
 
