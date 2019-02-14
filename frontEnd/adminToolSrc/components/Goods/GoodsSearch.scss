@@ -1,5 +1,32 @@
+@import "~AliasModelSrc/variables_override";
+
+
 .Goods__Cnt {
-    tbody {
-        cursor: pointer;
+    &.table > tbody > tr > td,
+    &.table > tbody > tr > th,
+    &.table > tfoot > tr > td,
+    &.table > tfoot > tr > th,
+    &.table > thead > tr > td,
+    &.table > thead > tr > th {
+        border: 0;
     }
+
+    &.table > tbody > tr.GoodsItem__cantegory-tr {
+      border-top: 1px solid $gray-light;
+    }
+
+    tbody {
+        .GoodsItem__cantegory-name {
+          & > *:first-child {
+            background-color: $gray-lighter;
+            font-style: italic;
+          }
+        }
+
+        td:not(.GoodsItem__cantegory-name):not(:first-of-type) {
+            border-top: 1px solid $table-border-color;
+            cursor: pointer;
+        }
+    }
+
 }

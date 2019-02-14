@@ -1,8 +1,6 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import api from 'AliasApi/api';
-import GoodsSearchTableCat from './GoodsSearchTableCat';
-import helpers from 'AliasRoot/helpers/helpers';
 import './GoodsSearch.scss';
 
 export default class GoodsSearch extends React.Component {
@@ -27,10 +25,10 @@ export default class GoodsSearch extends React.Component {
 
     render() {
         return (
-            <Table condensed responsive hover className="Goods__Cnt">
+            <Table striped className="Goods__Cnt">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th>#</th>
                         <th>Name</th>
                         <th>GoodId</th>
                         <th>CatId</th>
@@ -40,19 +38,19 @@ export default class GoodsSearch extends React.Component {
                 </thead>
                 <tbody>
                     {
-                        this.state.goods
-                            .sort(helpers.sortByPropName('CategoryName'))
-                            .map((good, i, arr) => {
-                                const showCatName = (i === 0) || (good.CategoryName !== arr[i-1].CategoryName);
-                                return (
-                                    <GoodsSearchTableCat
-                                        key={good.idProduct}
-                                        good={good}
-                                        showCatName={showCatName}
-                                        rowClick={this.rowClick}
-                                    />
-                                );
-                            })
+                        this.state.goods.map((good, i) => (
+                            <tr
+                                key={i}
+                                onClick={() => this.rowClick(good.idProduct)}
+                            >
+                                <td>{i+1}</td>
+                                <td>{good.productName}</td>
+                                <td>{good.idProduct}</td>
+                                <td>{good.idCategory}</td>
+                                <td>{good.declarePrice}</td>
+                                <td>{good.exist}</td>
+                            </tr>
+                        ))
                     }
                 </tbody>
             </Table>

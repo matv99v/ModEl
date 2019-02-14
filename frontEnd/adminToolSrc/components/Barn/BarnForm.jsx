@@ -35,7 +35,7 @@ class BarnForm extends React.Component {
             return api.updateBarn(this.props.hash, copyData)
                 .then(resp => {
                     this.props.dispatch(alertMessage({
-                        msg: `Заказ номер ${copyData.zakNumber} для продукта '${copyData.productName}' обновлен`,
+                        msg: `Заказ номер ${copyData.zakNumber} для продукта '${data.productName}' обновлен`,
                         type: 'success'
                     }));
                     this.props.history.push('/barn/purchase/actual');
@@ -51,7 +51,7 @@ class BarnForm extends React.Component {
             return api.postToBarn(copyData)
                 .then(resp => {
                     this.props.dispatch(alertMessage({
-                        msg: `Заказ номер ${copyData.zakNumber} для продукта '${copyData.productName}' добавлен`,
+                        msg: `Заказ номер ${copyData.zakNumber} для продукта '${data.productName}' добавлен`,
                         type: 'success'
                     }));
                     this.props.history.push('/barn/purchase/actual');
@@ -226,7 +226,7 @@ const ReduxBarnForm = reduxForm({
     // a unique name for the form
     form: 'BarnForm',
     enableReinitialize: true,
-    validate(values) {
+    validate(values, props) {
         return {
             idProduct: validateBarnForm.idProduct(values.idProduct),
             zakNumber: validateBarnForm.zakNumber(values.zakNumber),
@@ -239,7 +239,9 @@ const ReduxBarnForm = reduxForm({
             zakDate: validateBarnForm.zakDate(values.zakDate),
             zakDateShp: validateBarnForm.zakDateShp(values.zakDateShp, values.zakDate),
             zakDateRcv: validateBarnForm.zakDateRcv(values.zakDateRcv, values.zakDateShp),
-            zakDateProtct: validateBarnForm.zakDateProtct(values.zakDateProtct, values.zakDateShp),
+            zakDateProtct: props.type === 'put'
+                ? null
+                : validateBarnForm.zakDateProtct(values.zakDateProtct, values.zakDateShp),
         };
     },
 

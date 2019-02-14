@@ -7,6 +7,7 @@ import FormItem from 'AliasAdminToolSrc/components/common/FormItem';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import { alertMessage } from 'AliasAdminToolSrc/redux/actions/sysdialogs-actions';
 import api from 'AliasApi/api';
+import './GoodForm.scss';
 
 
 class GoodForm extends React.Component {
@@ -31,7 +32,8 @@ class GoodForm extends React.Component {
                         msg: `Товар '${copyData.productName}' номер ${copyData.idProduct} обновлен`,
                         type: 'success'
                     }));
-                    this.props.history.push('/goods/search');
+                    // this.props.history.push('/goods/search');
+                    this.handleGoToGoods();
                     return null;
                 })
                 .catch(err => {
@@ -47,7 +49,8 @@ class GoodForm extends React.Component {
                         msg: `Товар '${copyData.productName}' добавлен`,
                         type: 'success'
                     }));
-                    this.props.history.push('/goods/search');
+                    this.handleGoToGoods();
+                    // this.props.history.push('/goods/search');
                     return null;
                 })
                 .catch(err => {
@@ -88,10 +91,13 @@ class GoodForm extends React.Component {
         this.props.dispatch(change('GoodForm', fieldName, html));
     }
 
+    handleGoToGoods = () => {
+        this.props.history.push('/goods/search');
+    }
+
     render() {
         return (
-
-            <Grid>
+            <Grid className="GoodForm__box">
 
                 <Row>
                     <Col smOffset={3}>
@@ -230,8 +236,22 @@ class GoodForm extends React.Component {
                             />}
 
                             <Row>
-                                <Col smOffset={3}>
-                                    <Button bsStyle='primary' type='submit' bsSize='large' disabled={this.props.submitting || this.props.pristine}>Submit</Button>
+                                <Col smOffset={3} className="GoodForm__btn-box">
+                                    <Button
+                                        bsStyle='success'
+                                        type='submit'
+                                        bsSize='large'
+                                        disabled={this.props.submitting || this.props.pristine}
+                                    >
+                                        Submit
+                                    </Button>
+                                    <Button
+                                        bsStyle='primary'
+                                        bsSize='large'
+                                        onClick={this.handleGoToGoods}
+                                    >
+                                        Go to goods
+                                    </Button>
                                 </Col>
                             </Row>
 
