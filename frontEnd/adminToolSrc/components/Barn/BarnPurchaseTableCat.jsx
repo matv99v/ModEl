@@ -7,8 +7,6 @@ const BarnPurchaseTableCat = ({ name, items, rowClick}) => (
     <tbody className='BarnPurchaseTableCat__Cnt'>
         <tr>
             <td colSpan={12}>
-                {/* <Label bsStyle="default">G</Label> */}
-                {/* <Glyphicon glyph="glyphicon glyphicon-tasks" /> */}
                 <span>{name}, {items.length}</span>
             </td>
         </tr>

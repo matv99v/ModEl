@@ -16,7 +16,7 @@ module.exports = {
             env: {
                 NODE_ENV: 'development',
                 PORT: 3001,
-                DB_NAME: 'goods-release-2',
+                DB_NAME: 'goods-clone',
             },
             script: 'bin/www',
         },
@@ -25,11 +25,11 @@ module.exports = {
             env: {
                 NODE_ENV: 'development',
                 PORT: 3001,
-                DB_NAME: 'goods-release-2',
+                DB_NAME: 'goods-clone',
             },
             script: 'bin/www',
-            ignoreWatch: ['node_modules', 'public'],
             watch: '../',
+            ignoreWatch: ['node_modules', 'public', './database/examplesSql', './database/examplesJson', '.git'],
             args: ['--color'],
         },
     ],

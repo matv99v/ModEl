@@ -1,0 +1,7 @@
+.GoodForm__box {
+  .GoodForm__btn-box {
+    & > *:not(:first-child) {
+      margin-left: 15px;
+    }
+  }
+}

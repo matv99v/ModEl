@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "pm2 see ecosystem.config.js"
+    "start": "see pm2 ecosystem.config.js",
+    "test": "jest",
+    "test-watch": "jest --watch --verbose false"
   },
   "dependencies": {
     "basic-auth": "^2.0.1",
@@ -15,6 +17,8 @@
     "cors": "^2.8.4",
     "debug": "~2.6.9",
     "express": "~4.15.5",
+    "jest": "^23.6.0",
+    "livr": "^2.1.0",
     "morgan": "~1.9.0",
     "mysql": "^2.16.0",
     "pug": "2.0.0-beta11",

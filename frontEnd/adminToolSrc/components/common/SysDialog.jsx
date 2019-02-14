@@ -1,8 +1,8 @@
 import React from 'react';
 import './SysDialog.scss';
 import { connect } from 'react-redux';
-import SysDialogItem from './SysDialogItem.jsx';
-import { killMessage } from '../../redux/actions/sysdialogs-actions.js';
+import SysDialogItem from './SysDialogItem';
+import { killMessage } from '../../redux/actions/sysdialogs-actions';
 
 
 class SysDialog extends React.Component {
@@ -18,9 +18,9 @@ class SysDialog extends React.Component {
         return (
             <div className='SysDialog__cnt' >
                 {
-                    this.props.sysDialogs.map((dialog, i) => (
+                    this.props.sysDialogs.map((dialog) => (
                         <SysDialogItem
-                            key={i}
+                            key={dialog.id}
                             dialog={dialog}
                             kill={this.killHandler}
                         />

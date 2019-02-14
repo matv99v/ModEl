@@ -10,5 +10,6 @@
 4. make a pm2 snapshot for resurrecting after machine restart
     pm2 save
 
-5. Create symlinks (windows)
-    run ./frontEnd/createSymLinks.bat file in cmd
+5. generate symlinks by running "node frontend/generateSymlinkScript.js"
+
+6. run "frontend/createSymlinks.(js|bat)"

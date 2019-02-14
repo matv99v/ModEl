@@ -1,0 +1,2 @@
+clone DB script
+generate symlinks script

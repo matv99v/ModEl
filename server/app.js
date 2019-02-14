@@ -7,7 +7,11 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const cors = require('cors'); // !!!!!!!
-const api = require('./routes/api');
+
+const categoriesRouter = require('./routes/categoriesRouter');
+const goodsRouter = require('./routes/goodsRouter');
+const barnRouter = require('./routes/barnRouter');
+const autocompleteRoute = require('./routes/autocompleteRoute');
 const images = require('./routes/images');
 const admin = require('./routes/admin');
 
@@ -28,7 +32,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', api);
+app.use('/api/autocomplete', autocompleteRoute);
+app.use('/api/categories', categoriesRouter);
+app.use('/api/goods', goodsRouter);
+app.use('/api/barn', barnRouter);
+
 app.use('/images', images);
 app.use('/admin(/$|/*)?', admin);
 

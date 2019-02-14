@@ -1,6 +1,6 @@
 import React from 'react';
-import { reduxForm, change } from 'redux-form';
-import FormItem from './common/FormItem.jsx';
+import { reduxForm } from 'redux-form';
+import FormItem from 'AliasAdminToolSrc/components/common/FormItem';
 import { Button, Grid, Row, Col } from 'react-bootstrap';
 
 

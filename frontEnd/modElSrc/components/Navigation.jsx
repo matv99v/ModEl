@@ -4,8 +4,8 @@ import { Navbar, Nav, NavItem, Badge, NavDropdown, MenuItem } from 'react-bootst
 import { connect } from 'react-redux';
 import { fetchEnabledCategoriesAsync } from 'AliasModelSrc/redux/actions/catalog-actions';
 import './Navigation.scss';
-import BrandLogo from './common/BrandLogo.jsx';
-import helpers from '../../helpers/helpers.js';
+import BrandLogo from './common/BrandLogo';
+import helpers from '../../helpers/helpers';
 
 
 
@@ -20,7 +20,7 @@ class Navigation extends React.Component {
 
     componentWillMount() {
         console.warn('fetching initial data, should be printed only one time');
-        this.props.dispatch(fetchEnabledCategoriesAsync({enabled: true}));
+        this.props.dispatch(fetchEnabledCategoriesAsync({enabled: true, excludeProductsCount: 0}));
     }
 
 

@@ -6,14 +6,7 @@ import {
     isReal8d2,
     isBetween0And100,
     isZero,
-
-    // isDateInFuture,
-    // isSameOrAfter,
-    // isDateInPast,
-
-    isSameDay,
     isIncOrderDays,
-    isPresentDay,
     isFutureDay,
     isPastDay,
     isValidUrl,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import FormItem from './common/FormItem.jsx';
+import FormItem from 'AliasAdminToolSrc/components/common/FormItem';
 import { Button, Grid, Row, Col } from 'react-bootstrap';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -10,7 +10,7 @@ import { change } from 'redux-form';
 
 import api from 'AliasApi/api';
 
-import { alertMessage } from '../redux/actions/sysdialogs-actions.js';
+import { alertMessage } from 'AliasAdminToolSrc/redux/actions/sysdialogs-actions';
 import { withRouter } from 'react-router-dom';
 import validateBarnForm from 'AliasRoot/validation/validateBarnForm';
 
@@ -35,7 +35,7 @@ class BarnForm extends React.Component {
             return api.updateBarn(this.props.hash, copyData)
                 .then(resp => {
                     this.props.dispatch(alertMessage({
-                        msg: `Заказ номер ${data.zakNumber} для продукта '${data.productName}' обновлен`,
+                        msg: `Заказ номер ${copyData.zakNumber} для продукта '${data.productName}' обновлен`,
                         type: 'success'
                     }));
                     this.props.history.push('/barn/purchase/actual');
@@ -43,7 +43,7 @@ class BarnForm extends React.Component {
                 })
                 .catch(err => {
                     this.props.dispatch(alertMessage({
-                        msg: `Вознкла ошибка при обновлении заказа номер ${data.zakNumber} для продукта '${data.productName}'`,
+                        msg: `Вознкла ошибка при обновлении заказа номер ${copyData.zakNumber} для продукта '${copyData.productName}'`,
                         type: 'danger'
                     }));
                 });
@@ -51,7 +51,7 @@ class BarnForm extends React.Component {
             return api.postToBarn(copyData)
                 .then(resp => {
                     this.props.dispatch(alertMessage({
-                        msg: `Заказ номер ${data.zakNumber} для продукта '${data.productName}' добавлен`,
+                        msg: `Заказ номер ${copyData.zakNumber} для продукта '${data.productName}' добавлен`,
                         type: 'success'
                     }));
                     this.props.history.push('/barn/purchase/actual');
@@ -59,7 +59,7 @@ class BarnForm extends React.Component {
                 })
                 .catch(err => {
                     this.props.dispatch(alertMessage({
-                        msg: `Вознкла ошибка при добавлении заказа номер ${data.zakNumber} для продукта '${data.productName}'`,
+                        msg: `Вознкла ошибка при добавлении заказа номер ${copyData.zakNumber} для продукта '${copyData.productName}'`,
                         type: 'danger'
                     }));
                 });
@@ -220,20 +220,13 @@ class BarnForm extends React.Component {
     }
 }
 
-function mapStateToProps(state, ownProps) {
-    return {
-        initialValues: ownProps.initialValues
-    };
-}
-
 const withRouterBarnForm = withRouter(BarnForm);
-
 
 const ReduxBarnForm = reduxForm({
     // a unique name for the form
     form: 'BarnForm',
     enableReinitialize: true,
-    validate(values) {
+    validate(values, props) {
         return {
             idProduct: validateBarnForm.idProduct(values.idProduct),
             zakNumber: validateBarnForm.zakNumber(values.zakNumber),
@@ -246,12 +239,13 @@ const ReduxBarnForm = reduxForm({
             zakDate: validateBarnForm.zakDate(values.zakDate),
             zakDateShp: validateBarnForm.zakDateShp(values.zakDateShp, values.zakDate),
             zakDateRcv: validateBarnForm.zakDateRcv(values.zakDateRcv, values.zakDateShp),
-            zakDateProtct: validateBarnForm.zakDateProtct(values.zakDateProtct, values.zakDateShp),
+            zakDateProtct: props.type === 'put'
+                ? null
+                : validateBarnForm.zakDateProtct(values.zakDateProtct, values.zakDateShp),
         };
     },
 
-}, mapStateToProps
-)(withRouterBarnForm);
+})(withRouterBarnForm);
 
 
 

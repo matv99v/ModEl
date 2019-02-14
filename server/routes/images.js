@@ -1,9 +1,7 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+
 const imagesRouter = express.Router();
 const sharp = require('sharp');
-
-imagesRouter.use(bodyParser.json());
 
 
 imagesRouter.route('/goods/thumbnail/:id')
@@ -14,12 +12,10 @@ imagesRouter.route('/goods/thumbnail/:id')
     })
     .get((req, res, next) => {
         sharp(`./public/goods-photos/${req.params.id}`)
-          .resize(150)
-          .toBuffer()
-          .then(data => {
-              res.send(data);
-          })
-          .catch(err => next(err));
+            .resize(150)
+            .toBuffer()
+            .then(data => res.send(data))
+            .catch(err => next(err));
     });
 
 imagesRouter.route('/goods/medium/:id')
@@ -30,14 +26,11 @@ imagesRouter.route('/goods/medium/:id')
     })
     .get((req, res, next) => {
         sharp(`./public/goods-photos/${req.params.id}`)
-          .resize(500)
-          .toBuffer()
-          .then(data => {
-              res.send(data);
-          })
-          .catch(err => next(err));
+            .resize(500)
+            .toBuffer()
+            .then(data => res.send(data))
+            .catch(err => next(err));
     });
-
 
 
 module.exports = imagesRouter;
