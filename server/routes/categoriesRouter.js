@@ -1,8 +1,8 @@
 const express = require('express');
-const validateCategoriesParams = require('../middlewares/validateParams/validateCategoriesParams');
+// const validateCategoriesParams = require('../middlewares/validateParams/validateCategoriesParams');
 
 const categoriesRouter = express.Router();
-categoriesRouter.use(validateCategoriesParams);
+// categoriesRouter.use(validateCategoriesParams);
 
 const db = require('../database/db.js');
 const utils = require('../utils/utils');

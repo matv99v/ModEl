@@ -1,8 +1,8 @@
 const express = require('express');
-const validateAutocompleteParams = require('../middlewares/validateParams/validateAutocompleteParams');
+// const validateAutocompleteParams = require('../middlewares/validateParams/validateAutocompleteParams');
 
 const autocompleteRoute = express.Router();
-autocompleteRoute.use(validateAutocompleteParams);
+// autocompleteRoute.use(validateAutocompleteParams);
 
 const db = require('../database/db.js');
 const utils = require('../utils/utils');
