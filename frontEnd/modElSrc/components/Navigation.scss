@@ -1,4 +1,17 @@
 @import "~AliasModelSrc/variables_override";
 
-.Navigation__Cnt .Navigation__brandImg {
+.Navigation__Cnt {
+  .Navigation__search {
+    ul {
+      left: auto !important;
+    }
+
+    &.typehead-expanded {
+      // outline: 2px solid red;
+    }
+  }
+
+  .Navigation__links.typehead-expanded {
+    // outline: 2px solid yellow !important;
+  }
 }
