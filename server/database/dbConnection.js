@@ -7,6 +7,8 @@ const connectionOptions = true
         user: 'seller',
         password: '_SeLlEr_',
         database: process.env.DB_NAME,
+        supportBigNumbers: true,
+        bigNumberStrings: true,
     }
     : {
         host: '127.0.0.1',
