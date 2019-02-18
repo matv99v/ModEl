@@ -230,18 +230,18 @@ const ReduxBarnForm = reduxForm({
         return {
             idProduct: validateBarnForm.idProduct(values.idProduct),
             zakNumber: validateBarnForm.zakNumber(values.zakNumber),
-            zakLink: validateBarnForm.zakLink(values.zakLink, values.zakNumber),
+            // zakLink: validateBarnForm.zakLink(values.zakLink, values.zakNumber),
             zakQnty: validateBarnForm.zakQnty(values.zakQnty),
             frozQnty: validateBarnForm.frozQnty(values.frozQnty),
             restQnty: validateBarnForm.restQnty(values.restQnty),
             zakSum: validateBarnForm.zakSum(values.zakSum),
             curRate: validateBarnForm.curRate(values.curRate),
-            zakDate: validateBarnForm.zakDate(values.zakDate),
-            zakDateShp: validateBarnForm.zakDateShp(values.zakDateShp, values.zakDate),
-            zakDateRcv: validateBarnForm.zakDateRcv(values.zakDateRcv, values.zakDateShp),
-            zakDateProtct: props.type === 'put'
-                ? null
-                : validateBarnForm.zakDateProtct(values.zakDateProtct, values.zakDateShp),
+            // zakDate: validateBarnForm.zakDate(values.zakDate),
+            // zakDateShp: validateBarnForm.zakDateShp(values.zakDateShp, values.zakDate),
+            // zakDateRcv: validateBarnForm.zakDateRcv(values.zakDateRcv, values.zakDateShp),
+            // zakDateProtct: props.type === 'put'
+            //     ? null
+            //     : validateBarnForm.zakDateProtct(values.zakDateProtct, values.zakDateShp),
         };
     },
 
