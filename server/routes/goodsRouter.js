@@ -65,12 +65,22 @@ goodsRouter.route('/:id')
         next();
     })
     .put((req, res, next) => {
-        res.statusCode = 200;
         db.updateGood(req.body)
-            .then(resp => db.updateGoodDescription({
-                textDescrip: req.body.textDescrip,
-                idProduct: req.body.idProduct,
-            }))
+            .then((resp) => {
+                return db.updateGoodDescription({ // try to update item in description table
+                    textDescrip: req.body.textDescrip,
+                    idProduct: req.body.idProduct,
+                });
+            })
+            .then((resp) => {
+                if (resp.changedRows === 0) { // if no success, post to description table
+                    return db.postItemToGoodsDescription({
+                        textDescrip: req.body.textDescrip,
+                        idProduct: req.body.idProduct,
+                    });
+                }
+                return resp;
+            })
             .then((resp) => {
                 res.end(JSON.stringify(resp));
             })

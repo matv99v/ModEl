@@ -14,9 +14,6 @@ module.exports = {
 
     update(obj) {
         const { fields, values } = dbHelpers.pickExistingQuoted(obj, ['textDescrip']);
-
-        console.log('XXX', fields, values);
-
         const resString = `
             UPDATE descrip
                 SET
