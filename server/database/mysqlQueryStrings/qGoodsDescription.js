@@ -25,4 +25,15 @@ module.exports = {
         return resString;
     },
 
+    upsert(obj) {
+        const { fields, values } = dbHelpers.pickExistingQuoted(obj, ['textDescrip']);
+        const resString = `
+            INSERT INTO descrip (${fields})
+                VALUES (${values})
+            ON DUPLICATE KEY UPDATE
+                ${fields.map((field, i) => `${field} = ${values[i]}`)}
+        `;
+        utils.wrtieQueryExample('qGoodsDescription.upsert', obj, resString);
+        return resString;
+    },
 };

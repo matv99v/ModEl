@@ -67,20 +67,28 @@ goodsRouter.route('/:id')
     .put((req, res, next) => {
         db.updateGood(req.body)
             .then((resp) => {
-                return db.updateGoodDescription({ // try to update item in description table
+                return db.upsertGoodDescription({
                     textDescrip: req.body.textDescrip,
                     idProduct: req.body.idProduct,
                 });
             })
-            .then((resp) => {
-                if (resp.changedRows === 0) { // if no success, post to description table
-                    return db.postItemToGoodsDescription({
-                        textDescrip: req.body.textDescrip,
-                        idProduct: req.body.idProduct,
-                    });
-                }
-                return resp;
-            })
+            // .then((resp) => {
+            //     return db.updateGoodDescription({ // try to update item in description table
+            //         textDescrip: req.body.textDescrip,
+            //         idProduct: req.body.idProduct,
+            //     });
+            // })
+            // .then((resp) => {
+            //     console.log('>>>>>>> PUT', resp);
+            //     if (resp.changedRows === 0) { // if no success, post to description table
+            //         console.log('resp.changedRows === 0', resp.changedRows === 0);
+            //         return db.postItemToGoodsDescription({
+            //             textDescrip: req.body.textDescrip,
+            //             idProduct: req.body.idProduct,
+            //         });
+            //     }
+            //     return resp;
+            // })
             .then((resp) => {
                 res.end(JSON.stringify(resp));
             })
