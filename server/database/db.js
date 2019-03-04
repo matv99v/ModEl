@@ -48,6 +48,10 @@ module.exports = {
         return performQuery(qGoodsDescription.update(options));
     },
 
+    upsertGoodDescription(options) {
+        return performQuery(qGoodsDescription.upsert(options));
+    },
+
     updateGood(options) {
         return performQuery(qGoods.update(options));
     },

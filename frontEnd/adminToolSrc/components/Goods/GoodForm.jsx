@@ -183,6 +183,14 @@ class GoodForm extends React.Component {
                                 disabled
                             />}
 
+                            <FormItem
+                                id="detailName"
+                                component="input"
+                                type="text"
+                                label="detailName"
+                            />
+
+                            {false &&
                             <div className="form-group">
                                 <label className="col-sm-3 control-label">detailName</label>
                                 <div className="col-sm-9">
@@ -194,6 +202,7 @@ class GoodForm extends React.Component {
                                     />
                                 </div>
                             </div>
+                            }
 
                             <div className="form-group">
                                 <label className="col-sm-3 control-label">textDescrip</label>
